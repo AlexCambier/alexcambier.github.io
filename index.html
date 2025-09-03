@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title> Portfolio Projects </title>
+  <title>Nome Cognome • Data Analyst</title>
   <meta name="description" content="Portfolio e contatti di Nome Cognome" />
   <meta property="og:title" content="Nome Cognome • Portfolio" />
   <meta property="og:description" content="Portfolio e contatti di Nome Cognome" />
@@ -72,6 +72,14 @@
     footer{padding:28px 0 60px; color:#475569; text-align:center}
     /* Mobile tweaks */
     @media (max-width:720px){ .title{font-size:38px} .hero{padding-top:90px} }
+      /* HERO – avatar accanto al nome */
+    .hero-head{display:flex; align-items:center; gap:16px; margin-bottom:8px}
+    .avatar{width:84px; height:84px; border-radius:999px; object-fit:cover; background:#fff; border:1px solid var(--border); box-shadow:0 8px 20px rgba(2,6,23,.08)}
+    @media (max-width:720px){ .hero-head{gap:12px} .avatar{width:64px; height:64px} }
+
+    /* SKILLS – pill cards */
+    #skills .grid{grid-template-columns:repeat(auto-fit, minmax(320px,1fr)); gap:24px}
+    #skills .card.small{border-radius:32px; padding:22px 28px; box-shadow:0 12px 28px rgba(2,6,23,.06); background:#fff; border:1px solid var(--border)}
   </style>
 </head>
 <body>
@@ -91,14 +99,17 @@
     <!-- HERO -->
     <section class="hero">
       <div class="card">
-        <h1 class="title"> Alexandre Benjamin Cambier </h1>
-        <p class="subtitle"> Master Student @PoliMi | Gold Grain Capital </p>
+        <div class="hero-head">
+          <img class="avatar" src="profileimage.png" alt="Nome Cognome">
+          <h1 class="title"> Alexandre Benjamin Cambier </h1>
+        </div>
+        Master Student @PoliMi | Gold Grain Capital </p>
         <p class="desc">
           Master’s student in Business Analytics & Data Science at PoliMi with a Business Administration foundation from Bocconi and a Cross-Asset Data Analyst experience. Open to internships (BA/BI/DS) from May 2026.
         </p>
         <div class="buttons">
           <a class="btn primary" href="#projects">Guarda i progetti</a>
-          <a class="btn" href="https://www.linkedin.com/in/alexandre-benjamin-cambier/" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <a class="btn" href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V23h-4V8.5zM8 8.5h3.8v1.98h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V23h-4v-6.4c0-1.53-.03-3.5-2.13-3.5-2.13 0-2.46 1.66-2.46 3.39V23H8V8.5z"/></svg>
             LinkedIn
           </a>
@@ -106,7 +117,7 @@
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.73.5.98 5.24.98 11.5c0 4.85 3.14 8.96 7.49 10.41.55.1.75-.24.75-.53 0-.26-.01-1.13-.02-2.05-3.05.66-3.7-1.3-3.7-1.3-.5-1.28-1.22-1.62-1.22-1.62-.99-.67.08-.66.08-.66 1.1.08 1.68 1.13 1.68 1.13.98 1.68 2.58 1.2 3.21.92.1-.71.38-1.2.68-1.48-2.43-.28-4.98-1.21-4.98-5.38 0-1.19.43-2.17 1.13-2.94-.11-.28-.49-1.4.11-2.92 0 0 .92-.29 3.02 1.12A10.5 10.5 0 0 1 12 6.84c.94.01 1.88.13 2.77.38 2.1-1.41 3.02-1.12 3.02-1.12.6 1.52.22 2.64.1 2.92.7.77 1.13 1.75 1.13 2.94 0 4.18-2.56 5.1-5 5.37.39.33.73.99.73 2v2.97c0 .29.2.63.76.52A10.52 10.52 0 0 0 23.02 11.5C23.02 5.24 18.27.5 12 .5z"/></svg>
             GitHub
           </a>
-          <a class="btn" href="mailto:alecambier@gmail.com" aria-label="Email">
+          <a class="btn" href="mailto:tuo.nome@esempio.com" aria-label="Email">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
             Email
           </a>
@@ -169,7 +180,7 @@
   </section>
 
   <footer>
-    <div class="container">© <span id="year"></span> Alexandre Benjamin Cambier • Realized with GitHub Pages</div>
+    <div class="container">© <span id="year"></span> Nome Cognome • Realizzato con GitHub Pages</div>
   </footer>
 
   <script>
