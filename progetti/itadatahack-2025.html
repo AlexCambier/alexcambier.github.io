@@ -4,10 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ITADATAhack 2025 · Nome Cognome</title>
-  <!-- Transizioni tra pagine come nella home -->
   <meta name="view-transition" content="same-origin" />
   <style>
-    /* ===== Design tokens (allineati alla home) ===== */
+    /* ===== Design tokens (uguali alla home) ===== */
     :root{
       --bg: #f7f8fb;
       --panel: #ffffff;
@@ -17,6 +16,7 @@
       --accent: #6d28d9;     /* violet-700 */
       --accent-2: #0ea5e9;   /* sky-500 */
       --radius: 18px;
+      --shadow-sm: 0 1px 2px rgba(15,23,42,.06);
       --shadow-md: 0 6px 18px rgba(2,6,23,.08), 0 2px 8px rgba(2,6,23,.06);
       --shadow-lg: 0 22px 60px rgba(2,6,23,.10);
     }
@@ -37,7 +37,7 @@
     *{ box-sizing:border-box }
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
       color: var(--text);
       background:
         radial-gradient(1200px 600px at 20% -10%, rgba(13,110,253,.10), transparent 60%),
@@ -81,15 +81,20 @@
       --p: 8px 12px;
       display:inline-flex; align-items:center; gap:8px; padding:var(--p);
       border:1px solid rgba(15,23,42,.10); border-radius:999px; background:#fff;
-      box-shadow: var(--shadow-md); font-weight:600; cursor:pointer;
+      box-shadow: var(--shadow-sm); font-weight:600; cursor:pointer;
       transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease;
     }
-    .tab[aria-selected="true"]{ border-color: var(--ring-soft); transform: translateY(-2px) }
+    .tab:hover{ transform: translateY(-2px); box-shadow: var(--shadow-md) }
+    .tab[aria-selected="true"]{ border-color: var(--ring-soft) }
+
     .toolbar{ display:flex; gap:8px; margin-left:auto }
     .btn{
       display:inline-flex; align-items:center; gap:6px; padding:8px 10px; border-radius:999px;
-      border:1px solid rgba(15,23,42,.10); background:#fff; box-shadow:var(--shadow-md); font-weight:600; cursor:pointer;
+      border:1px solid rgba(15,23,42,.10); background:#fff; box-shadow:var(--shadow-sm); font-weight:600; cursor:pointer;
+      transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease;
     }
+    .btn:hover{ transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--ring-soft) }
+
     .viewer{
       position:relative; border:1px solid rgba(15,23,42,.06); border-radius:16px; overflow:hidden; background:#0b1020;
     }
@@ -97,6 +102,7 @@
       margin:0; padding:16px 18px; overflow:auto; color:#e6e6e6; line-height:1.5; font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
       counter-reset: line;
       tab-size:2;
+      transition: max-height .28s ease; /* transizione apri/chiudi */
     }
     .viewer code{ white-space: pre }
     /* numeri di riga */
@@ -107,6 +113,14 @@
     }
     /* micro highlighting minimo */
     .kw { color:#93c5fd } .fn { color:#a7f3d0 } .cm { color:#9ca3af } .st { color:#fde68a }
+
+    /* fade al fondo quando collassato */
+    .viewer[data-collapsed="true"]::after{
+      content:""; position:absolute; left:0; right:0; bottom:0; height:56px;
+      background: linear-gradient(to bottom, rgba(11,16,32,0), rgba(11,16,32,.88));
+      pointer-events:none;
+    }
+
     /* ===== PDF embed ===== */
     .pdf-wrap{
       border:1px solid rgba(15,23,42,.06); border-radius:16px; background:#fff; box-shadow:var(--shadow-md);
@@ -119,8 +133,10 @@
     .pdf-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px }
     .link{
       display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px;
-      border:1px solid rgba(15,23,42,.10); background:#fff; box-shadow:var(--shadow-md); font-weight:600;
+      border:1px solid rgba(15,23,42,.10); background:#fff; box-shadow:var(--shadow-sm); font-weight:600;
+      transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease;
     }
+    .link:hover{ transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--ring-soft) }
 
     /* ===== Responsive ===== */
     @media (max-width:480px){
@@ -143,7 +159,7 @@
         <!-- ====== BOX: CODICI ====== -->
         <article class="card">
           <h3>Codici</h3>
-          <p class="muted" style="margin-top:2px">Anteprima dei file Python del progetto con tab, numeri di riga e copia-incolla.</p>
+          <p class="muted" style="margin-top:2px">Anteprima delle prime 4 righe, con espansione, copia e download.</p>
 
           <div class="code-viewer" id="codeViewer"
                data-files='[
@@ -153,11 +169,12 @@
             <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap">
               <nav class="tabs" aria-label="File di codice"></nav>
               <div class="toolbar" aria-hidden="false">
+                <button class="btn" id="toggleBtn" type="button">Mostra tutto</button>
                 <button class="btn" id="copyBtn" type="button">Copia</button>
                 <a class="btn" id="downloadBtn" href="#" download>Scarica</a>
               </div>
             </div>
-            <div class="viewer" role="region" aria-live="polite" aria-label="Anteprima codice">
+            <div class="viewer" role="region" aria-live="polite" aria-label="Anteprima codice" data-collapsed="true">
               <pre><code id="codeArea"><span class="cm"># Seleziona un file sopra per caricare l'anteprima…</span></code></pre>
             </div>
           </div>
@@ -166,14 +183,12 @@
         <!-- ====== BOX: PRESENTAZIONE ====== -->
         <article class="card">
           <h3>Presentazione</h3>
-          <p class="muted" style="margin-top:2px">Anteprima PDF responsive. Apri a tutto schermo o scarica il file.</p>
+          <p class="muted" style="margin-top:2px">Anteprima PDF responsive. Apri a tutto schermo o scarica.</p>
 
           <div class="pdf-wrap">
-            <!-- Cambia il percorso con il tuo PDF -->
             <object class="pdf-frame"
                     data="../assets/presentazioni/itadatahack-2025.pdf#view=FitH"
                     type="application/pdf">
-              <!-- Fallback (es. iOS vecchi) -->
               <iframe class="pdf-frame" src="../assets/presentazioni/itadatahack-2025.pdf"></iframe>
             </object>
           </div>
@@ -188,28 +203,29 @@
   </main>
 
   <script>
-    // ------ Code viewer (tab + fetch + copy + download) ------
+    // ------ Code viewer (tab + fetch + preview 4 righe + copy + download) ------
     (function(){
       const root = document.getElementById('codeViewer');
       if(!root) return;
 
+      const PREVIEW_LINES = 4;       // quante righe mostrare in anteprima
       const files = JSON.parse(root.dataset.files || '[]');
       const tabs = root.querySelector('.tabs');
       const codeEl = root.querySelector('#codeArea');
       const copyBtn = root.querySelector('#copyBtn');
       const downloadBtn = root.querySelector('#downloadBtn');
+      const toggleBtn = root.querySelector('#toggleBtn');
+      const viewer = root.querySelector('.viewer');
 
-      let currentSrc = null, rawText = "";
+      let currentSrc = null, rawText = "", isCollapsed = true;
 
       function lineize(text){
-        // micro-highlighting: commenti, stringhe, def/class, funzioni chiamate
         const esc = s => s.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
         let t = esc(text)
           .replace(/^(\s*#.*)$/gm, '<span class="cm">$1</span>')
           .replace(/("[^"]*"|'[^']*')/g, '<span class="st">$1</span>')
           .replace(/\b(def|class|import|from|return|for|while|if|elif|else|with|as|try|except|finally|yield|lambda|pass|break|continue|in|not|and|or)\b/g, '<span class="kw">$1</span>')
           .replace(/\b([a-zA-Z_][a-zA-Z0-9_]*)\s*(?=\()/g, '<span class="fn">$1</span>');
-        // avvolgi ogni riga in uno <span> per i numeri di riga
         return t.split('\n').map(l => `<span>${l || ' '}</span>`).join('\n');
       }
 
@@ -218,19 +234,40 @@
         btn.setAttribute('aria-selected','true');
       }
 
+      function render(){
+        const lines = rawText.split('\n');
+        const hasMore = lines.length > PREVIEW_LINES;
+        const shown = isCollapsed && hasMore ? lines.slice(0, PREVIEW_LINES) : lines;
+        codeEl.innerHTML = lineize(shown.join('\n'));
+
+        // stato UI
+        viewer.dataset.collapsed = (isCollapsed && hasMore) ? "true" : "false";
+        toggleBtn.style.display = hasMore ? 'inline-flex' : 'none';
+        toggleBtn.textContent = isCollapsed ? 'Mostra tutto' : 'Mostra meno';
+
+        // altezza morbida (stima)
+        const lineHeight = 20; // ~ per font monospace 13px
+        const padding = 32;    // top+bottom
+        const targetH = (isCollapsed && hasMore ? PREVIEW_LINES : Math.min(lines.length, 200)) * lineHeight + padding;
+        viewer.querySelector('pre').style.maxHeight = Math.min(targetH, 600) + 'px';
+      }
+
       async function load(src){
         currentSrc = src;
+        isCollapsed = true;
         codeEl.innerHTML = '<span class="cm"># Caricamento…</span>';
         rawText = '';
         try{
           const r = await fetch(src, {cache:'no-store'});
           if(!r.ok) throw new Error(r.statusText);
           rawText = await r.text();
-          codeEl.innerHTML = lineize(rawText);
           downloadBtn.href = src;
+          render();
         }catch(err){
           codeEl.innerHTML = `<span class="cm"># Impossibile caricare ${src}\n# Verifica il percorso o il nome del file.</span>`;
           downloadBtn.removeAttribute('href');
+          viewer.dataset.collapsed = "false";
+          toggleBtn.style.display = 'none';
         }
       }
 
@@ -247,8 +284,9 @@
 
       // carica il primo file se presente
       if(files[0]) load(files[0].src);
+      else codeEl.innerHTML = '<span class="cm"># Nessun file configurato.</span>';
 
-      // copia
+      // copia (tutto il file)
       copyBtn.addEventListener('click', async ()=>{
         try{
           await navigator.clipboard.writeText(rawText || '');
@@ -258,6 +296,12 @@
           copyBtn.textContent = 'Errore';
           setTimeout(()=> copyBtn.textContent='Copia', 1100);
         }
+      });
+
+      // espandi/richiudi
+      toggleBtn.addEventListener('click', ()=>{
+        isCollapsed = !isCollapsed;
+        render();
       });
     })();
   </script>
