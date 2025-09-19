@@ -310,7 +310,7 @@
 
         viewer.dataset.collapsed = (isCollapsed && hasMore) ? "true" : "false";
         toggleBtn.style.display = hasMore ? 'inline-flex' : 'none';
-        toggleBtn.textContent = isCollapsed ? 'Mostra tutto' : 'Mostra meno';
+        toggleBtn.textContent = isCollapsed ? 'Show all' : 'Show less';
 
         const lineHeight = 20, padding = 32;
         const targetH = (isCollapsed && hasMore ? PREVIEW_LINES : Math.min(lines.length, 200)) * lineHeight + padding;
