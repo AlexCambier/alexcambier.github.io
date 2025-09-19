@@ -3,158 +3,260 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title> 🔧 Projects </title>
-  <meta name="description" content="Portfolio e contatti di Nome Cognome" />
-  <meta property="og:title" content="Nome Cognome • Portfolio" />
-  <meta property="og:description" content="Portfolio e contatti di Nome Cognome" />
-  <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#2563eb" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <title>Nome Cognome · Portfolio</title>
+  <meta name="description" content="Portfolio personale – progetti, contatti e curriculum" />
   <style>
+    /* ===== Design tokens ===== */
     :root{
-      --container: min(1100px, 92vw);
-      /* Palette chiara */
-      --bg:#f8fafc;          /* sfondo principale */
-      --bg-soft:#f1f5f9;     /* sezioni alternate */
-      --card:#ffffff;        /* pannelli */
-      --border:#e5e7eb;      /* bordi sottili */
-      --text:#0f172a;        /* testo principale */
-      --muted:#64748b;       /* testo attenuato */
-      --brand:#2563eb;       /* blu */
-      --brand-2:#7c3aed;     /* viola */
-      --ring: rgba(37, 99, 235, .20);
-      --radius:18px;
-      --shadow: 0 10px 30px rgba(2,6,23,.06);
+      --bg: #f7f8fb;                 /* chiaro, morbido */
+      --panel: #ffffff;               /* card */
+      --text: #0f172a;                /* slate-900 */
+      --muted: #334155;               /* slate-700 */
+      --ring: #1d4ed8;                /* indigo-600 */
+      --ring-soft: rgba(29,78,216,.12);
+      --accent: #6d28d9;              /* violet-700 */
+      --accent-2: #0ea5e9;            /* sky-500 */
+      --radius: 18px;
+      --shadow-sm: 0 1px 2px rgba(15,23,42,.06);
+      --shadow-md: 0 6px 18px rgba(2,6,23,.08), 0 2px 8px rgba(2,6,23,.06);
+      --shadow-lg: 0 22px 60px rgba(2,6,23,.10);
     }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
+
+    /* ===== Base ===== */
+    * { box-sizing: border-box }
+    html, body { height:100% }
     body{
-      margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
-      color:var(--text); background:
-        radial-gradient(1200px 800px at 70% -10%, rgba(124,77,255,.06), transparent),
-        radial-gradient(800px 600px at -10% 10%, rgba(37,99,235,.06), transparent),
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(13,110,253,.10), transparent 60%),
+        radial-gradient(1000px 500px at 100% 10%, rgba(99,102,241,.10), transparent 60%),
         var(--bg);
+      line-height:1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
-    a{color:inherit; text-decoration:none}
-    .container{max-width: var(--container); margin:0 auto; padding:0 20px}
-    /* NAV */
-    nav{position:sticky; top:0; backdrop-filter:saturate(120%) blur(10px); background:rgba(255,255,255,.8); z-index:50; border-bottom:1px solid var(--border)}
-    .nav-wrap{display:flex; align-items:center; justify-content:space-between; height:66px}
-    .brand{font-weight:800; letter-spacing:.2px}
-    .brand a{display:inline-block; padding:.4rem .65rem; border-radius:999px; background:#fff; border:1px solid var(--border); box-shadow:var(--shadow)}
-    .menu{display:flex; gap:6px; align-items:center}
-    .menu a{padding:.5rem .75rem; border-radius:12px; color:#334155}
-    .menu a:hover{background:#eef2f7}
 
-    /* HERO */
-    .hero{padding:120px 0 80px}
-    .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); padding:36px}
-    .title{font-size:clamp(32px, 2.5vw + 20px, 46px); line-height:1.1; margin:0 0 10px; font-weight:800; letter-spacing:.3px; 
-      background:linear-gradient(90deg,var(--brand), var(--brand-2)); -webkit-background-clip:text; background-clip:text; color:transparent}
-    .subtitle{color:#475569; margin:8px 0 16px}
-    .desc{color:#334155; line-height:1.7; max-width:880px}
-    .buttons{display:flex; flex-wrap:wrap; gap:10px; margin-top:24px}
-    .btn{display:inline-flex; align-items:center; gap:8px; padding:.65rem 1rem; border-radius:12px; background:#fff; border:1px solid var(--border); color:#0f172a; box-shadow:0 1px 0 rgba(2,6,23,.04)}
-    .btn:hover{transform:translateY(-1px); box-shadow:0 8px 20px var(--ring)}
-    .btn.primary{background:linear-gradient(90deg, var(--brand), var(--brand-2)); color:#fff; border:none}
-    .btn svg{width:18px; height:18px; opacity:.9}
+    a{ color: inherit; text-decoration: none }
+    .container{ max-width: 1080px; padding: 32px; margin: 0 auto }
 
-    /* SECTIONS */
-    section{padding:70px 0}
-    .section-alt{background:var(--bg-soft); border-top:1px solid var(--border); border-bottom:1px solid var(--border)}
-    h2{font-size:28px; margin:0 0 18px}
-    .muted{color:var(--muted)}
-    .grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:16px}
-    .card.small{padding:22px}
-    .project{display:flex; flex-direction:column; gap:8px}
-    .project a{font-weight:600; color:var(--brand)}
-    .project a:hover{text-decoration:underline}
-    .tag{display:inline-block; padding:.25rem .5rem; border:1px solid var(--border); background:#fff; border-radius:999px; font-size:12px; color:#334155}
-    footer{padding:28px 0 60px; color:#475569; text-align:center}
-    /* Mobile tweaks */
-    @media (max-width:720px){ .hero{padding-top:90px} }
-      /* HERO – avatar accanto al nome */
-    .hero-head{display:flex; align-items:center; gap:16px; margin-bottom:8px}
-    .avatar{width:84px; height:84px; border-radius:999px; object-fit:cover; background:#fff; border:1px solid var(--border); box-shadow:0 8px 20px rgba(2,6,23,.08)}
-    @media (max-width:720px){ .hero-head{gap:12px} .avatar{width:64px; height:64px} }
+    /* ===== Header ===== */
+    .hero{
+      position: relative;
+      padding: 28px 28px 32px;
+      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.78));
+      backdrop-filter: saturate(1.2) blur(6px);
+      border: 1px solid rgba(15,23,42,.06);
+      border-radius: 28px;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .hero::after{ /* highlight sweep */
+      content:""; position:absolute; inset:-40% -20% auto; height:200%;
+      background: conic-gradient(from 220deg at 50% 50%, rgba(14,165,233,.10), rgba(109,40,217,.10), transparent 30%);
+      filter: blur(48px); z-index:-1; transform: translateY(-10px);
+    }
 
-    /* SKILLS – pill cards */
-    #skills .grid{grid-template-columns:repeat(auto-fit, minmax(320px,1fr)); gap:24px}
-    #skills .card.small{border-radius:32px; padding:22px 28px; box-shadow:0 12px 28px rgba(2,6,23,.06); background:#fff; border:1px solid var(--border)}
-      /* Responsive & accessibility enhancements */
-    @media (pointer: coarse){ .btn{ padding:.8rem 1.1rem } }
-    @media (max-width:900px){ .menu a{ padding:.45rem .6rem } }
-    .hero{ container-type: inline-size }
-    @container (max-width:560px){ .hero-head{ gap:12px } .desc{ font-size:15px } }
-    :focus-visible{ outline:2px solid var(--brand); outline-offset:2px }
-    @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important } }
+    .row{ display:flex; gap:28px; align-items:center; flex-wrap:nowrap; min-width:0 }
+    .avatar{
+      width: 92px; height: 92px; flex: 0 0 auto;
+      border-radius: 50%;
+      background: linear-gradient(145deg, var(--accent-2), var(--accent));
+      padding: 2px; box-shadow: var(--shadow-md);
+    }
+    .avatar img{ width:100%; height:100%; object-fit: cover; border-radius:50%; display:block; background:#fff }
+
+    .title{ font-size:clamp(28px, 3.2vw, 42px); font-weight: 800; letter-spacing: .2px }
+    .subtitle{ color: var(--muted); margin-top: 8px }
+
+    .actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:18px }
+    .btn{
+      --p: 12px 16px; --bg: #fff; --bd: rgba(15,23,42,.10);
+      display:inline-flex; align-items:center; gap:10px; padding: var(--p);
+      border:1px solid var(--bd); border-radius: 999px; background: var(--bg);
+      box-shadow: var(--shadow-sm); font-weight: 600; transition: transform .18s ease, background .2s, box-shadow .2s, border-color .2s;
+    }
+    .btn:hover{ transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--ring-soft) }
+    .btn.primary{ --bg: linear-gradient(180deg,#fff, #f7f8fb); border-color: transparent }
+    .btn .ico{ width:18px; height:18px; display:inline-block }
+
+    /* ===== Projects ===== */
+    .section{ margin-top:56px }
+    .section h2{ font-size: clamp(22px, 2.6vw, 30px); margin: 0 0 18px 0 }
+
+    .grid{ display:grid; grid-template-columns: repeat(12, 1fr); gap: 16px }
+    .card{
+      grid-column: span 12; background: var(--panel); border:1px solid rgba(15,23,42,.06);
+      border-radius: var(--radius); box-shadow: var(--shadow-md); padding: 18px 18px 18px; position:relative;
+      overflow:hidden; transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .card:hover{ transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--ring-soft) }
+
+    .card h3{ margin:0 0 6px; font-size: 20px }
+    .card p{ margin:0; color: var(--muted) }
+    .meta{ color:#64748b; font-weight:600; margin: 0 0 10px 0 }
+    .bullets{ color: var(--muted); margin-top: 8px }
+    .bullets li{ margin: 8px 0 0 0 }
+
+    @media (min-width: 720px){ .card{ grid-column: span 6 } }
+
+    /* Fancy hover light */
+    .card::before{
+      content:""; position:absolute; inset: -1px; border-radius: inherit; padding: 2px;
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+              mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      background: radial-gradient(600px 200px at var(--mx, 0px) var(--my, 0px), rgba(14,165,233,.28), rgba(99,102,241,.26), transparent 60%);
+      opacity: 0; transition: opacity .25s; }
+    .card:hover::before{ opacity: 1 }
+
+    /* ===== Utilities ===== */
+    .pill{ display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; background: rgba(14,165,233,.10); color:#075985; font-weight:600; border:1px solid rgba(14,165,233,.25) }
+
+    /* ===== Motion / reveal ===== */
+    .reveal{ opacity:0; transform: translateY(14px) scale(.98); filter: blur(4px) }
+    .reveal.visible{ opacity:1; transform: none; filter:none; transition: opacity .6s ease, transform .6s ease, filter .6s ease }
+
+    @media (prefers-reduced-motion: reduce){
+      .btn, .card{ transition: none }
+      .reveal{ opacity:1; transform:none; filter:none }
+    }
+
+    /* ===== Footer ===== */
+    footer{ color:#475569; margin: 36px 0 14px; text-align:center; font-size: 14px }
+
+    /* ===== Responsive breakpoints (iPhone, iPad, MacBook, desktop) ===== */
+    /* Piccoli schermi (iPhone SE/mini) */
+    @media (max-width: 480px){
+      .container{ padding: 20px }
+      .hero{ padding: 20px; border-radius: 22px }
+      .row{ gap: 16px }
+      .avatar{ width: 64px; height: 64px }
+      .title{ font-size: 24px }
+      .subtitle{ font-size: 14px }
+      .actions{ gap: 8px }
+      .btn{ padding: 10px 12px; font-size: 14px }
+      .grid{ gap: 12px }
+      .card{ padding: 16px }
+    }
+
+    /* Smartphone medi/grandi (iPhone/Android) */
+    @media (min-width: 481px) and (max-width: 768px){
+      .avatar{ width: 80px; height: 80px }
+      .title{ font-size: 28px }
+    }
+
+    /* Tablet / piccoli laptop (iPad, 11"–13" tipo MacBook Air) */
+    @media (min-width: 769px) and (max-width: 1024px){
+      .container{ padding: 28px }
+      .avatar{ width: 88px; height: 88px }
+      .grid{ gap: 14px }
+    }
+
+    /* Desktop e MacBook Pro larghi */
+    @media (min-width: 1025px){
+      .container{ max-width: 1200px }
+      .avatar{ width: 100px; height: 100px }
+      .grid{ gap: 20px }
+    }
+
+    /* Riduzione motion su tutti i device */
+    @media (prefers-reduced-motion: reduce){
+      *{ scroll-behavior: auto }
+      .btn, .card{ transition: none }
+      .reveal{ opacity:1; transform:none; filter:none }
+    }
   </style>
 </head>
 <body>
-
-  <main id="top" class="container">
-    <!-- HERO -->
-    <section class="hero">
-      <div class="card">
-        <div class="hero-head">
-          <img class="avatar" alt="Nome Cognome" width="84" height="84" decoding="async" fetchpriority="high">
-          <h1 class="title"> Nome Cognome </h1>
-        </div>
-        Master Student @PoliMi | Gold Grain Capital </p>
-        <p class="desc">
-          Master’s student in Business Analytics & Data Science at PoliMi with a Business Administration foundation from Bocconi and a Cross-Asset Data Analyst experience. Open to internships (BA/BI/DS) from May 2026.
-        </p>
-        <div class="buttons">
-          <a class="btn primary" href="#projects">Guarda i progetti</a>
-          <a class="btn" href="https://www.linkedin.com/in/alexandre-benjamin-cambier/" target="_blank" rel="noopener" aria-label="LinkedIn">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V23h-4V8.5zM8 8.5h3.8v1.98h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V23h-4v-6.4c0-1.53-.03-3.5-2.13-3.5-2.13 0-2.46 1.66-2.46 3.39V23H8V8.5z"/></svg>
-            LinkedIn
-          </a>
-          <a class="btn" href="https://github.com/" target="_blank" rel="noopener" aria-label="GitHub">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.73.5.98 5.24.98 11.5c0 4.85 3.14 8.96 7.49 10.41.55.1.75-.24.75-.53 0-.26-.01-1.13-.02-2.05-3.05.66-3.7-1.3-3.7-1.3-.5-1.28-1.22-1.62-1.22-1.62-.99-.67.08-.66.08-.66 1.1.08 1.68 1.13 1.68 1.13.98 1.68 2.58 1.2 3.21.92.1-.71.38-1.2.68-1.48-2.43-.28-4.98-1.21-4.98-5.38 0-1.19.43-2.17 1.13-2.94-.11-.28-.49-1.4.11-2.92 0 0 .92-.29 3.02 1.12A10.5 10.5 0 0 1 12 6.84c.94.01 1.88.13 2.77.38 2.1-1.41 3.02-1.12 3.02-1.12.6 1.52.22 2.64.1 2.92.7.77 1.13 1.75 1.13 2.94 0 4.18-2.56 5.1-5 5.37.39.33.73.99.73 2v2.97c0 .29.2.63.76.52A10.52 10.52 0 0 0 23.02 11.5C23.02 5.24 18.27.5 12 .5z"/></svg>
-            GitHub
-          </a>
-          <a class="btn" href="mailto: alecambier@gmail.com" aria-label="Email">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
-            Email
-          </a>
-          <a class="btn" href="resume.pdf" target="_blank" rel="noopener" aria-label="Resume">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 2h7l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm7 1v4h4"/><path d="M8 13h8M8 17h8M8 9h4"/></svg>
-            Resume
-          </a>
+  <header class="container">
+    <section class="hero reveal">
+      <div class="row">
+        <span class="avatar" aria-hidden="true">
+          <!-- Sostituisci src con la tua immagine -->
+          <img src="profile.jpg" alt="Foto profilo di Nome Cognome" />
+        </span>
+        <div>
+          <h1 class="title">Nome Cognome</h1>
+          <p class="subtitle">Master Student @PoliMi · Gold Grain Capital</p>
+          <p class="subtitle">Master in Business Analytics & Data Science al PoliMi, base in Business Administration da Bocconi e esperienza come Cross-Asset Data Analyst. Disponibile per stage (BA/BI/DS) da <strong>Maggio 2026</strong>.</p>
+          <div class="actions">
+            <a class="btn primary" href="#progetti" aria-label="Guarda i progetti">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              Guarda i progetti
+            </a>
+            <a class="btn" href="https://www.linkedin.com/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+              <svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V23h-4V8.5zM8.5 8.5h3.8v2h.06c.53-1 1.82-2.06 3.75-2.06 4 0 4.74 2.63 4.74 6.06V23h-4v-6.5c0-1.56-.03-3.56-2.17-3.56-2.17 0-2.5 1.7-2.5 3.44V23h-4V8.5z"/></svg>
+              LinkedIn
+            </a>
+            <a class="btn" href="https://github.com/" target="_blank" rel="noreferrer" aria-label="GitHub">
+              <svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58l-.02-2.25c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.76.08-.75.08-.75 1.2.09 1.83 1.23 1.83 1.23 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.31-5.48-1.34-5.48-5.95 0-1.31.47-2.38 1.24-3.22-.12-.31-.54-1.57.12-3.27 0 0 1.01-.32 3.3 1.23a11.4 11.4 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.7.24 2.96.12 3.27.77.84 1.24 1.9 1.24 3.22 0 4.62-2.81 5.63-5.49 5.93.43.37.81 1.1.81 2.22l-.01 3.29c0 .32.21.7.83.58A12 12 0 0 0 12 .5z"/></svg>
+              GitHub
+            </a>
+            <a class="btn" href="mailto:tuo.nome@email.com" aria-label="Email">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg>
+              Email
+            </a>
+            <a class="btn" href="#" target="_blank" rel="noreferrer" aria-label="Curriculum">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2h9l5 5v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path d="M14 2v6h6"/></svg>
+              Resume
+            </a>
+          </div>
         </div>
       </div>
     </section>
+  </header>
+
+  <main class="container section" id="progetti">
+    <span class="pill reveal">🚀 Progetti</span>
+    <h2 class="reveal">Selezione di lavori</h2>
+
+    <div class="grid">
+      <a class="card reveal" href="#" target="_blank" rel="noreferrer">
+        <h3>ITADATAhack 2025</h3>
+        <p class="meta">ago 2025 – set 2025</p>
+        <ul class="bullets">
+          <li>Assisted a three-person team in building two Python Machine Learning classifiers on HDFS logs, predicting anomaly category and type, evaluated with weighted G‑Mean.</li>
+          <li>Presented the methodology to judges: stratified train/validation split, standardized features, class-balanced Random Forest; feature engineering, oversampling, bagging and LightGBM. Ranked 6th out of 15.</li>
+        </ul>
+      </a>
+
+      <a class="card reveal" href="#" target="_blank" rel="noreferrer">
+        <h3>FEduF</h3>
+        <p class="meta">gen 2019 – mag 2019</p>
+        <ul class="bullets">
+          <li>Presented a socially beneficial sleep‑monitoring sensor to 10–15 professionals, explaining its technical operation and pricing versus industry leaders. Ranked 2nd among 5 teams.</li>
+        </ul>
+      </a>
+    </div>
   </main>
 
-  <!-- PROJECTS -->
-  <section id="projects">
-    <div class="container">
-      <h2>Progetti</h2>
-      <div class="grid">
-        <div class="card small project">
-          <a href="#" target="_blank" rel="noopener">Analisi prestazioni NBA</a>
-          <p class="muted">Modello per valutare l'impatto dei giocatori usando dati play‑by‑play.</p>
-        </div>
-        <div class="card small project">
-          <a href="#" target="_blank" rel="noopener">Dashboard vendite</a>
-          <p class="muted">Cruscotto interattivo con KPI principali per canali e regioni.</p>
-        </div>
-        <div class="card small project">
-          <a href="#" target="_blank" rel="noopener">Rilevamento anomalie</a>
-          <p class="muted">Pipeline ML per individuare outlier in serie temporali.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container">© <span id="year"></span> Nome Cognome • Realizzato con GitHub Pages</div>
+  <footer class="container">
+    © <span id="year"></span> Nome Cognome · Realizzato con GitHub Pages
   </footer>
 
   <script>
+    // Anno dinamico
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Reveal on scroll (IntersectionObserver)
+    const revealables = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold:.12 });
+    revealables.forEach(el=> io.observe(el));
+
+    // Hover light follows mouse (cards)
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+      card.addEventListener('pointermove', (e)=>{
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+    });
   </script>
 </body>
 </html>
