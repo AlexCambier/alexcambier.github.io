@@ -2,79 +2,115 @@
 <html lang="it">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>FEduF · Nome Cognome</title>
   <meta name="view-transition" content="same-origin" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b1020" media="(prefers-color-scheme: dark)">
   <style>
+    /* ===== Design tokens ===== */
     :root{
-      --bg:#f7f8fb; --panel:#fff; --text:#0f172a; --muted:#334155;
-      --ring-soft:rgba(29,78,216,.12);
-      --shadow-md:0 6px 18px rgba(2,6,23,.08), 0 2px 8px rgba(2,6,23,.06);
-      --shadow-lg:0 22px 60px rgba(2,6,23,.10);
-      --radius:18px;
+      --bg:#f7f8fb; --panel:#ffffff; --text:#0f172a; --muted:#334155;
+      --ring-soft: rgba(29,78,216,.18);
+      --accent:#6d28d9; --accent-2:#0ea5e9;
+      --radius: 18px;
+      --shadow-sm: 0 1px 2px rgba(15,23,42,.06);
+      --shadow-md: 0 6px 18px rgba(2,6,23,.08), 0 2px 8px rgba(2,6,23,.06);
+      --shadow-lg: 0 22px 60px rgba(2,6,23,.10);
     }
+
+    /* ===== View Transitions ===== */
     @supports (view-transition-name: initial) {
       :root { view-transition-name: root; }
       ::view-transition-old(root){ animation: vt-out .45s ease; }
-      ::view-transition-new(root){ animation: vt-in .45s ease; }
+      ::view-transition-new(root){ animation: vt-in  .45s ease; }
       @keyframes vt-out { to { opacity:0; transform: translateY(6px) scale(.995); filter: blur(2px); } }
       @keyframes vt-in  { from { opacity:0; transform: translateY(8px) scale(.995); filter: blur(4px);} to { opacity:1; transform:none; filter:none; } }
       @media (prefers-reduced-motion: reduce){
         ::view-transition-old(root), ::view-transition-new(root){ animation:none; }
       }
     }
-    *{box-sizing:border-box}
+
+    /* ===== Base ===== */
+    *{ box-sizing:border-box }
+    html{ -webkit-text-size-adjust: 100% }
     body{
-      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial;
-      color:var(--text);
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
       background:
         radial-gradient(1200px 600px at 20% -10%, rgba(13,110,253,.10), transparent 60%),
         radial-gradient(1000px 500px at 100% 10%, rgba(99,102,241,.10), transparent 60%),
         var(--bg);
       line-height:1.6;
+      -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+      padding-bottom: env(safe-area-inset-bottom);
     }
-    .container{ max-width:900px; padding:28px; margin:0 auto }
-    .panel{
-      background:var(--panel); border:1px solid rgba(15,23,42,.06); border-radius:24px;
-      box-shadow:var(--shadow-lg); padding:24px 24px 28px;
+    a{ color: inherit; text-decoration: none }
+    a, button { -webkit-tap-highlight-color: rgba(0,0,0,0); }
+    :focus-visible{
+      outline: 2px solid var(--accent-2);
+      outline-offset: 2px;
+      border-radius: 8px;
     }
+    .container{
+      padding: clamp(16px, 4vw, 28px);
+      margin: 0 auto;
+      max-width: min(1100px, 100%);
+    }
+
+    /* ===== Header ===== */
     .back{
-      display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:999px;
-      border:1px solid rgba(15,23,42,.08); background:#fff; box-shadow:var(--shadow-md); font-weight:600;
-      text-decoration:none; transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease;
+      display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:999px;
+      border:1px solid rgba(15,23,42,.10); background:#fff; box-shadow:var(--shadow-md); font-weight:600;
+      transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease;
+      touch-action: manipulation;
     }
     .back:hover{ transform: translateY(-2px); box-shadow: var(--shadow-lg); border-color: var(--ring-soft) }
-    h1{ margin:10px 0 6px; font-size: clamp(26px, 3vw, 36px) }
-    .meta{ color:#64748b; font-weight:600; margin:0 0 16px 0 }
-    .grid{ display:grid; gap:16px }
-    .card{ padding:16px 18px; border:1px solid rgba(15,23,42,.06); border-radius: var(--radius); background:#fff; box-shadow:var(--shadow-md) }
-    ul{ margin:8px 0 0 18px }
+
+    h1{ margin:14px 0 6px; font-size: clamp(26px, 4vw, 42px); font-weight:800; letter-spacing:.2px }
+    .meta{ color:#64748b; font-weight:600; margin:0 0 18px 0; font-size: clamp(14px, 2.2vw, 16px) }
+
+    /* ===== Cards / layout ===== */
+    .panel{
+      background: var(--panel); border:1px solid rgba(15,23,42,.06); border-radius: 24px;
+      box-shadow: var(--shadow-lg); padding: clamp(18px, 3.5vw, 28px); margin-top:16px;
+    }
+    .grid{
+      display:grid; gap: clamp(12px, 2.2vw, 16px);
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      align-items: start;
+    }
+    .card{
+      padding: clamp(14px, 2.5vw, 18px); border:1px solid rgba(15,23,42,.06);
+      border-radius: var(--radius); background:#fff; box-shadow: var(--shadow-md);
+      min-height: 160px; /* dà “corpo” anche se vuoto */
+    }
+    .card h3{ margin:0 0 8px 0; font-size: clamp(18px, 2.4vw, 22px) }
   </style>
 </head>
 <body>
   <main class="container">
     <a class="back" href="../index.html" aria-label="Back to Projects">← Back to Projects </a>
 
-    <section class="panel" style="margin-top:16px">
+    <section class="panel">
       <h1>FEduF</h1>
       <p class="meta">gen 2019 – mag 2019</p>
 
       <div class="grid">
-        <div class="card">
-          <h3>Descrizione</h3>
-          <ul>
-            <li>Presentazione di un sensore per il monitoraggio del sonno con impatto sociale.</li>
-            <li>Pitch a 10–15 professionisti, posizionamento prezzo vs leader di mercato.</li>
-            <li>2° classificato su 5 team.</li>
-          </ul>
-        </div>
+        <!-- ====== BOX 1: VUOTO ====== -->
+        <article class="card">
+          <h3>Sleep‑monitoring sensor</h3>
+          <!-- Contenuto intenzionalmente vuoto per ora -->
+        </article>
 
-        <div class="card">
-          <h3>Materiali</h3>
-          <ul>
-            <li>Slides di progetto, demo, note di pricing (link se disponibili)</li>
-          </ul>
-        </div>
+        <!-- ====== BOX 2: VUOTO ====== -->
+        <article class="card">
+          <h3>Presentation</h3>
+          <!-- Contenuto intenzionalmente vuoto per ora -->
+        </article>
       </div>
     </section>
   </main>
