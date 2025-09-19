@@ -1,309 +1,87 @@
 <!doctype html>
 <html lang="it">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ITADATAhack 2025 · Nome Cognome</title>
-  <meta name="view-transition" content="same-origin" />
-  <style>
-    /* ===== Design tokens (uguali alla home) ===== */
-    :root{
-      --bg: #f7f8fb;
-      --panel: #ffffff;
-      --text: #0f172a;       /* slate-900 */
-      --muted: #334155;      /* slate-700 */
-      --ring-soft: rgba(29,78,216,.12);
-      --accent: #6d28d9;     /* violet-700 */
-      --accent-2: #0ea5e9;   /* sky-500 */
-      --radius: 18px;
-      --shadow-sm: 0 1px 2px rgba(15,23,42,.06);
-      --shadow-md: 0 6px 18px rgba(2,6,23,.08), 0 2px 8px rgba(2,6,23,.06);
-      --shadow-lg: 0 22px 60px rgba(2,6,23,.10);
-    }
-
-    /* ===== View Transitions ===== */
-    @supports (view-transition-name: initial) {
-      :root { view-transition-name: root; }
-      ::view-transition-old(root){ animation: vt-out .45s ease; }
-      ::view-transition-new(root){ animation: vt-in .45s ease; }
-      @keyframes vt-out { to { opacity:0; transform: translateY(6px) scale(.995); filter: blur(2px); } }
-      @keyframes vt-in  { from { opacity:0; transform: translateY(8px) scale(.995); filter: blur(4px);} to { opacity:1; transform:none; filter:none; } }
-      @media (prefers-reduced-motion: reduce){
-        ::view-transition-old(root), ::view-transition-new(root){ animation:none; }
-      }
-    }
-
-    /* ===== Base ===== */
-    *{ box-sizing:border-box }
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      color: var(--text);
-      background:
-        radial-gradient(1200px 600px at 20% -10%, rgba(13,110,253,.10), transparent 60%),
-        radial-gradient(1000px 500px at 100% 10%, rgba(99,102,241,.10), transparent 60%),
-        var(--bg);
-      line-height:1.6;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-    a{ color: inherit; text-decoration: none }
-    .container{ max-width: 980px; padding: 28px; margin: 0 auto }
-
-    /* ===== Header ===== */
-    .back{
-      display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:999px;
-      border:1px solid rgba(15,23,42,.08); background:#fff; box-shadow:var(--shadow-md); font-weight:600;
-      transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease;
-    }
-    .back:hover{ transform: translateY(-2px); box-shadow: var(--shadow-lg); border-color: var(--ring-soft) }
-
-    h1{ margin:14px 0 6px; font-size: clamp(28px, 3.2vw, 42px); font-weight:800; letter-spacing:.2px }
-    .meta{ color:#64748b; font-weight:600; margin:0 0 18px 0 }
-
-    /* ===== Cards / layout ===== */
-    .panel{
-      background: var(--panel); border:1px solid rgba(15,23,42,.06); border-radius: 24px;
-      box-shadow: var(--shadow-lg); padding: 24px 24px 28px; margin-top:16px;
-    }
-    .grid{ display:grid; gap:16px }
-    .card{
-      padding:16px 18px; border:1px solid rgba(15,23,42,.06);
-      border-radius: var(--radius); background:#fff; box-shadow: var(--shadow-md);
-    }
-    .card h3{ margin:0 0 8px 0; font-size: clamp(18px, 2vw, 22px) }
-    .muted{ color: var(--muted) }
-
-    /* ===== Code viewer ===== */
-    .code-viewer{ display:flex; flex-direction:column; gap:12px }
-    .tabs{ display:flex; flex-wrap:wrap; gap:8px }
-    .tab{
-      --p: 8px 12px;
-      display:inline-flex; align-items:center; gap:8px; padding:var(--p);
-      border:1px solid rgba(15,23,42,.10); border-radius:999px; background:#fff;
-      box-shadow: var(--shadow-sm); font-weight:600; cursor:pointer;
-      transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease;
-    }
-    .tab:hover{ transform: translateY(-2px); box-shadow: var(--shadow-md) }
-    .tab[aria-selected="true"]{ border-color: var(--ring-soft) }
-
-    .toolbar{ display:flex; gap:8px; margin-left:auto }
-    .btn{
-      display:inline-flex; align-items:center; gap:6px; padding:8px 10px; border-radius:999px;
-      border:1px solid rgba(15,23,42,.10); background:#fff; box-shadow:var(--shadow-sm); font-weight:600; cursor:pointer;
-      transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease;
-    }
-    .btn:hover{ transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--ring-soft) }
-
-    .viewer{
-      position:relative; border:1px solid rgba(15,23,42,.06); border-radius:16px; overflow:hidden; background:#0b1020;
-    }
-    .viewer pre{
-      margin:0; padding:16px 18px; overflow:auto; color:#e6e6e6; line-height:1.5; font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-      counter-reset: line;
-      tab-size:2;
-      transition: max-height .28s ease; /* transizione apri/chiudi */
-    }
-    .viewer code{ white-space: pre }
-    /* numeri di riga */
-    .viewer code > span{ display:block; counter-increment: line }
-    .viewer code > span::before{
-      content: counter(line);
-      display:inline-block; width:2.4em; margin-right:.8em; color:#7c869b; text-align:right;
-    }
-    /* micro highlighting minimo */
-    .kw { color:#93c5fd } .fn { color:#a7f3d0 } .cm { color:#9ca3af } .st { color:#fde68a }
-
-    /* fade al fondo quando collassato */
-    .viewer[data-collapsed="true"]::after{
-      content:""; position:absolute; left:0; right:0; bottom:0; height:56px;
-      background: linear-gradient(to bottom, rgba(11,16,32,0), rgba(11,16,32,.88));
-      pointer-events:none;
-    }
-
-    /* ===== PDF embed ===== */
-    .pdf-wrap{
-      border:1px solid rgba(15,23,42,.06); border-radius:16px; background:#fff; box-shadow:var(--shadow-md);
-      overflow:hidden;
-    }
-    .pdf-frame{
-      width:100%; height: min(72vh, 860px);
-      display:block; border:0; background:#fff;
-    }
-    .pdf-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px }
-    .link{
-      display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px;
-      border:1px solid rgba(15,23,42,.10); background:#fff; box-shadow:var(--shadow-sm); font-weight:600;
-      transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease;
-    }
-    .link:hover{ transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--ring-soft) }
-
-    /* ===== Responsive ===== */
-    @media (max-width:480px){
-      .container{ padding:20px }
-      .panel{ border-radius:22px; padding:20px }
-      .viewer pre{ padding:14px }
-      .pdf-frame{ height: 70vh; }
-    }
-  </style>
-</head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Test anteprima codice</title>
+<style>
+  :root{--bg:#f7f8fb;--panel:#fff;--text:#0f172a;--muted:#334155;--ring-soft:rgba(29,78,216,.12);--shadow-md:0 6px 18px rgba(2,6,23,.08),0 2px 8px rgba(2,6,23,.06)}
+  body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Inter;color:var(--text);background:var(--bg)}
+  .container{max-width:900px;margin:30px auto;padding:20px}
+  .card{background:var(--panel);border:1px solid rgba(15,23,42,.06);border-radius:16px;box-shadow:var(--shadow-md);padding:16px}
+  .tabs{display:flex;gap:8px;margin-bottom:8px}
+  .tab{border:1px solid rgba(15,23,42,.1);border-radius:999px;padding:8px 12px;background:#fff;font-weight:600}
+  .toolbar{display:flex;gap:8px;margin-left:auto}
+  .btn{border:1px solid rgba(15,23,42,.1);border-radius:999px;padding:8px 10px;background:#fff;font-weight:600}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .viewer{position:relative;border:1px solid rgba(15,23,42,.06);border-radius:16px;overflow:hidden;background:#0b1020}
+  .viewer pre{margin:0;padding:16px 18px;overflow:auto;color:#e6e6e6;font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;counter-reset:line;transition:max-height .28s ease}
+  .viewer code>span{display:block;counter-increment:line}
+  .viewer code>span::before{content:counter(line);display:inline-block;width:2.4em;margin-right:.8em;color:#7c869b;text-align:right}
+  .kw{color:#93c5fd}.fn{color:#a7f3d0}.cm{color:#9ca3af}.st{color:#fde68a}
+  .viewer[data-collapsed="true"]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:56px;background:linear-gradient(to bottom,rgba(11,16,32,0),rgba(11,16,32,.88));pointer-events:none}
+</style>
 <body>
-  <main class="container">
-    <a class="back" href="../index.html" aria-label="Torna ai progetti">← Torna ai progetti</a>
-
-    <section class="panel">
-      <h1>ITADATAhack 2025</h1>
-      <p class="meta">ago 2025 – set 2025</p>
-
-      <div class="grid">
-        <!-- ====== BOX: CODICI ====== -->
-        <article class="card">
-          <h3>Codici</h3>
-          <p class="muted" style="margin-top:2px">Anteprima delle prime 4 righe, con espansione, copia e download.</p>
-
-          <div class="code-viewer" id="codeViewer"
-               data-files='[
-                 {"label":"preprocessing.py","src":"../assets/codici/preprocessing.py"},
-                 {"label":"model_training.py","src":"../assets/codici/model_training.py"}
-               ]'>
-            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap">
-              <nav class="tabs" aria-label="File di codice"></nav>
-              <div class="toolbar" aria-hidden="false">
-                <button class="btn" id="toggleBtn" type="button">Mostra tutto</button>
-                <button class="btn" id="copyBtn" type="button">Copia</button>
-                <a class="btn" id="downloadBtn" href="#" download>Scarica</a>
-              </div>
-            </div>
-            <div class="viewer" role="region" aria-live="polite" aria-label="Anteprima codice" data-collapsed="true">
-              <pre><code id="codeArea"><span class="cm"># Seleziona un file sopra per caricare l'anteprima…</span></code></pre>
-            </div>
-          </div>
-        </article>
-
-        <!-- ====== BOX: PRESENTAZIONE ====== -->
-        <article class="card">
-          <h3>Presentazione</h3>
-          <p class="muted" style="margin-top:2px">Anteprima PDF responsive. Apri a tutto schermo o scarica.</p>
-
-          <div class="pdf-wrap">
-            <object class="pdf-frame"
-                    data="../assets/presentazioni/itadatahack-2025.pdf#view=FitH"
-                    type="application/pdf">
-              <iframe class="pdf-frame" src="../assets/presentazioni/itadatahack-2025.pdf"></iframe>
-            </object>
-          </div>
-
-          <div class="pdf-actions">
-            <a class="link" href="../assets/presentazioni/itadatahack-2025.pdf" target="_blank" rel="noreferrer">Apri a schermo intero</a>
-            <a class="link" href="../assets/presentazioni/itadatahack-2025.pdf" download>Scarica PDF</a>
-          </div>
-        </article>
+  <div class="container">
+    <div class="card">
+      <h3>Codici</h3>
+      <div class="row">
+        <nav class="tabs"><button class="tab" id="fakeTab">example.py</button></nav>
+        <div class="toolbar">
+          <button class="btn" id="toggleBtn">Mostra tutto</button>
+          <button class="btn" id="copyBtn">Copia</button>
+        </div>
       </div>
-    </section>
-  </main>
+      <div class="viewer" data-collapsed="true"><pre><code id="codeArea"></code></pre></div>
+    </div>
+  </div>
+<script>
+  const PREVIEW_LINES=4;
+  const codeArea=document.getElementById('codeArea');
+  const viewer=document.querySelector('.viewer');
+  const toggleBtn=document.getElementById('toggleBtn');
+  const copyBtn=document.getElementById('copyBtn');
 
-  <script>
-    // ------ Code viewer (tab + fetch + preview 4 righe + copy + download) ------
-    (function(){
-      const root = document.getElementById('codeViewer');
-      if(!root) return;
+  const RAW=`import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.ensemble import RandomForestClassifier
+from imblearn.metrics import geometric_mean_score
 
-      const PREVIEW_LINES = 4;       // quante righe mostrare in anteprima
-      const files = JSON.parse(root.dataset.files || '[]');
-      const tabs = root.querySelector('.tabs');
-      const codeEl = root.querySelector('#codeArea');
-      const copyBtn = root.querySelector('#copyBtn');
-      const downloadBtn = root.querySelector('#downloadBtn');
-      const toggleBtn = root.querySelector('#toggleBtn');
-      const viewer = root.querySelector('.viewer');
+train = pd.read_csv("training_categoria.csv", sep=";")
+test  = pd.read_csv("test_categoria.csv", sep=";")
+X = train.drop(columns=["TRACE_ID","ANOMALY_CATEGORY"])
+y = train["ANOMALY_CATEGORY"]
+`;
 
-      let currentSrc = null, rawText = "", isCollapsed = true;
+  function lineize(t){
+    const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+    let out=esc(t)
+      .replace(/^(\s*#.*)$/gm,'<span class="cm">$1</span>')
+      .replace(/("[^"]*"|'[^']*')/g,'<span class="st">$1</span>')
+      .replace(/\b(def|class|import|from|return|for|while|if|elif|else|with|as|try|except|finally|yield|lambda|pass|break|continue|in|not|and|or)\b/g,'<span class="kw">$1</span>')
+      .replace(/\b([a-zA-Z_][a-zA-Z0-9_]*)\s*(?=\()/g,'<span class="fn">$1</span>');
+    return out.split('\n').map(l=>`<span>${l||' '}</span>`).join('\n');
+  }
 
-      function lineize(text){
-        const esc = s => s.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
-        let t = esc(text)
-          .replace(/^(\s*#.*)$/gm, '<span class="cm">$1</span>')
-          .replace(/("[^"]*"|'[^']*')/g, '<span class="st">$1</span>')
-          .replace(/\b(def|class|import|from|return|for|while|if|elif|else|with|as|try|except|finally|yield|lambda|pass|break|continue|in|not|and|or)\b/g, '<span class="kw">$1</span>')
-          .replace(/\b([a-zA-Z_][a-zA-Z0-9_]*)\s*(?=\()/g, '<span class="fn">$1</span>');
-        return t.split('\n').map(l => `<span>${l || ' '}</span>`).join('\n');
-      }
+  let rawText=RAW, isCollapsed=true;
+  function render(){
+    const lines=rawText.split('\n');
+    const hasMore=lines.length>PREVIEW_LINES;
+    const shown=isCollapsed&&hasMore?lines.slice(0,PREVIEW_LINES):lines;
+    codeArea.innerHTML=lineize(shown.join('\n'));
+    viewer.dataset.collapsed=(isCollapsed&&hasMore)?"true":"false";
+    toggleBtn.style.display=hasMore?'inline-block':'none';
+    toggleBtn.textContent=isCollapsed?'Mostra tutto':'Mostra meno';
+    const lineHeight=20, padding=32;
+    const targetH=(isCollapsed&&hasMore?PREVIEW_LINES:lines.length)*lineHeight+padding;
+    viewer.querySelector('pre').style.maxHeight=Math.min(targetH,600)+'px';
+  }
+  render();
 
-      function setActive(btn){
-        tabs.querySelectorAll('.tab').forEach(b => b.setAttribute('aria-selected','false'));
-        btn.setAttribute('aria-selected','true');
-      }
-
-      function render(){
-        const lines = rawText.split('\n');
-        const hasMore = lines.length > PREVIEW_LINES;
-        const shown = isCollapsed && hasMore ? lines.slice(0, PREVIEW_LINES) : lines;
-        codeEl.innerHTML = lineize(shown.join('\n'));
-
-        // stato UI
-        viewer.dataset.collapsed = (isCollapsed && hasMore) ? "true" : "false";
-        toggleBtn.style.display = hasMore ? 'inline-flex' : 'none';
-        toggleBtn.textContent = isCollapsed ? 'Mostra tutto' : 'Mostra meno';
-
-        // altezza morbida (stima)
-        const lineHeight = 20; // ~ per font monospace 13px
-        const padding = 32;    // top+bottom
-        const targetH = (isCollapsed && hasMore ? PREVIEW_LINES : Math.min(lines.length, 200)) * lineHeight + padding;
-        viewer.querySelector('pre').style.maxHeight = Math.min(targetH, 600) + 'px';
-      }
-
-      async function load(src){
-        currentSrc = src;
-        isCollapsed = true;
-        codeEl.innerHTML = '<span class="cm"># Caricamento…</span>';
-        rawText = '';
-        try{
-          const r = await fetch(src, {cache:'no-store'});
-          if(!r.ok) throw new Error(r.statusText);
-          rawText = await r.text();
-          downloadBtn.href = src;
-          render();
-        }catch(err){
-          codeEl.innerHTML = `<span class="cm"># Impossibile caricare ${src}\n# Verifica il percorso o il nome del file.</span>`;
-          downloadBtn.removeAttribute('href');
-          viewer.dataset.collapsed = "false";
-          toggleBtn.style.display = 'none';
-        }
-      }
-
-      // crea tab
-      files.forEach((f, i)=>{
-        const b = document.createElement('button');
-        b.className = 'tab';
-        b.type = 'button';
-        b.textContent = f.label;
-        b.setAttribute('aria-selected', i===0 ? 'true' : 'false');
-        b.addEventListener('click', ()=>{ setActive(b); load(f.src); });
-        tabs.appendChild(b);
-      });
-
-      // carica il primo file se presente
-      if(files[0]) load(files[0].src);
-      else codeEl.innerHTML = '<span class="cm"># Nessun file configurato.</span>';
-
-      // copia (tutto il file)
-      copyBtn.addEventListener('click', async ()=>{
-        try{
-          await navigator.clipboard.writeText(rawText || '');
-          copyBtn.textContent = 'Copiato!';
-          setTimeout(()=> copyBtn.textContent='Copia', 1100);
-        }catch(e){
-          copyBtn.textContent = 'Errore';
-          setTimeout(()=> copyBtn.textContent='Copia', 1100);
-        }
-      });
-
-      // espandi/richiudi
-      toggleBtn.addEventListener('click', ()=>{
-        isCollapsed = !isCollapsed;
-        render();
-      });
-    })();
-  </script>
+  toggleBtn.onclick=()=>{ isCollapsed=!isCollapsed; render(); };
+  copyBtn.onclick=async()=>{
+    await navigator.clipboard.writeText(rawText);
+    copyBtn.textContent='Copiato!'; setTimeout(()=>copyBtn.textContent='Copia',1000);
+  };
+</script>
 </body>
 </html>
