@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ITADATAhack 2025 · Nome Cognome</title>
+  <meta name="view-transition" content="same-origin" />
+  <style>
+    :root{
+      --bg:#f7f8fb; --panel:#fff; --text:#0f172a; --muted:#334155;
+      --ring-soft:rgba(29,78,216,.12);
+      --shadow-md:0 6px 18px rgba(2,6,23,.08), 0 2px 8px rgba(2,6,23,.06);
+      --shadow-lg:0 22px 60px rgba(2,6,23,.10);
+      --radius:18px;
+    }
+    @supports (view-transition-name: initial) {
+      :root { view-transition-name: root; }
+      ::view-transition-old(root){ animation: vt-out .45s ease; }
+      ::view-transition-new(root){ animation: vt-in .45s ease; }
+      @keyframes vt-out { to { opacity:0; transform: translateY(6px) scale(.995); filter: blur(2px); } }
+      @keyframes vt-in  { from { opacity:0; transform: translateY(8px) scale(.995); filter: blur(4px);} to { opacity:1; transform:none; filter:none; } }
+      @media (prefers-reduced-motion: reduce){
+        ::view-transition-old(root), ::view-transition-new(root){ animation:none; }
+      }
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(13,110,253,.10), transparent 60%),
+        radial-gradient(1000px 500px at 100% 10%, rgba(99,102,241,.10), transparent 60%),
+        var(--bg);
+      line-height:1.6;
+    }
+    .container{ max-width:900px; padding:28px; margin:0 auto }
+    .panel{
+      background:var(--panel); border:1px solid rgba(15,23,42,.06); border-radius:24px;
+      box-shadow:var(--shadow-lg); padding:24px 24px 28px;
+    }
+    .back{
+      display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:999px;
+      border:1px solid rgba(15,23,42,.08); background:#fff; box-shadow:var(--shadow-md); font-weight:600;
+      text-decoration:none; transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .back:hover{ transform: translateY(-2px); box-shadow: var(--shadow-lg); border-color: var(--ring-soft) }
+    h1{ margin:10px 0 6px; font-size: clamp(26px, 3vw, 36px) }
+    .meta{ color:#64748b; font-weight:600; margin:0 0 16px 0 }
+    .grid{ display:grid; gap:16px }
+    .card{ padding:16px 18px; border:1px solid rgba(15,23,42,.06); border-radius: var(--radius); background:#fff; box-shadow:var(--shadow-md) }
+    ul{ margin:8px 0 0 18px }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <a class="back" href="../index.html" aria-label="Torna ai progetti">← Torna ai progetti</a>
+
+    <section class="panel" style="margin-top:16px">
+      <h1>ITADATAhack 2025</h1>
+      <p class="meta">ago 2025 – set 2025</p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Descrizione</h3>
+          <ul>
+            <li>Classificatori ML su log HDFS (categoria e tipo di anomalia) con metrica weighted G-Mean.</li>
+            <li>Pipeline: split stratificato, standardizzazione, RF bilanciata; feature eng., oversampling, bagging, LightGBM.</li>
+            <li>Classifica: 6° su 15.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Stack & artefatti</h3>
+          <ul>
+            <li>Python, scikit-learn, LightGBM</li>
+            <li>Notebook e report (link a repo/drive se disponibili)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
