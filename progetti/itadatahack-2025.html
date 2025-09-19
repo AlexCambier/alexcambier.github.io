@@ -97,29 +97,37 @@
       transition: max-height .28s ease; /* transizione apri/chiudi */
     }
     .viewer code{ white-space: pre }
-    /* numeri di riga */
     .viewer code > span{ display:block; counter-increment: line }
     .viewer code > span::before{
       content: counter(line);
       display:inline-block; width:2.4em; margin-right:.8em; color:#7c869b; text-align:right;
     }
-    /* micro highlighting minimo */
     .kw { color:#93c5fd } .fn { color:#a7f3d0 } .cm { color:#9ca3af } .st { color:#fde68a }
-
-    /* fade al fondo quando collassato */
     .viewer[data-collapsed="true"]::after{
       content:""; position:absolute; left:0; right:0; bottom:0; height:56px;
-      background: linear-gradient(to bottom, rgba(11,16,32,0), rgba(11,16,32,.88));
-      pointer-events:none;
+      background: linear-gradient(to bottom, rgba(11,16,32,0), rgba(11,16,32,.88)); pointer-events:none;
     }
 
-    /* ===== PDF embed ===== */
-    .pdf-wrap{
-      border:1px solid rgba(15,23,42,.06); border-radius:16px; background:#fff; box-shadow:var(--shadow-md);
-      overflow:hidden;
+    /* ===== Presentazione: anteprima 1.5 slide (16:9) ===== */
+    .pdf-mask{
+      width:100%;
+      /* 16 : 13.5  -> mostra 1.5 pagine 16:9 senza scroll */
+      aspect-ratio: 16 / 13.5;
+      border:1px solid rgba(15,23,42,.06);
+      border-radius:16px;
+      background:#fff;
+      box-shadow: var(--shadow-md);
+      position:relative;
+      overflow:hidden;       /* taglia il viewer oltre 1.5 slide */
+    }
+    .pdf-mask::after{        /* leggero fade in basso */
+      content:""; position:absolute; left:0; right:0; bottom:0; height:14%;
+      background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
+      pointer-events:none;
     }
     .pdf-frame{
-      width:100%; height: min(72vh, 860px); display:block; border:0; background:#fff;
+      position:absolute; inset:0; width:100%; height:100%;
+      border:0; display:block; background:#fff;
     }
     .pdf-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px }
     .link{
@@ -134,7 +142,6 @@
       .container{ padding:20px }
       .panel{ border-radius:22px; padding:20px }
       .viewer pre{ padding:14px }
-      .pdf-frame{ height: 70vh; }
     }
   </style>
 </head>
@@ -171,16 +178,17 @@
           </div>
         </article>
 
-        <!-- ====== BOX: PRESENTAZIONE ====== -->
+        <!-- ====== BOX: PRESENTAZIONE (1.5 slide, senza controlli) ====== -->
         <article class="card">
           <h3>Presentazione</h3>
-          <p class="muted" style="margin-top:2px">Anteprima PDF responsive. Apri a tutto schermo o scarica.</p>
+          <p class="muted" style="margin-top:2px">Anteprima fissa: 1,5 slide. Per il documento completo usa i link qui sotto.</p>
 
-          <div class="pdf-wrap">
+          <div class="pdf-mask">
+            <!-- Mostriamo la prima pagina, larghezza piena; l'altezza è mascherata a 1.5 pagine -->
             <object class="pdf-frame"
-                    data="../assets/presentazioni/itadatahack-2025.pdf#view=FitH"
+                    data="../assets/presentazioni/itadatahack-2025.pdf#page=1&view=FitH"
                     type="application/pdf">
-              <iframe class="pdf-frame" src="../assets/presentazioni/itadatahack-2025.pdf"></iframe>
+              <iframe class="pdf-frame" src="../assets/presentazioni/itadatahack-2025.pdf#page=1&view=FitH" title="Presentazione"></iframe>
             </object>
           </div>
 
@@ -194,12 +202,12 @@
   </main>
 
   <script>
-    // ------ Code viewer (tab + fetch + preview 4 righe + copy + download + contesti full) ------
+    // ------ Code viewer (tab + fetch + preview 4 righe + copy + download + contesti full/print) ------
     (function(){
       const root = document.getElementById('codeViewer');
       if(!root) return;
 
-      // ---- Contesti ----
+      // Contesti opzionali: ?full=1 o ?view=full o #full per aprire espanso
       const url = new URL(window.location.href);
       const params = url.searchParams;
       const FORCE_FULL = params.get('full') === '1' || params.get('view') === 'full' || window.location.hash === '#full';
@@ -289,7 +297,7 @@
       // espandi/richiudi manuale
       toggleBtn.addEventListener('click', ()=>{ isCollapsed = !isCollapsed; render(); });
 
-      // stampa: mostra sempre tutto
+      // stampa: mostra sempre tutto (solo per i codici)
       const initialCollapsed = isCollapsed;
       window.addEventListener('beforeprint', ()=>{ isCollapsed = false; render(); });
       window.addEventListener('afterprint',  ()=>{ isCollapsed = initialCollapsed; render(); });
