@@ -33,7 +33,7 @@
 
     /* ===== Base ===== */
     *{ box-sizing:border-box }
-    html{ -webkit-text-size-adjust: 100% } /* evita zoom forzato su iOS */
+    html{ -webkit-text-size-adjust: 100% }
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
@@ -44,7 +44,6 @@
         var(--bg);
       line-height:1.6;
       -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
-      /* safe-area per iPhone con notch */
       padding-left: env(safe-area-inset-left);
       padding-right: env(safe-area-inset-right);
       padding-bottom: env(safe-area-inset-bottom);
@@ -57,10 +56,9 @@
       border-radius: 8px;
     }
     .container{
-      /* padding fluido per piccoli/grandi schermi */
       padding: clamp(16px, 4vw, 28px);
       margin: 0 auto;
-      max-width: min(1100px, 100%); /* leggermente più larga ma sempre responsiva */
+      max-width: min(1100px, 100%);
     }
 
     /* ===== Header ===== */
@@ -82,7 +80,6 @@
     }
     .grid{
       display:grid; gap: clamp(12px, 2.2vw, 16px);
-      /* layout auto-fit: da 1 colonna su telefoni a 2+ su tablet/desktop */
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       align-items: start;
     }
@@ -113,20 +110,26 @@
       border:1px solid rgba(15,23,42,.12); background:#fff; box-shadow:var(--shadow-sm); font-weight:600; cursor:pointer;
       transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease;
       touch-action: manipulation;
-      min-height: 40px; /* target touch minimo */
+      min-height: 40px;
     }
     .btn:hover{ transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--ring-soft) }
 
     .viewer{
-      position:relative; border:1px solid rgba(15,23,42,.06); border-radius:16px; overflow:hidden; background:#0b1020;
+      position:relative; border:1px solid rgba(15,23,42,.06); border-radius:16px; background:#0b1020;
+      overflow:hidden; /* il contenitore */
     }
     .viewer pre{
-      margin:0; padding:16px 18px; overflow:auto; color:#e6e6e6; line-height:1.5; font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      margin:0; padding:16px 18px; color:#e6e6e6; line-height:1.5;
+      font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
       counter-reset: line; tab-size:2;
       transition: max-height .28s ease;
-      -webkit-overflow-scrolling: touch; /* scorrimento fluido su iOS */
+      overflow:auto;                /* scroll sia X che Y */
+      white-space: pre;             /* NIENTE WRAP di default */
+      word-break: normal;
+      overflow-wrap: normal;
+      -webkit-overflow-scrolling: touch;
     }
-    .viewer code{ white-space: pre }
+    .viewer code{ display:block; white-space: inherit } /* segue la modalità del <pre> */
     .viewer code > span{ display:block; counter-increment: line }
     .viewer code > span::before{
       content: counter(line);
@@ -141,7 +144,7 @@
     /* ===== Presentazione: anteprima 1.5 slide (16:9) ===== */
     .pdf-mask{
       width:100%;
-      aspect-ratio: 16 / 13.5; /* 1.5 pagine 16:9 */
+      aspect-ratio: 16 / 13.5;
       border:1px solid rgba(15,23,42,.06);
       border-radius:16px;
       background:#fff;
@@ -168,7 +171,7 @@
     }
     .link:hover{ transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--ring-soft) }
 
-    /* ===== Responsive: micro-tweaks extra piccoli schermi ===== */
+    /* ===== Responsive: micro-tweaks XS ===== */
     @media (max-width: 420px){
       .viewer pre{ padding:14px }
       .tab{ padding: 8px 12px }
@@ -199,6 +202,7 @@
               <nav class="tabs" aria-label="File di codice"></nav>
               <div class="toolbar" aria-hidden="false">
                 <button class="btn" id="toggleBtn" type="button">Mostra tutto</button>
+                <button class="btn" id="wrapBtn" type="button" aria-pressed="false">A capo: off</button>
                 <button class="btn" id="copyBtn" type="button">Copia</button>
                 <a class="btn" id="downloadBtn" href="#" download>Scarica</a>
               </div>
@@ -232,12 +236,12 @@
   </main>
 
   <script>
-    // ------ Code viewer (tab + fetch + preview 4 righe + copy + download + contesti full/print) ------
+    // ------ Code viewer (tab + fetch + preview 4 righe + copy + download + full/print + wrap toggle) ------
     (function(){
       const root = document.getElementById('codeViewer');
       if(!root) return;
 
-      // Contesti opzionali: ?full=1 o ?view=full o #full per aprire espanso
+      // Query helpers: ?full=1 | ?view=full | #full ; ?lines=4
       const url = new URL(window.location.href);
       const params = url.searchParams;
       const FORCE_FULL = params.get('full') === '1' || params.get('view') === 'full' || window.location.hash === '#full';
@@ -249,18 +253,54 @@
       const copyBtn = root.querySelector('#copyBtn');
       const downloadBtn = root.querySelector('#downloadBtn');
       const toggleBtn = root.querySelector('#toggleBtn');
+      const wrapBtn = root.querySelector('#wrapBtn');
       const viewer = root.querySelector('.viewer');
 
       let rawText = "", isCollapsed = !FORCE_FULL;
 
+      // ===== evidenziazione "safe" riga-per-riga =====
       function lineize(text){
         const esc = s => s.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
-        let t = esc(text)
-          .replace(/^(\s*#.*)$/gm, '<span class="cm">$1</span>')
-          .replace(/("[^"]*"|'[^']*')/g, '<span class="st">$1</span>')
-          .replace(/\b(def|class|import|from|return|for|while|if|elif|else|with|as|try|except|finally|yield|lambda|pass|break|continue|in|not|and|or)\b/g, '<span class="kw">$1</span>')
-          .replace(/\b([a-zA-Z_][a-zA-Z0-9_]*)\s*(?=\()/g, '<span class="fn">$1</span>');
-        return t.split('\n').map(l => `<span>${l || ' '}</span>`).join('\n');
+        const kwRe = /\b(def|class|import|from|return|for|while|if|elif|else|with|as|try|except|finally|yield|lambda|pass|break|continue|in|not|and|or)\b/g;
+        const fnRe = /\b([a-zA-Z_][a-zA-Z0-9_]*)\s*(?=\()/g;
+
+        function highlightLine(line){
+          let i = 0, out = "", inStr = null, escNext = false;
+          const colorizePlain = (plain) =>
+            plain.replace(kwRe,'<span class="kw">$1</span>')
+                 .replace(fnRe,'<span class="fn">$1</span>');
+
+          while(i < line.length){
+            if(!inStr){
+              if(line[i] === '#'){
+                out += '<span class="cm">' + esc(line.slice(i)) + '</span>';
+                return out;
+              }
+              if(line[i] === '"' || line[i] === "'"){
+                inStr = line[i];
+                out += '<span class="st">' + esc(inStr);
+                i++; continue;
+              }
+              let j = i;
+              while(j < line.length && line[j] !== '#' && line[j] !== '"' && line[j] !== "'") j++;
+              out += colorizePlain(esc(line.slice(i, j)));
+              i = j;
+            }else{
+              const ch = line[i];
+              out += esc(ch);
+              if(escNext){ escNext = false; }
+              else if(ch === '\\'){ escNext = true; }
+              else if(ch === inStr){ inStr = null; out += '</span>'; }
+              i++;
+            }
+          }
+          if(inStr){ out += '</span>'; }
+          return out;
+        }
+
+        return text.split('\n')
+          .map(raw => `<span>${highlightLine(raw) || ' '}</span>`)
+          .join('\n');
       }
 
       function render(){
@@ -326,6 +366,19 @@
 
       // espandi/richiudi manuale
       toggleBtn.addEventListener('click', ()=>{ isCollapsed = !isCollapsed; render(); });
+
+      // toggle a capo soft (per schermi stretti)
+      if (wrapBtn){
+        wrapBtn.addEventListener('click', ()=>{
+          const pre = viewer.querySelector('pre');
+          const code = viewer.querySelector('code');
+          const on = wrapBtn.getAttribute('aria-pressed') === 'true';
+          wrapBtn.setAttribute('aria-pressed', String(!on));
+          wrapBtn.textContent = !on ? 'A capo: on' : 'A capo: off';
+          pre.style.whiteSpace = !on ? 'pre-wrap' : 'pre';
+          code.style.whiteSpace = pre.style.whiteSpace;
+        });
+      }
 
       // stampa: mostra sempre tutto (solo per i codici)
       const initialCollapsed = isCollapsed;
