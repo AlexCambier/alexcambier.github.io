@@ -1,102 +1,107 @@
 <!doctype html>
 <html lang="it">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ITADATAhack 2025 (simple version)</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ITADATAhack 2025</title>
   <style>
-    /* 
-      VERY SIMPLE STYLES
-      The goal is clarity over design. No fancy shadows or animations.
-    */
-    :root{
-      --bg:#f5f5f7; --text:#222; --muted:#555; --panel:#fff; --border:#ddd;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial;line-height:1.5;color:var(--text);background:var(--bg)}
-    a{color:inherit;text-decoration:none}
+    /* stile molto semplice, spigoli più morbidi */
+    :root{ --b:#ddd; --bg:#f6f7f9; --ink:#111 }
+    *{ box-sizing:border-box }
+    body{ margin:0; font-family:system-ui, Arial, sans-serif; background:var(--bg); color:var(--ink) }
+    .container{ max-width:1000px; margin:0 auto; padding:16px }
+    a{ color:inherit; text-decoration:none }
 
-    /* Page layout */
-    .container{max-width:1000px;margin:0 auto;padding:16px}
-    .back{display:inline-block;padding:8px 10px;border:1px solid var(--border);border-radius:6px;background:#fff}
-    h1{margin:12px 0 4px}
-    .meta{margin:0 0 16px;color:var(--muted);font-size:14px}
+    .back{ display:inline-block; padding:8px 12px; border:1px solid var(--b); border-radius:999px; background:#fff }
+    h1{ margin:14px 0 6px }
+    .meta{ color:#555; margin:0 0 14px }
 
-    /* Simple panels and cards */
-    .panel{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:16px}
-    .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
-    .card{border:1px solid var(--border);border-radius:8px;padding:12px;background:#fff}
-    .card h3{margin:0 0 6px}
-    .muted{color:var(--muted);font-size:14px}
+    .panel{ background:#fff; border:1px solid var(--b); border-radius:16px; padding:16px }
+    .grid{ display:grid; gap:12px; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)) }
+    .card{ background:#fff; border:1px solid var(--b); border-radius:14px; padding:12px }
+    .card h3{ margin:0 0 8px }
+    .muted{ color:#555; margin:6px 0 10px }
 
-    /* Tabs and toolbar (basic look) */
-    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}
-    .tab{padding:6px 10px;border:1px solid var(--border);background:#fff;border-radius:6px;cursor:pointer}
-    .tab[aria-selected="true"]{background:#eef;border-color:#aac}
+    /* viewer codice */
+    .row{ display:grid; gap:10px; grid-template-columns:1fr 1fr }
+    @media (max-width: 760px){ .row{ grid-template-columns:1fr } }
+    .tabs{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px }
+    .tab{ padding:8px 10px; border:1px solid var(--b); background:#fff; border-radius:999px; cursor:pointer }
+    .tab[aria-selected="true"]{ border-color:#6aa7ff }
+    .toolbar{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px }
+    .btn{ padding:8px 10px; border:1px solid var(--b); background:#fff; border-radius:999px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; min-width:38px }
 
-    .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}
-    .btn{padding:6px 10px;border:1px solid var(--border);background:#fff;border-radius:6px;cursor:pointer}
+    .viewer{ border:1px solid var(--b); border-radius:12px; background:#0b1020 }
+    .viewer pre{ margin:0; padding:12px; color:#eee; font:13px/1.5 ui-monospace, monospace; white-space:pre-wrap; word-break:break-word; max-height:240px; overflow:auto }
+    .viewer[data-collapsed="true"]{ position:relative }
+    .viewer[data-collapsed="true"]::after{ content:""; position:absolute; left:0; right:0; bottom:0; height:40px; background:linear-gradient(to bottom, rgba(11,16,32,0), rgba(11,16,32,.9)) }
 
-    /* Code viewer box */
-    .viewer{border:1px solid var(--border);border-radius:6px;background:#0b1020}
-    .viewer pre{margin:0;padding:12px;color:#e6e6e6;font:13px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;white-space:pre-wrap;overflow:auto;max-height:240px}
-    .viewer[data-collapsed="true"] .fade{height:32px;background:linear-gradient(to bottom, rgba(11,16,32,0), rgba(11,16,32,.9))}
-    .fade{position:sticky;bottom:0}
+    /* anteprima semplice (solo per HTML) */
+    .preview{ border:1px solid var(--b); border-radius:12px; background:#fff; overflow:hidden; min-height:260px }
+    .preview iframe{ display:block; width:100%; height:360px; border:0 }
+    .note{ font-size:14px; color:#333; padding:8px }
 
-    /* PDF preview area */
-    .pdf-box{border:1px solid var(--border);border-radius:6px;overflow:hidden;background:#fff}
-    .pdf-box object,.pdf-box iframe{display:block;width:100%;aspect-ratio:16/13.5;border:0}
-    .pdf-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-    .link{padding:6px 10px;border:1px solid var(--border);background:#fff;border-radius:6px}
+    /* PDF mask 1.5 slide */
+    .pdf-mask{ position:relative; width:100%; aspect-ratio:16/13.5; border:1px solid var(--b); border-radius:12px; background:#fff; overflow:hidden }
+    .pdf-mask::after{ content:""; position:absolute; left:0; right:0; bottom:0; height:14%; background:linear-gradient(to bottom, rgba(255,255,255,0), #fff) }
+    .pdf-frame{ position:absolute; inset:0; width:100%; height:100%; border:0; display:block }
+    .pdf-actions{ display:flex; gap:8px; flex-wrap:wrap; margin-top:8px }
+    .iconBtn{ padding:8px 10px; border:1px solid var(--b); background:#fff; border-radius:999px; display:inline-flex; align-items:center; justify-content:center; min-width:38px }
   </style>
 </head>
 <body>
   <main class="container">
-    <a class="back" href="../index.html">← Back to Projects</a>
+    <a class="back" href="../index.html" aria-label="Back to Projects">← Back to Projects</a>
 
     <section class="panel">
       <h1>ITADATAhack 2025</h1>
       <p class="meta">ago 2025 – set 2025</p>
 
       <div class="grid">
-        <!-- === CODE BOX (beginner-friendly, still functional) === -->
+        <!-- Codes + Anteprima affiancata -->
         <article class="card">
           <h3>Codes</h3>
-          <p class="muted">Choose a file and press "Show all" to see everything.</p>
+          <p class="muted">Seleziona un file. Puoi vedere poche righe o tutto.</p>
 
-          <div id="codeViewer" data-files='[
-            {"label":"Task 1.py","src":"../assets/codici/Task 1.py"},
-            {"label":"Task 2.py","src":"../assets/codici/Task 2.py"}
-          ]'>
-            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-              <nav class="tabs" aria-label="Files"></nav>
+          <div class="row">
+            <!-- Colonna codice -->
+            <div>
+              <nav class="tabs" id="tabs" aria-label="File di codice"></nav>
               <div class="toolbar">
-                <button class="btn" id="toggleBtn" type="button">Show all</button>
-                <button class="btn" id="copyBtn" type="button">Copy</button>
-                <a class="btn" id="downloadBtn" href="#" download>Download</a>
+                <button class="btn" id="toggleBtn" type="button" title="Mostra tutto / meno" aria-label="Mostra tutto / meno">⇵</button>
+                <button class="btn" id="copyBtn" type="button" title="Copia tutto" aria-label="Copia tutto">⎘</button>
+                <!-- ancora un link per scaricare ma senza testo -->
+                <a class="btn" id="downloadBtn" title="Scarica" aria-label="Scarica" download>⤓</a>
+              </div>
+              <div class="viewer" id="viewer" role="region" aria-live="polite" aria-label="Anteprima codice" data-collapsed="true">
+                <pre id="codeArea"># Seleziona un file per iniziare…</pre>
               </div>
             </div>
 
-            <div class="viewer" data-collapsed="true" aria-live="polite">
-              <pre id="codeArea"># Select a file above to load a preview…</pre>
-              <div class="fade" aria-hidden="true"></div>
+            <!-- Colonna anteprima (solo HTML) -->
+            <div>
+              <h4 style="margin:0 0 8px">Anteprima</h4>
+              <div class="preview">
+                <iframe id="livePreview" title="Anteprima"></iframe>
+                <div class="note" id="noPreview" style="display:none">Nessuna anteprima per questo file.</div>
+              </div>
             </div>
           </div>
         </article>
 
-        <!-- === PRESENTATION (simple) === -->
+        <!-- Presentation (stessi collegamenti) -->
         <article class="card">
           <h3>Presentation</h3>
-          <p class="muted">Open the full PDF using the buttons below.</p>
-
-          <div class="pdf-box">
-            <object data="../assets/presentazioni/itadatahack-2025.pdf#page=1&view=FitH" type="application/pdf">
-              <iframe src="../assets/presentazioni/itadatahack-2025.pdf#page=1&view=FitH" title="Presentazione"></iframe>
+          <p class="muted">Usa i pulsanti per vedere il documento completo.</p>
+          <div class="pdf-mask">
+            <object class="pdf-frame" data="../assets/presentazioni/itadatahack-2025.pdf#page=1&view=FitH" type="application/pdf">
+              <iframe class="pdf-frame" src="../assets/presentazioni/itadatahack-2025.pdf#page=1&view=FitH" title="Presentazione"></iframe>
             </object>
           </div>
           <div class="pdf-actions">
-            <a class="link" href="../assets/presentazioni/itadatahack-2025.pdf" target="_blank" rel="noreferrer">Full screen</a>
-            <a class="link" href="../assets/presentazioni/itadatahack-2025.pdf" download>Download PDF</a>
+            <!-- mantengo gli stessi link ma senza testo visibile -->
+            <a class="iconBtn" href="../assets/presentazioni/itadatahack-2025.pdf" target="_blank" rel="noreferrer" title="Full screen" aria-label="Full screen">⤢</a>
+            <a class="iconBtn" href="../assets/presentazioni/itadatahack-2025.pdf" download title="Download PDF" aria-label="Download PDF">⤓</a>
           </div>
         </article>
       </div>
@@ -104,100 +109,109 @@
   </main>
 
   <script>
-  // SIMPLE JAVASCRIPT (step-by-step with plain comments)
-  (function(){
-    // 1) Find the main widget container
-    const root = document.getElementById('codeViewer');
-    if(!root) return; // if not present, stop
+    // Code viewer minimal: tabs + fetch + anteprima N righe + copy + download + full
+    (function(){
+      const FILES = [
+        { label:'Task 1.py', src:'../assets/codici/Task 1.py' },
+        { label:'Task 2.py', src:'../assets/codici/Task 2.py' }
+      ];
 
-    // 2) Read options from the URL (optional)
-    const sp = new URL(window.location).searchParams;
-    const FORCE_FULL = sp.get('full')==='1' || window.location.hash==='#full'; // show full code if ?full=1 or #full
-    const PREVIEW_LINES = Math.max(1, parseInt(sp.get('lines')||'4', 10));     // number of preview lines (default: 4)
+      const tabs = document.getElementById('tabs');
+      const codeArea = document.getElementById('codeArea');
+      const viewer = document.getElementById('viewer');
+      const toggleBtn = document.getElementById('toggleBtn');
+      const copyBtn = document.getElementById('copyBtn');
+      const downloadBtn = document.getElementById('downloadBtn');
+      const iframe = document.getElementById('livePreview');
+      const noPreview = document.getElementById('noPreview');
 
-    // 3) Grab elements inside the widget
-    const files = JSON.parse(root.dataset.files||'[]'); // list of files to show
-    const tabs = root.querySelector('.tabs');           // where we put the file buttons
-    const pre = root.querySelector('#codeArea');        // the <pre> that shows the code
-    const btnCopy = root.querySelector('#copyBtn');     // copy-to-clipboard button
-    const btnToggle = root.querySelector('#toggleBtn'); // show all / show less
-    const aDownload = root.querySelector('#downloadBtn'); // download link
-    const viewer = root.querySelector('.viewer');       // wrapper to control collapsed state
+      const url = new URL(window.location.href);
+      const FORCE_FULL = url.searchParams.get('full') === '1' || url.searchParams.get('view') === 'full' || window.location.hash === '#full';
+      const PREVIEW_LINES = Math.max(1, parseInt(url.searchParams.get('lines') || '4', 10));
 
-    // 4) State variables
-    let rawText = '';                 // holds the full file content
-    let collapsed = !FORCE_FULL;      // true = preview (few lines), false = full code
+      let rawText = '';
+      let isCollapsed = !FORCE_FULL;
+      let current = null;
 
-    // 5) Create one button per file (the tabs)
-    files.forEach((f, i)=>{
-      const b=document.createElement('button');
-      b.className='tab'; b.type='button'; b.textContent=f.label;
-      b.setAttribute('aria-selected', i===0 ? 'true' : 'false');
-      b.addEventListener('click', ()=>{
-        setActive(b);            // mark this tab as active
-        collapsed = !FORCE_FULL; // reset to preview when switching file
-        load(f.src);             // fetch and show the new file
-      });
-      tabs.appendChild(b);
-    });
-
-    // 6) If there is at least one file, load the first one automatically
-    if(files[0]) load(files[0].src);
-
-    // Helper: visually set which tab is active
-    function setActive(btn){
-      tabs.querySelectorAll('.tab').forEach(el=>el.setAttribute('aria-selected','false'));
-      btn.setAttribute('aria-selected','true');
-    }
-
-    // 7) Render the code in the <pre>
-    function render(){
-      const lines = rawText.split('
-');            // split into lines
-      const hasMore = lines.length > PREVIEW_LINES;  // do we have more lines than preview?
-      const shown = (collapsed && hasMore) ? lines.slice(0, PREVIEW_LINES) : lines;
-      pre.textContent = shown.join('
-');           // show only part or all
-
-      // update UI parts related to the preview
-      viewer.dataset.collapsed = (collapsed && hasMore) ? 'true' : 'false';
-      btnToggle.style.display = hasMore ? '' : 'none';
-      btnToggle.textContent = collapsed ? 'Show all' : 'Show less';
-    }
-
-    // 8) Load a file via fetch and then call render()
-    async function load(src){
-      pre.textContent = '# Loading...'; rawText='';
-      try{
-        const r = await fetch(src, {cache:'no-store'}); // avoid cached old content
-        if(!r.ok) throw new Error('HTTP '+r.status);
-        rawText = await r.text();      // store full content
-        aDownload.href = src;          // set download link
-        render();                      // paint on screen
-      }catch(err){
-        // Show a simple error message (no fancy UI)
-        pre.textContent = '# Error loading: '+src+'
-# Check the path or filename.';
-        aDownload.removeAttribute('href');
-        viewer.dataset.collapsed='false';
-        btnToggle.style.display='none';
+      function render(){
+        const lines = (rawText||'').split('
+');
+        const hasMore = lines.length > PREVIEW_LINES;
+        const shown = (isCollapsed && hasMore) ? lines.slice(0, PREVIEW_LINES) : lines;
+        codeArea.textContent = shown.join('
+');
+        viewer.dataset.collapsed = (isCollapsed && hasMore) ? 'true' : 'false';
+        toggleBtn.style.display = hasMore ? 'inline-flex' : 'none';
+        codeArea.style.maxHeight = (isCollapsed && hasMore) ? '240px' : '600px';
       }
-    }
 
-    // 9) Copy the whole file to clipboard (even if only a preview is visible)
-    btnCopy.addEventListener('click', async()=>{
-      try{ await navigator.clipboard.writeText(rawText||''); }
-      catch(e){ console.error('Clipboard error', e); }
-    });
+      function updatePreview(label){
+        // Solo se il file è .html, mostro dentro l'iframe (altrimenti niente)
+        if(label && label.toLowerCase().endsWith('.html')){
+          iframe.style.display = 'block';
+          noPreview.style.display = 'none';
+          // carico lo stesso file nel frame (stesso percorso di src)
+          iframe.removeAttribute('srcdoc');
+          iframe.src = current.src;
+        }else{
+          iframe.style.display = 'none';
+          noPreview.style.display = 'block';
+          iframe.removeAttribute('src');
+        }
+      }
 
-    // 10) Toggle between preview and full text
-    btnToggle.addEventListener('click', ()=>{ collapsed=!collapsed; render(); });
+      async function load(file){
+        current = file;
+        codeArea.textContent = '# Caricamento…';
+        rawText = '';
+        downloadBtn.removeAttribute('href');
+        try{
+          const r = await fetch(file.src, { cache:'no-store' });
+          if(!r.ok) throw new Error(r.statusText);
+          rawText = await r.text();
+          downloadBtn.href = file.src; // mantengo collegamento reale
+          render();
+        }catch(e){
+          codeArea.textContent = '# Impossibile caricare: ' + file.src + '
+# Controlla il percorso o il nome del file.';
+          viewer.dataset.collapsed = 'false';
+          toggleBtn.style.display = 'none';
+        }
+        updatePreview(file.label);
+      }
 
-    // 11) When printing, always show the full text; restore after print
-    const initialCollapsed = collapsed;
-    addEventListener('beforeprint', ()=>{ collapsed=false; render(); });
-    addEventListener('afterprint', ()=>{ collapsed=initialCollapsed; render(); });
-  })();
+      function setActive(btn){
+        tabs.querySelectorAll('.tab').forEach(b => b.setAttribute('aria-selected','false'));
+        btn.setAttribute('aria-selected','true');
+      }
+
+      // crea le tab
+      FILES.forEach((f, i)=>{
+        const b = document.createElement('button');
+        b.className = 'tab';
+        b.type = 'button';
+        b.textContent = f.label;
+        b.setAttribute('aria-selected', i===0 ? 'true' : 'false');
+        b.addEventListener('click', ()=>{ setActive(b); isCollapsed = !FORCE_FULL; load(f); });
+        tabs.appendChild(b);
+      });
+
+      // carica il primo
+      if(FILES[0]) load(FILES[0]);
+
+      // copia tutto il file
+      copyBtn.addEventListener('click', async ()=>{
+        try{ await navigator.clipboard.writeText(rawText || ''); }catch(e){}
+      });
+
+      // toggle anteprima/completo
+      toggleBtn.addEventListener('click', ()=>{ isCollapsed = !isCollapsed; render(); });
+
+      // stampa mostra tutto
+      const initialCollapsed = isCollapsed;
+      window.addEventListener('beforeprint', ()=>{ isCollapsed = false; render(); });
+      window.addEventListener('afterprint', ()=>{ isCollapsed = initialCollapsed; render(); });
+    })();
   </script>
 </body>
 </html>
