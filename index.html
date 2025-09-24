@@ -1,174 +1,216 @@
 <!doctype html>
 <html lang="it">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Projects (simple)</title>
-  <meta name="description" content="Portfolio – simple projects page" />
-  <!-- Simple emoji favicon -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🚀%3C/text%3E%3C/svg%3E'">
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ITADATAhack 2025</title>
   <style>
-    /* VERY BASIC STYLES — clean and beginner friendly */
-    :root{
-      --bg:#f6f7fb;   /* page background */
-      --text:#222;    /* main text color */
-      --muted:#555;   /* secondary text */
-      --card:#fff;    /* panels and cards */
-      --border:#ddd;  /* light borders */
+    /* Stili semplici */
+    body { margin: 0; font-family: system-ui, Arial, sans-serif; background:#f5f5f7; color:#111; }
+    .container { max-width: 900px; margin: 0 auto; padding: 16px; }
+    a { color: inherit; text-decoration: none; }
+    .back { display:inline-block; padding:8px 12px; border:1px solid #ddd; border-radius:999px; background:#fff; }
+    h1 { margin:16px 0 4px; }
+    .meta { color:#555; margin:0 0 16px; }
+
+    .panel { background:#fff; border:1px solid #eee; border-radius:12px; padding:16px; }
+    .grid { display:grid; gap:12px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+    .card { border:1px solid #eee; border-radius:10px; padding:12px; background:#fff; }
+    .card h3 { margin:0 0 6px; }
+    .muted { color:#555; margin: 6px 0 12px; }
+
+    /* Code viewer */
+    .tabs { display:flex; gap:6px; flex-wrap:wrap; }
+    .tab { padding:8px 10px; border:1px solid #ddd; background:#fff; border-radius:999px; cursor:pointer; }
+    .tab[aria-selected="true"] { border-color:#6aa7ff; }
+
+    .toolbar { display:flex; gap:6px; margin-left:auto; flex-wrap:wrap; }
+    .btn, .link { padding:8px 10px; border:1px solid #ddd; background:#fff; border-radius:999px; cursor:pointer; display:inline-flex; align-items:center; }
+    .viewer { border:1px solid #ddd; border-radius:8px; background:#0b1020; }
+    .viewer pre { margin:0; padding:12px; color:#eee; font: 13px/1.5 ui-monospace, monospace;
+                  white-space: pre-wrap; word-break: break-word; overflow:auto; max-height: 220px; }
+    .viewer[data-collapsed="true"] { position:relative; }
+    .viewer[data-collapsed="true"]::after{
+      content:""; position:absolute; left:0; right:0; bottom:0; height:40px;
+      background: linear-gradient(to bottom, rgba(11,16,32,0), rgba(11,16,32,.9));
+      pointer-events:none;
     }
 
-    *{ box-sizing:border-box }
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      background:var(--bg);
-      color:var(--text);
-      line-height:1.5;
+    /* PDF “mask” 1.5 slide */
+    .pdf-mask { width:100%; aspect-ratio:16/13.5; border:1px solid #eee; border-radius:10px; overflow:hidden; background:#fff; }
+    .pdf-mask::after{
+      content:""; position:absolute; inset:auto 0 0 0; height:14%;
+      background: linear-gradient(to bottom, rgba(255,255,255,0), #fff);
+      pointer-events:none;
     }
-    a{ color:inherit; text-decoration:none }
-
-    /* Page container */
-    .container{ max-width:1000px; margin:0 auto; padding:16px }
-
-    /* Header (simple hero) */
-    .hero{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:16px;            /* rounded box */
-      padding:16px;
-    }
-    .row{ display:flex; gap:16px; align-items:center; flex-wrap:wrap }
-    .avatar{
-      width:80px; height:80px; border-radius:50%;
-      border:1px solid var(--border); background:#fff; overflow:hidden;
-      flex:0 0 auto;
-    }
-    .avatar img{ width:100%; height:100%; object-fit:cover; display:block }
-
-    .title{ margin:6px 0 4px; font-size:28px; font-weight:800 }
-    .subtitle{ margin:4px 0; color:var(--muted); font-size:14px }
-
-    /* Simple buttons */
-    .actions{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px }
-    .btn{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:8px 12px; border:1px solid var(--border);
-      background:#fff; border-radius:6px; font-weight:600; cursor:pointer;
-      transition: background .15s ease;
-    }
-    .btn:hover{ background:#f1f5f9 }
-    .ico{ width:18px; height:18px }
-
-    /* Sections */
-    .section{ margin-top:28px }
-    .section h2{ margin:0 0 8px; font-size:20px }
-    .section p.help{ margin:0 0 12px; color:var(--muted); font-size:14px }
-
-    /* Projects grid */
-    .grid{
-      display:grid; gap:12px;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    }
-    .card{
-      display:block; background:var(--card);
-      border:1px solid var(--border);
-      border-radius:16px;           /* rounded project cards */
-      padding:12px;
-      transition: background .15s ease, border-color .15s ease;
-    }
-    .card:hover{ border-color:#bbb; background:#fafafa }
-    .card h3{ margin:0 0 4px; font-size:18px }
-    .meta{ margin:0 0 6px; color:#666; font-weight:600; font-size:14px }
-    .bullets{ margin:8px 0 0 16px; color:var(--muted) }
-    .bullets li{ margin:6px 0 }
-
-    /* Small screens */
-    @media (max-width:480px){
-      .container{ padding:12px }
-      .title{ font-size:24px }
-      .avatar{ width:64px; height:64px }
-    }
+    .pdf-wrap { position:relative; }
+    .pdf-frame { position:absolute; inset:0; width:100%; height:100%; border:0; display:block; }
+    .pdf-actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
   </style>
 </head>
 <body>
-  <header class="container">
-    <section class="hero">
-      <div class="row">
-        <span class="avatar" aria-hidden="true">
-          <!-- NOTE: change src to your real image path -->
-          <img src="profilepicture.png" alt="Nome Cognome" width="80" height="80">
-        </span>
-        <div>
-          <h1 class="title">Nome</h1>
-          <p class="subtitle">Master Student @PoliMi · Gold Grain Capital</p>
-          <p class="subtitle">
-            Master's student in Business Analytics & Data Science at PoliMi (Bocconi background).
-            Open to internships (BA/BI/DS) from <strong>May 2026</strong>.
-          </p>
+  <main class="container">
+    <a class="back" href="../index.html" aria-label="Back to Projects">← Back to Projects</a>
 
-          <div class="actions">
-            <!-- TIP: put your real links below -->
-            <a class="btn" href="" target="_blank" rel="noreferrer" aria-label="LinkedIn">
-              <!-- LinkedIn icon -->
-              <svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V23h-4V8.5zM8.5 8.5h3.8v2h.06c.53-1 1.82-2.06 3.75-2.06 4 0 4.74 2.63 4.74 6.06V23h-4v-6.5c0-1.56-.03-3.56-2.17-3.56-2.17 0-2.5 1.7-2.5 3.44V23h-4V8.5z"/></svg>
-              LinkedIn
-            </a>
+    <section class="panel">
+      <h1>ITADATAhack 2025</h1>
+      <p class="meta">ago 2025 – set 2025</p>
 
-            <a class="btn" href="https://github.com/" target="_blank" rel="noreferrer" aria-label="GitHub">
-              <!-- GitHub icon -->
-              <svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58l-.02-2.25c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.76.08-.75.08-.75 1.2.09 1.83 1.23 1.83 1.23 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.31-5.48-1.34-5.48-5.95 0-1.31.47-2.38 1.24-3.22-.12-.31-.54-1.57.12-3.27 0 0 1.01-.32 3.3 1.23a11.4 11.4 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.7.24 2.96.12 3.27.77.84 1.24 1.9 1.24 3.22 0 4.62-2.81 5.63-5.49 5.93.43.37.81 1.1.81 2.22l-.01 3.29c0 .32.21.7.83.58A12 12 0 0 0 12 .5z"/></svg>
-              GitHub
-            </a>
+      <div class="grid">
+        <!-- Codes -->
+        <article class="card">
+          <h3>Codes</h3>
+          <p class="muted">Seleziona il file e usa “Show all” per vedere tutto.</p>
 
-            <a class="btn" href="mailto:" aria-label="Email">
-              <!-- Mail icon -->
-              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg>
-              Email
-            </a>
+          <div id="codeViewer"
+               data-files='[
+                 {"label":"Task 1.py","src":"../assets/codici/Task 1.py"},
+                 {"label":"Task 2.py","src":"../assets/codici/Task 2.py"}
+               ]'>
 
-            <a class="btn" href="/resume.pdf" target="_blank" rel="noopener" aria-label="Resume">
-              <!-- File icon -->
-              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2h9l5 5v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path d="M14 2v6h6"/></svg>
-              Resume
-            </a>
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+              <nav class="tabs" aria-label="File di codice"></nav>
+              <div class="toolbar">
+                <button class="btn" id="toggleBtn" type="button">Show all</button>
+                <button class="btn" id="copyBtn" type="button">Copy</button>
+                <a class="btn" id="downloadBtn" href="#" download>Download</a>
+              </div>
+            </div>
+
+            <div class="viewer" role="region" aria-live="polite" aria-label="Anteprima codice" data-collapsed="true">
+              <pre id="codeArea"># Seleziona un file sopra per caricare l'anteprima…</pre>
+            </div>
           </div>
-        </div>
+        </article>
+
+        <!-- Presentation -->
+        <article class="card">
+          <h3>Presentation</h3>
+          <p class="muted">Usa i pulsanti per il documento completo.</p>
+
+          <div class="pdf-mask pdf-wrap">
+            <object class="pdf-frame"
+                    data="../assets/presentazioni/itadatahack-2025.pdf#page=1&view=FitH"
+                    type="application/pdf">
+              <iframe class="pdf-frame"
+                      src="../assets/presentazioni/itadatahack-2025.pdf#page=1&view=FitH"
+                      title="Presentazione"></iframe>
+            </object>
+          </div>
+
+          <div class="pdf-actions">
+            <a class="link" href="../assets/presentazioni/itadatahack-2025.pdf" target="_blank" rel="noreferrer">Full screen</a>
+            <a class="link" href="../assets/presentazioni/itadatahack-2025.pdf" download>Download PDF</a>
+          </div>
+        </article>
       </div>
     </section>
-  </header>
-
-  <main class="container section" id="progetti">
-    <h2>Projects</h2>
-    <p class="help">Click a card to open a project page.</p>
-
-    <div class="grid">
-      <a class="card" href="progetti/itadatahack-2025.html">
-        <h3>ITADATAhack 2025</h3>
-        <p class="meta">ago 2025 – set 2025</p>
-        <ul class="bullets">
-          <li>Helped a 3-person team build two Python ML classifiers on HDFS logs. Predicted anomaly category and type; used weighted G-Mean.</li>
-          <li>Presented method: stratified split, standardization, class-balanced Random Forest; feature engineering, oversampling, bagging, LightGBM. Ranked 6/15.</li>
-        </ul>
-      </a>
-
-      <a class="card" href="progetti/feduf-2019.html">
-        <h3>FEduF</h3>
-        <p class="meta">gen 2019 – mag 2019</p>
-        <ul class="bullets">
-          <li>Presented a basic sleep-monitoring sensor to 10–15 professionals. Explained tech and pricing vs industry leaders. Ranked 2/5.</li>
-        </ul>
-      </a>
-    </div>
   </main>
 
   <script>
-    // TINY JS — small pressed effect on buttons (nice but simple)
-    document.querySelectorAll('.btn').forEach(btn=>{
-      btn.addEventListener('mousedown', ()=> btn.style.transform='scale(0.98)');
-      btn.addEventListener('mouseup',   ()=> btn.style.transform='');
-      btn.addEventListener('mouseleave',()=> btn.style.transform='');
-    });
+    // Code viewer semplice (tabs + fetch + anteprima N righe + copy + download + full)
+    (function () {
+      const root = document.getElementById('codeViewer');
+      if (!root) return;
+
+      const url = new URL(window.location.href);
+      const FORCE_FULL = url.searchParams.get('full') === '1'
+                      || url.searchParams.get('view') === 'full'
+                      || window.location.hash === '#full';
+      const PREVIEW_LINES = Math.max(1, parseInt(url.searchParams.get('lines') || '4', 10));
+
+      const files = JSON.parse(root.dataset.files || '[]');
+      const tabs = root.querySelector('.tabs');
+      const codeEl = document.getElementById('codeArea');
+      const copyBtn = document.getElementById('copyBtn');
+      const downloadBtn = document.getElementById('downloadBtn');
+      const toggleBtn = document.getElementById('toggleBtn');
+      const viewer = root.querySelector('.viewer');
+
+      let rawText = '';
+      let isCollapsed = !FORCE_FULL;
+
+      function render() {
+        const lines = rawText.split('\n');
+        const hasMore = lines.length > PREVIEW_LINES;
+
+        const shown = (isCollapsed && hasMore) ? lines.slice(0, PREVIEW_LINES) : lines;
+        codeEl.textContent = shown.join('\n');
+
+        viewer.dataset.collapsed = (isCollapsed && hasMore) ? 'true' : 'false';
+        toggleBtn.style.display = hasMore ? 'inline-flex' : 'none';
+        toggleBtn.textContent = isCollapsed ? 'Show all' : 'Show less';
+
+        // altezza semplice per l’anteprima
+        codeEl.style.maxHeight = (isCollapsed && hasMore) ? '220px' : '600px';
+      }
+
+      async function load(src) {
+        codeEl.textContent = '# Caricamento…';
+        rawText = '';
+        downloadBtn.removeAttribute('href');
+
+        try {
+          const r = await fetch(src, { cache: 'no-store' });
+          if (!r.ok) throw new Error(r.statusText);
+          rawText = await r.text();
+          downloadBtn.href = src;
+          render();
+        } catch (e) {
+          codeEl.textContent = '# Impossibile caricare: ' + src + '\n# Controlla il percorso o il nome del file.';
+          viewer.dataset.collapsed = 'false';
+          toggleBtn.style.display = 'none';
+        }
+      }
+
+      function setActive(btn) {
+        tabs.querySelectorAll('.tab').forEach(b => b.setAttribute('aria-selected', 'false'));
+        btn.setAttribute('aria-selected', 'true');
+      }
+
+      // Crea tab
+      files.forEach((f, i) => {
+        const b = document.createElement('button');
+        b.className = 'tab';
+        b.type = 'button';
+        b.textContent = f.label;
+        b.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+        b.addEventListener('click', () => {
+          setActive(b);
+          isCollapsed = !FORCE_FULL; // ogni cambio file riparte in anteprima se non forzato
+          load(f.src);
+        });
+        tabs.appendChild(b);
+      });
+
+      // Carica il primo file se c'è
+      if (files[0]) {
+        isCollapsed = !FORCE_FULL;
+        load(files[0].src);
+      } else {
+        codeEl.textContent = '# Nessun file configurato.';
+        viewer.dataset.collapsed = 'false';
+        toggleBtn.style.display = 'none';
+      }
+
+      // Copy: copia sempre tutto il file
+      copyBtn.addEventListener('click', async () => {
+        try { await navigator.clipboard.writeText(rawText || ''); }
+        catch (e) { /* niente messaggi UI */ }
+      });
+
+      // Toggle anteprima/completo
+      toggleBtn.addEventListener('click', () => {
+        isCollapsed = !isCollapsed;
+        render();
+      });
+
+      // Stampa: mostra sempre tutto
+      const initialCollapsed = isCollapsed;
+      window.addEventListener('beforeprint', () => { isCollapsed = false; render(); });
+      window.addEventListener('afterprint', () => { isCollapsed = initialCollapsed; render(); });
+    })();
   </script>
 </body>
 </html>
