@@ -2,52 +2,106 @@
 <html lang="it">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>FEduF</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
-    /* Stili basici, senza effetti */
-    :root { --b:#ddd; --bg:#f6f7f9; --ink:#0f172a; --muted:#64748b; }
-    * { box-sizing: border-box; }
-    body { margin:0; font-family: system-ui, Arial, sans-serif; background:var(--bg); color:var(--ink); line-height:1.6; }
-    a { color:inherit; text-decoration:none; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f2f2f2;
+    }
 
-    .container { max-width: 1000px; margin: 0 auto; padding: 16px; }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px;
+    }
 
-    /* Header/back */
-    .back { display:inline-block; padding:8px 12px; border:1px solid var(--b); border-radius:999px; background:#fff; }
+    a {
+      text-decoration: none;
+      color: #333;
+      border: 1px solid #ddd;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #fff;
+      display: inline-block;
+    }
 
-    /* Pannello principale */
-    .panel { background:#fff; border:1px solid var(--b); border-radius:16px; padding:16px; margin-top:12px; }
-    h1 { margin:12px 0 4px; font-size:28px; font-weight:800; }
-    .meta { color:var(--muted); margin:0 0 12px; }
+    h1 {
+      margin: 12px 0 4px;
+      font-size: 24px;
+    }
 
-    /* Griglia e card */
-    .grid { display:grid; gap:12px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-    .card { background:#fff; border:1px solid var(--b); border-radius:14px; padding:12px; min-height:140px; }
-    .card h3 { margin:0 0 6px; font-size:18px; }
+    .meta {
+      color: #666;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 12px;
+      background: #fff;
+      min-height: 140px;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    video {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 6px;
+    }
+
+    .caption {
+      font-size: 13px;
+      color: #666;
+      margin-top: 6px;
+    }
   </style>
 </head>
 <body>
-  <main class="container">
-    <a class="back" href="../index.html" aria-label="Back to Projects">← Back to Projects</a>
 
-    <section class="panel">
-      <h1>FEduF</h1>
-      <p class="meta">gen 2019 – mag 2019</p>
+  <div class="container">
+    <a href="../index.html">← Back to Projects</a>
 
-      <div class="grid">
-        <article class="card">
-          <h3>Sleep-monitoring sensor</h3>
-          <!-- Contenuto semplice/placeholder -->
-        </article>
+    <h1>FEduF</h1>
+    <p class="meta">gen 2019 – mag 2019</p>
 
-        <article class="card">
-          <h3>Presentation</h3>
-          <!-- Contenuto semplice/placeholder -->
-        </article>
+    <div class="grid">
+      <div class="card">
+        <h3>Sleep-monitoring sensor</h3>
+
+        <!-- Video locale nella cartella assets -->
+        <video controls preload="metadata" poster="assets/sleep-sensor-poster.jpg">
+          <source src="assets/sleep-sensor.mov" type="video/quicktime">
+          Il tuo browser non supporta il video.
+        </video>
+        <p class="caption">Demo del sensore durante il sonno.</p>
       </div>
-    </section>
-  </main>
+
+      <div class="card">
+        <h3>Presentation</h3>
+        <p>Contenuto in arrivo…</p>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
