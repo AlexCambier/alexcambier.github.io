@@ -2,233 +2,101 @@
 <html lang="it">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>ITADATAhack 2025</title>
-  <meta name="view-transition" content="same-origin" />
-  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0b1020" media="(prefers-color-scheme: dark)">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ITADATAhack 2025 (simple version)</title>
   <style>
-    /* ===== Design tokens ===== */
+    /* 
+      VERY SIMPLE STYLES
+      The goal is clarity over design. No fancy shadows or animations.
+    */
     :root{
-      --bg:#f7f8fb; --panel:#ffffff; --text:#0f172a; --muted:#334155;
-      --ring-soft: rgba(29,78,216,.18);
-      --accent:#6d28d9; --accent-2:#0ea5e9;
-      --radius: 18px;
-      --shadow-sm: 0 1px 2px rgba(15,23,42,.06);
-      --shadow-md: 0 6px 18px rgba(2,6,23,.08), 0 2px 8px rgba(2,6,23,.06);
-      --shadow-lg: 0 22px 60px rgba(2,6,23,.10);
+      --bg:#f5f5f7; --text:#222; --muted:#555; --panel:#fff; --border:#ddd;
     }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial;line-height:1.5;color:var(--text);background:var(--bg)}
+    a{color:inherit;text-decoration:none}
 
-    /* ===== View Transitions ===== */
-    @supports (view-transition-name: initial) {
-      :root { view-transition-name: root; }
-      ::view-transition-old(root){ animation: vt-out .45s ease; }
-      ::view-transition-new(root){ animation: vt-in  .45s ease; }
-      @keyframes vt-out { to { opacity:0; transform: translateY(6px) scale(.995); filter: blur(2px); } }
-      @keyframes vt-in  { from { opacity:0; transform: translateY(8px) scale(.995); filter: blur(4px);} to { opacity:1; transform:none; filter:none; } }
-      @media (prefers-reduced-motion: reduce){
-        ::view-transition-old(root), ::view-transition-new(root){ animation:none; }
-      }
-    }
+    /* Page layout */
+    .container{max-width:1000px;margin:0 auto;padding:16px}
+    .back{display:inline-block;padding:8px 10px;border:1px solid var(--border);border-radius:6px;background:#fff}
+    h1{margin:12px 0 4px}
+    .meta{margin:0 0 16px;color:var(--muted);font-size:14px}
 
-    /* ===== Base ===== */
-    *{ box-sizing:border-box }
-    html{ -webkit-text-size-adjust: 100% }
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      color: var(--text);
-      background:
-        radial-gradient(1200px 600px at 20% -10%, rgba(13,110,253,.10), transparent 60%),
-        radial-gradient(1000px 500px at 100% 10%, rgba(99,102,241,.10), transparent 60%),
-        var(--bg);
-      line-height:1.6;
-      -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
-      padding-left: env(safe-area-inset-left);
-      padding-right: env(safe-area-inset-right);
-      padding-bottom: env(safe-area-inset-bottom);
-    }
-    a{ color: inherit; text-decoration: none }
-    a, button { -webkit-tap-highlight-color: rgba(0,0,0,0); }
-    :focus-visible{
-      outline: 2px solid var(--accent-2);
-      outline-offset: 2px;
-      border-radius: 8px;
-    }
-    .container{
-      padding: clamp(16px, 4vw, 28px);
-      margin: 0 auto;
-      max-width: min(1100px, 100%);
-    }
+    /* Simple panels and cards */
+    .panel{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:16px}
+    .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+    .card{border:1px solid var(--border);border-radius:8px;padding:12px;background:#fff}
+    .card h3{margin:0 0 6px}
+    .muted{color:var(--muted);font-size:14px}
 
-    /* ===== Header ===== */
-    .back{
-      display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:999px;
-      border:1px solid rgba(15,23,42,.10); background:#fff; box-shadow:var(--shadow-md); font-weight:600;
-      transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease;
-      touch-action: manipulation;
-    }
-    .back:hover{ transform: translateY(-2px); box-shadow: var(--shadow-lg); border-color: var(--ring-soft) }
+    /* Tabs and toolbar (basic look) */
+    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}
+    .tab{padding:6px 10px;border:1px solid var(--border);background:#fff;border-radius:6px;cursor:pointer}
+    .tab[aria-selected="true"]{background:#eef;border-color:#aac}
 
-    h1{ margin:14px 0 6px; font-size: clamp(26px, 4vw, 42px); font-weight:800; letter-spacing:.2px }
-    .meta{ color:#64748b; font-weight:600; margin:0 0 18px 0; font-size: clamp(14px, 2.2vw, 16px) }
+    .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}
+    .btn{padding:6px 10px;border:1px solid var(--border);background:#fff;border-radius:6px;cursor:pointer}
 
-    /* ===== Cards / layout ===== */
-    .panel{
-      background: var(--panel); border:1px solid rgba(15,23,42,.06); border-radius: 24px;
-      box-shadow: var(--shadow-lg); padding: clamp(18px, 3.5vw, 28px); margin-top:16px;
-    }
-    .grid{
-      display:grid; gap: clamp(12px, 2.2vw, 16px);
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      align-items: start;
-    }
-    .card{
-      padding: clamp(14px, 2.5vw, 18px); border:1px solid rgba(15,23,42,.06);
-      border-radius: var(--radius); background:#fff; box-shadow: var(--shadow-md);
-    }
-    .card h3{ margin:0 0 8px 0; font-size: clamp(18px, 2.4vw, 22px) }
-    .muted{ color: var(--muted); font-size: clamp(14px, 2.2vw, 16px) }
+    /* Code viewer box */
+    .viewer{border:1px solid var(--border);border-radius:6px;background:#0b1020}
+    .viewer pre{margin:0;padding:12px;color:#e6e6e6;font:13px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;white-space:pre-wrap;overflow:auto;max-height:240px}
+    .viewer[data-collapsed="true"] .fade{height:32px;background:linear-gradient(to bottom, rgba(11,16,32,0), rgba(11,16,32,.9))}
+    .fade{position:sticky;bottom:0}
 
-    /* ===== Code viewer ===== */
-    .code-viewer{ display:flex; flex-direction:column; gap:12px }
-    .tabs{ display:flex; flex-wrap:wrap; gap:8px }
-    .tab{
-      --p: 10px 14px;
-      display:inline-flex; align-items:center; gap:8px; padding:var(--p);
-      border:1px solid rgba(15,23,42,.12); border-radius:999px; background:#fff;
-      box-shadow: var(--shadow-sm); font-weight:600; cursor:pointer;
-      transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease;
-      touch-action: manipulation;
-    }
-    .tab:hover{ transform: translateY(-2px); box-shadow: var(--shadow-md) }
-    .tab[aria-selected="true"]{ border-color: var(--ring-soft) }
-
-    .toolbar{ display:flex; gap:8px; margin-left:auto; flex-wrap:wrap }
-    .btn{
-      display:inline-flex; align-items:center; gap:6px; padding:10px 12px; border-radius:999px;
-      border:1px solid rgba(15,23,42,.12); background:#fff; box-shadow:var(--shadow-sm); font-weight:600; cursor:pointer;
-      transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease;
-      touch-action: manipulation;
-      min-height: 40px;
-    }
-    .btn:hover{ transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--ring-soft) }
-
-    .viewer{
-      position:relative; border:1px solid rgba(15,23,42,.06); border-radius:16px; background:#0b1020;
-      overflow:hidden;
-    }
-    .viewer pre{
-      margin:0; padding:16px 18px; color:#e6e6e6;
-      font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-      counter-reset: line; tab-size:2;
-      transition: max-height .28s ease;
-      overflow:auto;
-      /* === WRAP SEMPRE ATTIVO === */
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-      word-break: break-word;
-      -webkit-overflow-scrolling: touch;
-    }
-    .viewer code{ display:block; white-space: inherit }
-    .viewer code > span{ display:block; counter-increment: line }
-    .viewer code > span::before{
-      content: counter(line);
-      display:inline-block; width:2.4em; margin-right:.8em; color:#7c869b; text-align:right;
-    }
-    .kw { color:#93c5fd } .fn { color:#a7f3d0 } .cm { color:#9ca3af } .st { color:#fde68a }
-    .viewer[data-collapsed="true"]::after{
-      content:""; position:absolute; left:0; right:0; bottom:0; height:56px;
-      background: linear-gradient(to bottom, rgba(11,16,32,0), rgba(11,16,32,.88)); pointer-events:none;
-    }
-
-    /* ===== Presentazione: anteprima 1.5 slide (16:9) ===== */
-    .pdf-mask{
-      width:100%;
-      aspect-ratio: 16 / 13.5;
-      border:1px solid rgba(15,23,42,.06);
-      border-radius:16px;
-      background:#fff;
-      box-shadow: var(--shadow-md);
-      position:relative;
-      overflow:hidden;
-    }
-    .pdf-mask::after{
-      content:""; position:absolute; left:0; right:0; bottom:0; height:14%;
-      background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
-      pointer-events:none;
-    }
-    .pdf-frame{
-      position:absolute; inset:0; width:100%; height:100%;
-      border:0; display:block; background:#fff;
-    }
-    .pdf-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px }
-    .link{
-      display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px;
-      border:1px solid rgba(15,23,42,.12); background:#fff; box-shadow:var(--shadow-sm); font-weight:600;
-      transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease;
-      touch-action: manipulation;
-      min-height: 40px;
-    }
-    .link:hover{ transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--ring-soft) }
-
-    /* ===== Responsive: micro-tweaks XS ===== */
-    @media (max-width: 420px){
-      .viewer pre{ padding:14px }
-      .tab{ padding: 8px 12px }
-      .btn{ padding: 8px 10px }
-    }
+    /* PDF preview area */
+    .pdf-box{border:1px solid var(--border);border-radius:6px;overflow:hidden;background:#fff}
+    .pdf-box object,.pdf-box iframe{display:block;width:100%;aspect-ratio:16/13.5;border:0}
+    .pdf-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .link{padding:6px 10px;border:1px solid var(--border);background:#fff;border-radius:6px}
   </style>
 </head>
 <body>
   <main class="container">
-    <a class="back" href="../index.html" aria-label=" Back to Projects">← Back to Projects </a>
+    <a class="back" href="../index.html">← Back to Projects</a>
 
     <section class="panel">
       <h1>ITADATAhack 2025</h1>
       <p class="meta">ago 2025 – set 2025</p>
 
       <div class="grid">
-        <!-- ====== BOX: CODICI ====== -->
+        <!-- === CODE BOX (beginner-friendly, still functional) === -->
         <article class="card">
           <h3>Codes</h3>
-          <p class="muted" style="margin-top:2px"> Select the desired code, then click ‘Show all’ to view the full details. </p>
+          <p class="muted">Choose a file and press "Show all" to see everything.</p>
 
-          <div class="code-viewer" id="codeViewer"
-               data-files='[
-                 {"label":"Task 1.py","src":"../assets/codici/Task 1.py"},
-                 {"label":"Task 2.py","src":"../assets/codici/Task 2.py"}
-               ]'>
-            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap">
-              <nav class="tabs" aria-label="File di codice"></nav>
-              <div class="toolbar" aria-hidden="false">
-                <button class="btn" id="toggleBtn" type="button"> Show all </button>
-                <button class="btn" id="copyBtn" type="button"> Copy </button>
-                <a class="btn" id="downloadBtn" href="#" download> Download </a>
+          <div id="codeViewer" data-files='[
+            {"label":"Task 1.py","src":"../assets/codici/Task 1.py"},
+            {"label":"Task 2.py","src":"../assets/codici/Task 2.py"}
+          ]'>
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+              <nav class="tabs" aria-label="Files"></nav>
+              <div class="toolbar">
+                <button class="btn" id="toggleBtn" type="button">Show all</button>
+                <button class="btn" id="copyBtn" type="button">Copy</button>
+                <a class="btn" id="downloadBtn" href="#" download>Download</a>
               </div>
             </div>
-            <div class="viewer" role="region" aria-live="polite" aria-label="Anteprima codice" data-collapsed="true">
-              <pre><code id="codeArea"><span class="cm"># Seleziona un file sopra per caricare l'anteprima…</span></code></pre>
+
+            <div class="viewer" data-collapsed="true" aria-live="polite">
+              <pre id="codeArea"># Select a file above to load a preview…</pre>
+              <div class="fade" aria-hidden="true"></div>
             </div>
           </div>
         </article>
 
-        <!-- ====== BOX: PRESENTAZIONE (1.5 slide, senza controlli) ====== -->
+        <!-- === PRESENTATION (simple) === -->
         <article class="card">
           <h3>Presentation</h3>
-          <p class="muted" style="margin-top:2px">  Use the buttons below to view the full document. </p>
+          <p class="muted">Open the full PDF using the buttons below.</p>
 
-          <div class="pdf-mask">
-            <object class="pdf-frame"
-                    data="../assets/presentazioni/itadatahack-2025.pdf#page=1&view=FitH"
-                    type="application/pdf">
-              <iframe class="pdf-frame" src="../assets/presentazioni/itadatahack-2025.pdf#page=1&view=FitH" title="Presentazione"></iframe>
+          <div class="pdf-box">
+            <object data="../assets/presentazioni/itadatahack-2025.pdf#page=1&view=FitH" type="application/pdf">
+              <iframe src="../assets/presentazioni/itadatahack-2025.pdf#page=1&view=FitH" title="Presentazione"></iframe>
             </object>
           </div>
-
           <div class="pdf-actions">
-            <a class="link" href="../assets/presentazioni/itadatahack-2025.pdf" target="_blank" rel="noreferrer"> Full screen </a>
-            <a class="link" href="../assets/presentazioni/itadatahack-2025.pdf" download> Download PDF </a>
+            <a class="link" href="../assets/presentazioni/itadatahack-2025.pdf" target="_blank" rel="noreferrer">Full screen</a>
+            <a class="link" href="../assets/presentazioni/itadatahack-2025.pdf" download>Download PDF</a>
           </div>
         </article>
       </div>
@@ -236,140 +104,100 @@
   </main>
 
   <script>
-    // ------ Code viewer (tab + fetch + preview 4 righe + copy + download + full/print) ------
-    (function(){
-      const root = document.getElementById('codeViewer');
-      if(!root) return;
+  // SIMPLE JAVASCRIPT (step-by-step with plain comments)
+  (function(){
+    // 1) Find the main widget container
+    const root = document.getElementById('codeViewer');
+    if(!root) return; // if not present, stop
 
-      // Query helpers: ?full=1 | ?view=full | #full ; ?lines=4
-      const url = new URL(window.location.href);
-      const params = url.searchParams;
-      const FORCE_FULL = params.get('full') === '1' || params.get('view') === 'full' || window.location.hash === '#full';
-      const PREVIEW_LINES = Math.max(1, parseInt(params.get('lines') || '4', 10));
+    // 2) Read options from the URL (optional)
+    const sp = new URL(window.location).searchParams;
+    const FORCE_FULL = sp.get('full')==='1' || window.location.hash==='#full'; // show full code if ?full=1 or #full
+    const PREVIEW_LINES = Math.max(1, parseInt(sp.get('lines')||'4', 10));     // number of preview lines (default: 4)
 
-      const files = JSON.parse(root.dataset.files || '[]');
-      const tabs = root.querySelector('.tabs');
-      const codeEl = root.querySelector('#codeArea');
-      const copyBtn = root.querySelector('#copyBtn');
-      const downloadBtn = root.querySelector('#downloadBtn');
-      const toggleBtn = root.querySelector('#toggleBtn');
-      const viewer = root.querySelector('.viewer');
+    // 3) Grab elements inside the widget
+    const files = JSON.parse(root.dataset.files||'[]'); // list of files to show
+    const tabs = root.querySelector('.tabs');           // where we put the file buttons
+    const pre = root.querySelector('#codeArea');        // the <pre> that shows the code
+    const btnCopy = root.querySelector('#copyBtn');     // copy-to-clipboard button
+    const btnToggle = root.querySelector('#toggleBtn'); // show all / show less
+    const aDownload = root.querySelector('#downloadBtn'); // download link
+    const viewer = root.querySelector('.viewer');       // wrapper to control collapsed state
 
-      let rawText = "", isCollapsed = !FORCE_FULL;
+    // 4) State variables
+    let rawText = '';                 // holds the full file content
+    let collapsed = !FORCE_FULL;      // true = preview (few lines), false = full code
 
-      // ===== evidenziazione "safe" riga-per-riga =====
-      function lineize(text){
-        const esc = s => s.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
-        const kwRe = /\b(def|class|import|from|return|for|while|if|elif|else|with|as|try|except|finally|yield|lambda|pass|break|continue|in|not|and|or)\b/g;
-        const fnRe = /\b([a-zA-Z_][a-zA-Z0-9_]*)\s*(?=\()/g;
-
-        function highlightLine(line){
-          let i = 0, out = "", inStr = null, escNext = false;
-          const colorizePlain = (plain) =>
-            plain.replace(kwRe,'<span class="kw">$1</span>')
-                 .replace(fnRe,'<span class="fn">$1</span>');
-
-          while(i < line.length){
-            if(!inStr){
-              if(line[i] === '#'){
-                out += '<span class="cm">' + esc(line.slice(i)) + '</span>';
-                return out;
-              }
-              if(line[i] === '"' || line[i] === "'"){
-                inStr = line[i];
-                out += '<span class="st">' + esc(inStr);
-                i++; continue;
-              }
-              let j = i;
-              while(j < line.length && line[j] !== '#' && line[j] !== '"' && line[j] !== "'") j++;
-              out += colorizePlain(esc(line.slice(i, j)));
-              i = j;
-            }else{
-              const ch = line[i];
-              out += esc(ch);
-              if(escNext){ escNext = false; }
-              else if(ch === '\\'){ escNext = true; }
-              else if(ch === inStr){ inStr = null; out += '</span>'; }
-              i++;
-            }
-          }
-          if(inStr){ out += '</span>'; }
-          return out;
-        }
-
-        return text.split('\n')
-          .map(raw => `<span>${highlightLine(raw) || ' '}</span>`)
-          .join('\n');
-      }
-
-      function render(){
-        const lines = rawText.split('\n');
-        const hasMore = lines.length > PREVIEW_LINES;
-        const shown = isCollapsed && hasMore ? lines.slice(0, PREVIEW_LINES) : lines;
-        codeEl.innerHTML = lineize(shown.join('\n'));
-
-        viewer.dataset.collapsed = (isCollapsed && hasMore) ? "true" : "false";
-        toggleBtn.style.display = hasMore ? 'inline-flex' : 'none';
-        toggleBtn.textContent = isCollapsed ? 'Show all' : 'Show less';
-
-        const lineHeight = 20, padding = 32;
-        const targetH = (isCollapsed && hasMore ? PREVIEW_LINES : Math.min(lines.length, 200)) * lineHeight + padding;
-        viewer.querySelector('pre').style.maxHeight = Math.min(targetH, 600) + 'px';
-      }
-
-      async function load(src){
-        codeEl.innerHTML = '<span class="cm"># Caricamento…</span>';
-        rawText = '';
-        try{
-          const r = await fetch(src, {cache:'no-store'});
-          if(!r.ok) throw new Error(r.statusText);
-          rawText = await r.text();
-          downloadBtn.href = src;
-          render();
-        }catch(err){
-          codeEl.innerHTML = `<span class="cm"># Impossibile caricare ${src}\n# Verifica il percorso o il nome del file.</span>`;
-          downloadBtn.removeAttribute('href');
-          viewer.dataset.collapsed = "false";
-          toggleBtn.style.display = 'none';
-        }
-      }
-
-      function setActive(btn){
-        tabs.querySelectorAll('.tab').forEach(b => b.setAttribute('aria-selected','false'));
-        btn.setAttribute('aria-selected','true');
-      }
-
-      // crea tab e wiring
-      files.forEach((f, i)=>{
-        const b = document.createElement('button');
-        b.className = 'tab'; b.type = 'button'; b.textContent = f.label;
-        b.setAttribute('aria-selected', i===0 ? 'true' : 'false');
-        b.addEventListener('click', ()=>{ setActive(b); isCollapsed = !FORCE_FULL; load(f.src); });
-        tabs.appendChild(b);
+    // 5) Create one button per file (the tabs)
+    files.forEach((f, i)=>{
+      const b=document.createElement('button');
+      b.className='tab'; b.type='button'; b.textContent=f.label;
+      b.setAttribute('aria-selected', i===0 ? 'true' : 'false');
+      b.addEventListener('click', ()=>{
+        setActive(b);            // mark this tab as active
+        collapsed = !FORCE_FULL; // reset to preview when switching file
+        load(f.src);             // fetch and show the new file
       });
+      tabs.appendChild(b);
+    });
 
-      if(files[0]){ isCollapsed = !FORCE_FULL; load(files[0].src); }
-      else codeEl.innerHTML = '<span class="cm"># Nessun file configurato.</span>';
+    // 6) If there is at least one file, load the first one automatically
+    if(files[0]) load(files[0].src);
 
-      // copia (sempre tutto il file) — NESSUN CAMBIO TESTO
-      copyBtn.addEventListener('click', async ()=>{
-        try{
-          await navigator.clipboard.writeText(rawText || '');
-          // niente "Copiato!" o altri cambi di testo
-        }catch(e){
-          // opzionale: potresti gestire errori in console, ma senza cambiare l'UI
-          console.error('Clipboard error:', e);
-        }
-      });
+    // Helper: visually set which tab is active
+    function setActive(btn){
+      tabs.querySelectorAll('.tab').forEach(el=>el.setAttribute('aria-selected','false'));
+      btn.setAttribute('aria-selected','true');
+    }
 
-      // espandi/richiudi manuale
-      toggleBtn.addEventListener('click', ()=>{ isCollapsed = !isCollapsed; render(); });
+    // 7) Render the code in the <pre>
+    function render(){
+      const lines = rawText.split('
+');            // split into lines
+      const hasMore = lines.length > PREVIEW_LINES;  // do we have more lines than preview?
+      const shown = (collapsed && hasMore) ? lines.slice(0, PREVIEW_LINES) : lines;
+      pre.textContent = shown.join('
+');           // show only part or all
 
-      // stampa: mostra sempre tutto (solo per i codici)
-      const initialCollapsed = isCollapsed;
-      window.addEventListener('beforeprint', ()=>{ isCollapsed = false; render(); });
-      window.addEventListener('afterprint',  ()=>{ isCollapsed = initialCollapsed; render(); });
-    })();
+      // update UI parts related to the preview
+      viewer.dataset.collapsed = (collapsed && hasMore) ? 'true' : 'false';
+      btnToggle.style.display = hasMore ? '' : 'none';
+      btnToggle.textContent = collapsed ? 'Show all' : 'Show less';
+    }
+
+    // 8) Load a file via fetch and then call render()
+    async function load(src){
+      pre.textContent = '# Loading...'; rawText='';
+      try{
+        const r = await fetch(src, {cache:'no-store'}); // avoid cached old content
+        if(!r.ok) throw new Error('HTTP '+r.status);
+        rawText = await r.text();      // store full content
+        aDownload.href = src;          // set download link
+        render();                      // paint on screen
+      }catch(err){
+        // Show a simple error message (no fancy UI)
+        pre.textContent = '# Error loading: '+src+'
+# Check the path or filename.';
+        aDownload.removeAttribute('href');
+        viewer.dataset.collapsed='false';
+        btnToggle.style.display='none';
+      }
+    }
+
+    // 9) Copy the whole file to clipboard (even if only a preview is visible)
+    btnCopy.addEventListener('click', async()=>{
+      try{ await navigator.clipboard.writeText(rawText||''); }
+      catch(e){ console.error('Clipboard error', e); }
+    });
+
+    // 10) Toggle between preview and full text
+    btnToggle.addEventListener('click', ()=>{ collapsed=!collapsed; render(); });
+
+    // 11) When printing, always show the full text; restore after print
+    const initialCollapsed = collapsed;
+    addEventListener('beforeprint', ()=>{ collapsed=false; render(); });
+    addEventListener('afterprint', ()=>{ collapsed=initialCollapsed; render(); });
+  })();
   </script>
 </body>
 </html>
