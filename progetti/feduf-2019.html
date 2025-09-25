@@ -5,20 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>FEduF</title>
   <style>
+    /* Stili basici, senza effetti */
     :root { --b:#ddd; --bg:#f6f7f9; --ink:#0f172a; --muted:#64748b; }
     * { box-sizing: border-box; }
     body { margin:0; font-family: system-ui, Arial, sans-serif; background:var(--bg); color:var(--ink); line-height:1.6; }
     a { color:inherit; text-decoration:none; }
     .container { max-width: 1000px; margin: 0 auto; padding: 16px; }
+    /* Header/back */
     .back { display:inline-block; padding:8px 12px; border:1px solid var(--b); border-radius:999px; background:#fff; }
+    /* Pannello principale */
     .panel { background:#fff; border:1px solid var(--b); border-radius:16px; padding:16px; margin-top:12px; }
     h1 { margin:12px 0 4px; font-size:28px; font-weight:800; }
     .meta { color:var(--muted); margin:0 0 12px; }
+    /* Griglia e card */
     .grid { display:grid; gap:12px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
     .card { background:#fff; border:1px solid var(--b); border-radius:14px; padding:12px; min-height:140px; }
     .card h3 { margin:0 0 6px; font-size:18px; }
-    .card video { width:100%; height:auto; display:block; border-radius:8px; }
-    .caption { font-size:14px; color:var(--muted); margin-top:6px; }
+    /* Video responsive con angoli arrotondati */
+    .card video {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+    }
+    /* Didascalia opzionale */
+    .caption { font-size: 14px; color: var(--muted); margin-top: 6px; }
   </style>
 </head>
 <body>
@@ -33,17 +44,16 @@
         <article class="card">
           <h3>Sleep-monitoring sensor</h3>
 
-          <!-- Video in /assets -->
-          <video
-            controls
-            preload="metadata"
-            poster="assets/sleep-sensor-poster.jpg"
-            playsinline>
-            <source src="assets/sleep-sensor.mp4" type="video/mp4">
+         
+          <video controls preload="metadata" playsinline>
+            <source src="../assets/sleep-sensor.mp4" type="video/mp4">
             Il tuo browser non supporta il tag video.
           </video>
 
           <div class="caption">Demo del sensore di monitoraggio del sonno</div>
+
+          <!-- Link utile per verificare rapidamente il percorso -->
+          <p class="caption"><a href="../assets/sleep-sensor.mp4">Apri il video direttamente</a></p>
         </article>
 
         <article class="card">
