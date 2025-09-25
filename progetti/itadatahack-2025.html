@@ -2,72 +2,72 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ITADATAhack 2025</title>
 <style>
-  :root{--b:#ddd;--bg:#fff;--ink:#111;--mut:#555;--card:#fff;--page:#f5f5f7}
-  *{box-sizing:border-box} body{margin:0;font:16px system-ui,Arial,sans-serif;background:var(--page);color:var(--ink)}
+  :root{--b:#ddd;--bg:#fff;--ink:#111;--mut:#555}
+  *{box-sizing:border-box} body{margin:0;font:16px system-ui,Arial,sans-serif;background:#f5f5f7;color:var(--ink)}
   .wrap{max-width:900px;margin:auto;padding:16px}
   a{color:inherit;text-decoration:none}
-  .pill{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border:1px solid var(--b);border-radius:999px;background:var(--bg);cursor:pointer}
-  h1{margin:16px 0 4px}.muted{color:var(--mut);margin:6px 0 12px}
-  .panel{background:var(--card);border:1px solid #eee;border-radius:12px;padding:16px}
+  .pill{display:inline-block;padding:8px 12px;border:1px solid var(--b);border-radius:999px;background:var(--bg)}
+  h1{margin:16px 0 4px}.muted{color:var(--mut);margin:0 0 12px}
+  .panel{background:var(--bg);border:1px solid #eee;border-radius:12px;padding:16px}
   .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
-  .card{border:1px solid #eee;border-radius:10px;padding:12px;background:var(--card)}
-  .tabs{display:flex;gap:6px;flex-wrap:wrap}
+  .card{border:1px solid #eee;border-radius:10px;padding:12px;background:var(--bg)}
+  .tabs,.bar{display:flex;gap:6px;flex-wrap:wrap}.tab,.btn{padding:8px 10px;border:1px solid var(--b);background:var(--bg);border-radius:999px;cursor:pointer}
   .tab[aria-selected="true"]{border-color:#6aa7ff}
   .viewer{border:1px solid var(--b);border-radius:8px;background:#0b1020}
   .viewer pre{margin:0;padding:12px;color:#eee;font:13px/1.5 ui-monospace,monospace;white-space:pre-wrap;word-break:break-word;overflow:auto;max-height:220px}
-  .viewer.collapsed{position:relative}
-  .viewer.collapsed::after{content:"";position:absolute;inset:auto 0 0;height:40px;background:linear-gradient(to bottom,rgba(11,16,32,0),rgba(11,16,32,.9));pointer-events:none}
+  .viewer[data-collapsed="true"]{position:relative}
+  .viewer[data-collapsed="true"]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:40px;background:linear-gradient(to bottom,rgba(11,16,32,0),rgba(11,16,32,.9));pointer-events:none}
   .pdf{position:relative;width:100%;aspect-ratio:16/13.5;border:1px solid #eee;border-radius:10px;overflow:hidden;background:#fff}
-  .pdf > .frame{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
-  .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .pdf::after{content:"";position:absolute;inset:auto 0 0 0;height:14%;background:linear-gradient(to bottom,rgba(255,255,255,0),#fff);pointer-events:none}
+  .pdf>object{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
 </style>
 </head>
 <body>
 <main class="wrap">
-  <a class="pill" href="../index.html" aria-label="Back to Projects">← Back to Projects</a>
+  <a class="pill" href="#" aria-label="Back to Projects" onclick="history.back();return false;">← Back to Projects</a>
 
   <section class="panel">
     <h1>ITADATAhack 2025</h1>
-    <p class="muted" style="margin:0 0 16px">ago 2025 – set 2025</p>
+    <p class="muted">ago 2025 – set 2025</p>
 
     <div class="grid">
       <!-- Codes -->
-      <article class="card" id="cv"
-        data-files='[{"label":"Task 1.py","src":"../assets/codici/Task 1.py"},{"label":"Task 2.py","src":"../assets/codici/Task 2.py"}]'>
-        <h3 style="margin:0 0 6px">Codes</h3>
-        <p class="muted">Seleziona il file e usa “Show all”.</p>
+      <article class="card" id="cv" data-files='[
+        {"label":"Task 1.py","src":"data:text/plain,print(\"Hello Task 1\")\nfor i in range(3):\n    print(i)"},
+        {"label":"Task 2.py","src":"data:text/plain,# Esempio\nvalues = [1,2,3]\nfor v in values:\n    print(v*v)"}
+      ]'>
+        <h3>Codes</h3>
+        <p class="muted">Seleziona il file e usa “Show all” per vedere tutto.</p>
 
-        <div class="row">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
           <nav class="tabs" aria-label="File di codice"></nav>
-          <div class="row" style="margin-left:auto">
-            <button class="pill" id="toggle" type="button">Show all</button>
-            <button class="pill" id="copy" type="button">Copy</button>
-            <a class="pill" id="dl" href="#" download>Download</a>
+          <div class="bar" style="margin-left:auto">
+            <button class="btn" id="tg">Show all</button>
+            <button class="btn" id="cp">Copy</button>
+            <a class="btn" id="dl" href="#" download>Download</a>
           </div>
         </div>
 
-        <div class="viewer collapsed" aria-live="polite" aria-label="Anteprima codice">
+        <div class="viewer" role="region" aria-live="polite" aria-label="Anteprima codice" data-collapsed="true">
           <pre id="code"># Seleziona un file sopra per caricare l'anteprima…</pre>
         </div>
       </article>
 
       <!-- Presentation -->
       <article class="card">
-        <h3 style="margin:0 0 6px">Presentation</h3>
+        <h3>Presentation</h3>
         <p class="muted">Usa i pulsanti per il documento completo.</p>
 
         <div class="pdf">
-          <object class="frame" data="../assets/presentazioni/itadatahack-2025.pdf#page=1&view=FitH" type="application/pdf">
-            <iframe class="frame" src="../assets/presentazioni/itadatahack-2025.pdf#page=1&view=FitH" title="Presentazione"></iframe>
-          </object>
+          <object data="data:application/pdf,"> </object>
         </div>
 
-        <div class="row" style="margin-top:10px">
-          <a class="pill" href="../assets/presentazioni/itadatahack-2025.pdf" target="_blank" rel="noreferrer">Full screen</a>
-          <a class="pill" href="../assets/presentazioni/itadatahack-2025.pdf" download>Download PDF</a>
+        <div class="bar" style="margin-top:10px">
+          <a class="pill" href="#" onclick="alert('Aprirebbe il PDF reale.');return false;">Full screen</a>
+          <a class="pill" href="#" onclick="alert('Scaricherebbe il PDF reale.');return false;">Download PDF</a>
         </div>
       </article>
     </div>
@@ -75,53 +75,57 @@
 </main>
 
 <script>
-(function(){
-  const root=document.getElementById('cv'); if(!root) return;
-  const q=s=>root.querySelector(s);
-  const url=new URL(location.href);
-  const FORCE_FULL=['1','full','#full'].includes(url.searchParams.get('full'))||location.hash==='\u0023full';
-  const LINES=Math.max(1,parseInt(url.searchParams.get('lines')||'4',10));
+(() => {
+  const q = s => document.querySelector(s), qa = (el,s) => [...el.querySelectorAll(s)];
+  const $ = q('#cv'); if (!$) return;
 
-  const files=JSON.parse(root.dataset.files||'[]');
-  const tabs=q('.tabs'), code=document.getElementById('code');
-  const btnCopy=document.getElementById('copy'), btnDl=document.getElementById('dl'), btnT=document.getElementById('toggle');
-  const viewer=q('.viewer');
+  const url = new URL(location.href),
+        FORCE_FULL = ['1','full','#full'].includes(url.searchParams.get('full')) || location.hash === '#full',
+        PREVIEW_LINES = Math.max(1, parseInt(url.searchParams.get('lines') || '4', 10));
 
-  let raw='', collapsed=!FORCE_FULL;
+  const files = JSON.parse($.dataset.files || '[]'),
+        tabs = $.querySelector('.tabs'),
+        pre = q('#code'),
+        btnT = q('#tg'),
+        btnC = q('#cp'),
+        btnD = q('#dl'),
+        viewer = $.querySelector('.viewer');
 
-  const setActive=b=>tabs.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected',x===b?'true':'false'));
+  let raw = '', collapsed = !FORCE_FULL;
 
-  function render(){
-    const lines=raw.split('\n'), more=lines.length>LINES;
-    code.textContent=(collapsed&&more)?lines.slice(0,LINES).join('\n'):raw;
-    viewer.classList.toggle('collapsed',collapsed&&more);
-    btnT.style.display=more?'inline-flex':'none';
-    btnT.textContent=collapsed?'Show all':'Show less';
-    code.style.maxHeight=(collapsed&&more)?'220px':'600px';
-  }
+  const render = () => {
+    const rows = raw.split('\n'), more = rows.length > PREVIEW_LINES;
+    pre.textContent = (collapsed && more) ? rows.slice(0, PREVIEW_LINES).join('\n') : raw;
+    viewer.dataset.collapsed = (collapsed && more) ? 'true' : 'false';
+    btnT.style.display = more ? 'inline-flex' : 'none';
+    btnT.textContent = collapsed ? 'Show all' : 'Show less';
+    pre.style.maxHeight = (collapsed && more) ? '220px' : '600px';
+  };
 
-  async function load(src){
-    code.textContent='# Caricamento…'; raw=''; btnDl.removeAttribute('href');
-    try{ const r=await fetch(src,{cache:'no-store'}); if(!r.ok) throw 0;
-      raw=await r.text(); btnDl.href=src; render();
-    }catch{ code.textContent=`# Impossibile caricare: ${src}\n# Controlla il percorso o il nome del file.`; viewer.classList.remove('collapsed'); btnT.style.display='none'; }
-  }
+  const load = async src => {
+    pre.textContent = '# Caricamento…'; raw = ''; btnD.removeAttribute('href');
+    try {
+      const r = await fetch(src, {cache:'no-store'}); if (!r.ok) throw 0;
+      raw = await r.text(); btnD.href = src; render();
+    } catch { pre.textContent = `# Impossibile caricare: ${src}`; viewer.dataset.collapsed = 'false'; btnT.style.display = 'none'; }
+  };
 
-  files.forEach((f,i)=>{ const b=document.createElement('button');
-    b.className='pill tab'; b.type='button'; b.textContent=f.label;
-    b.setAttribute('aria-selected', i? 'false':'true');
-    b.onclick=()=>{ setActive(b); collapsed=!FORCE_FULL; load(f.src); };
+  files.forEach((f,i) => {
+    const b = document.createElement('button');
+    b.className = 'tab'; b.type = 'button'; b.textContent = f.label;
+    b.setAttribute('aria-selected', i ? 'false' : 'true');
+    b.onclick = () => { qa(tabs,'.tab').forEach(x=>x.setAttribute('aria-selected','false')); b.setAttribute('aria-selected','true'); collapsed = !FORCE_FULL; load(f.src); };
     tabs.appendChild(b);
   });
 
-  files[0] ? (collapsed=!FORCE_FULL, load(files[0].src)) : (code.textContent='# Nessun file configurato.', viewer.classList.remove('collapsed'), btnT.style.display='none');
+  files[0] ? (collapsed = !FORCE_FULL, load(files[0].src)) : (pre.textContent = '# Nessun file configurato.', viewer.dataset.collapsed = 'false', btnT.style.display = 'none');
 
-  btnCopy.onclick=()=>navigator.clipboard.writeText(raw||'').catch(()=>{});
-  btnT.onclick=()=>{ collapsed=!collapsed; render(); };
+  btnC.onclick = async () => { try { await navigator.clipboard.writeText(raw || ''); } catch {} };
+  btnT.onclick = () => { collapsed = !collapsed; render(); };
 
-  const init=collapsed;
-  addEventListener('beforeprint',()=>{ collapsed=false; render(); });
-  addEventListener('afterprint',()=>{ collapsed=init; render(); });
+  const init = collapsed;
+  addEventListener('beforeprint', () => { collapsed = false; render(); });
+  addEventListener('afterprint',  () => { collapsed = init;  render(); });
 })();
 </script>
 </body>
