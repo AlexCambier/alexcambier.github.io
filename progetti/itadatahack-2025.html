@@ -3,214 +3,104 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ITADATAhack 2025</title>
+  <title>Anteprima codice (semplice)</title>
   <style>
-    /* Stili semplici */
-    body { margin: 0; font-family: system-ui, Arial, sans-serif; background:#f5f5f7; color:#111; }
-    .container { max-width: 900px; margin: 0 auto; padding: 16px; }
-    a { color: inherit; text-decoration: none; }
-    .back { display:inline-block; padding:8px 12px; border:1px solid #ddd; border-radius:999px; background:#fff; }
-    h1 { margin:16px 0 4px; }
-    .meta { color:#555; margin:0 0 16px; }
+    body { margin:0; font-family:system-ui, Arial, sans-serif; background:#f5f5f7; color:#111; }
+    .container { max-width:800px; margin:0 auto; padding:16px; }
+    h1 { margin:0 0 12px; }
+    .box { background:#fff; border:1px solid #ddd; border-radius:10px; padding:12px; }
 
-    .panel { background:#fff; border:1px solid #eee; border-radius:12px; padding:16px; }
-    .grid { display:grid; gap:12px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-
-    .card { border:1px solid #eee; border-radius:10px; padding:12px; background:#fff; }
-    .card h3 { margin:0 0 6px; }
-    .muted { color:#555; margin: 6px 0 12px; }
-
-    /* Code viewer */
-    .tabs { display:flex; gap:6px; flex-wrap:wrap; }
-    .tab { padding:8px 10px; border:1px solid #ddd; background:#fff; border-radius:999px; cursor:pointer; }
-    .tab[aria-selected="true"] { border-color:#6aa7ff; }
-
-    .toolbar { display:flex; gap:6px; margin-left:auto; flex-wrap:wrap; }
-    .btn, .link { padding:8px 10px; border:1px solid #ddd; background:#fff; border-radius:999px; cursor:pointer; display:inline-flex; align-items:center; }
-    .viewer { border:1px solid #ddd; border-radius:8px; background:#0b1020; }
-    .viewer pre { margin:0; padding:12px; color:#eee; font: 13px/1.5 ui-monospace, monospace;
-                  white-space: pre-wrap; word-break: break-word; overflow:auto; max-height: 220px; }
-    .viewer[data-collapsed="true"] { position:relative; }
-    .viewer[data-collapsed="true"]::after{
-      content:""; position:absolute; left:0; right:0; bottom:0; height:40px;
-      background: linear-gradient(to bottom, rgba(11,16,32,0), rgba(11,16,32,.9));
-      pointer-events:none;
+    /* Viewer semplice con <details> */
+    details.viewer { border:1px solid #ddd; border-radius:8px; background:#0b1020; color:#eee; }
+    details.viewer summary { padding:8px 12px; cursor:pointer; }
+    details.viewer summary::-webkit-details-marker { display:none; }
+    details.viewer pre {
+      margin:0; padding:12px;
+      font:13px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      white-space:pre-wrap; word-break:break-word; overflow:auto;
     }
+    /* Anteprima “ridotta” quando CHIUSO */
+    details.viewer:not([open]) pre { max-height:220px; }
 
-    /* PDF “mask” 1.5 slide */
-    .pdf-mask { width:100%; aspect-ratio:16/13.5; border:1px solid #eee; border-radius:10px; overflow:hidden; background:#fff; }
-    .pdf-mask::after{
-      content:""; position:absolute; inset:auto 0 0 0; height:14%;
-      background: linear-gradient(to bottom, rgba(255,255,255,0), #fff);
-      pointer-events:none;
+    .toolbar { display:flex; gap:8px; flex-wrap:wrap; margin:8px 0 12px; }
+    .btn, .link {
+      padding:8px 10px; border:1px solid #ddd; background:#fff; border-radius:999px;
+      cursor:pointer; color:#111; text-decoration:none; display:inline-block;
     }
-    .pdf-wrap { position:relative; }
-    .pdf-frame { position:absolute; inset:0; width:100%; height:100%; border:0; display:block; }
-    .pdf-actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
   </style>
 </head>
 <body>
   <main class="container">
-    <a class="back" href="../index.html" aria-label="Back to Projects">← Back to Projects</a>
+    <h1>Codice: Task 1.py</h1>
 
-    <section class="panel">
-      <h1>ITADATAhack 2025</h1>
-      <p class="meta">ago 2025 – set 2025</p>
-
-      <div class="grid">
-        <!-- Codes -->
-        <article class="card">
-          <h3>Codes</h3>
-          <p class="muted">Seleziona il file e usa “Show all” per vedere tutto.</p>
-
-          <div id="codeViewer"
-               data-files='[
-                 {"label":"Task 1.py","src":"../assets/codici/Task 1.py"},
-                 {"label":"Task 2.py","src":"../assets/codici/Task 2.py"}
-               ]'>
-
-            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-              <nav class="tabs" aria-label="File di codice"></nav>
-              <div class="toolbar">
-                <button class="btn" id="toggleBtn" type="button">Show all</button>
-                <button class="btn" id="copyBtn" type="button">Copy</button>
-                <a class="btn" id="downloadBtn" href="#" download>Download</a>
-              </div>
-            </div>
-
-            <div class="viewer" role="region" aria-live="polite" aria-label="Anteprima codice" data-collapsed="true">
-              <pre id="codeArea"># Seleziona un file sopra per caricare l'anteprima…</pre>
-            </div>
-          </div>
-        </article>
-
-        <!-- Presentation -->
-        <article class="card">
-          <h3>Presentation</h3>
-          <p class="muted">Usa i pulsanti per il documento completo.</p>
-
-          <div class="pdf-mask pdf-wrap">
-            <object class="pdf-frame"
-                    data="../assets/presentazioni/itadatahack-2025.pdf#page=1&view=FitH"
-                    type="application/pdf">
-              <iframe class="pdf-frame"
-                      src="../assets/presentazioni/itadatahack-2025.pdf#page=1&view=FitH"
-                      title="Presentazione"></iframe>
-            </object>
-          </div>
-
-          <div class="pdf-actions">
-            <a class="link" href="../assets/presentazioni/itadatahack-2025.pdf" target="_blank" rel="noreferrer">Full screen</a>
-            <a class="link" href="../assets/presentazioni/itadatahack-2025.pdf" download>Download PDF</a>
-          </div>
-        </article>
+    <section class="box" id="codeBox" data-src="../assets/codici/Task 1.py">
+      <div class="toolbar">
+        <button class="btn" id="copyBtn" type="button">Copia</button>
+        <a class="btn" id="downloadBtn" href="#" download>Download</a>
       </div>
+
+      <!-- Anteprima/Completo con <details> -->
+      <details class="viewer" id="viewer" open>
+        <summary>
+          <span class="txt-more">Mostra meno</span>
+        </summary>
+        <pre id="codeArea"># Caricamento…</pre>
+      </details>
     </section>
   </main>
 
   <script>
-    // Code viewer semplice (tabs + fetch + anteprima N righe + copy + download + full)
-    (function () {
-      const root = document.getElementById('codeViewer');
-      if (!root) return;
+  (function () {
+    const box = document.getElementById('codeBox');
+    const src = box?.dataset?.src || '';
+    const pre = document.getElementById('codeArea');
+    const viewer = document.getElementById('viewer');
+    const copyBtn = document.getElementById('copyBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const summaryText = viewer.querySelector('.txt-more');
 
-      const url = new URL(window.location.href);
-      const FORCE_FULL = url.searchParams.get('full') === '1'
-                      || url.searchParams.get('view') === 'full'
-                      || window.location.hash === '#full';
-      const PREVIEW_LINES = Math.max(1, parseInt(url.searchParams.get('lines') || '4', 10));
+    let rawText = '';
 
-      const files = JSON.parse(root.dataset.files || '[]');
-      const tabs = root.querySelector('.tabs');
-      const codeEl = document.getElementById('codeArea');
-      const copyBtn = document.getElementById('copyBtn');
-      const downloadBtn = document.getElementById('downloadBtn');
-      const toggleBtn = document.getElementById('toggleBtn');
-      const viewer = root.querySelector('.viewer');
+    // Testo del summary in base allo stato (aperto = tutto visibile)
+    function updateSummary() {
+      summaryText.textContent = viewer.open ? 'Mostra meno' : 'Mostra tutto';
+    }
+    viewer.addEventListener('toggle', updateSummary);
 
-      let rawText = '';
-      let isCollapsed = !FORCE_FULL;
-
-      function render() {
-        const lines = rawText.split('\n');
-        const hasMore = lines.length > PREVIEW_LINES;
-
-        const shown = (isCollapsed && hasMore) ? lines.slice(0, PREVIEW_LINES) : lines;
-        codeEl.textContent = shown.join('\n');
-
-        viewer.dataset.collapsed = (isCollapsed && hasMore) ? 'true' : 'false';
-        toggleBtn.style.display = hasMore ? 'inline-flex' : 'none';
-        toggleBtn.textContent = isCollapsed ? 'Show all' : 'Show less';
-
-        // altezza semplice per l’anteprima
-        codeEl.style.maxHeight = (isCollapsed && hasMore) ? '220px' : '600px';
+    async function load() {
+      if (!src) {
+        pre.textContent = '# Nessun file configurato.';
+        viewer.open = true;
+        updateSummary();
+        return;
       }
-
-      async function load(src) {
-        codeEl.textContent = '# Caricamento…';
-        rawText = '';
-        downloadBtn.removeAttribute('href');
-
-        try {
-          const r = await fetch(src, { cache: 'no-store' });
-          if (!r.ok) throw new Error(r.statusText);
-          rawText = await r.text();
-          downloadBtn.href = src;
-          render();
-        } catch (e) {
-          codeEl.textContent = '# Impossibile caricare: ' + src + '\n# Controlla il percorso o il nome del file.';
-          viewer.dataset.collapsed = 'false';
-          toggleBtn.style.display = 'none';
-        }
+      pre.textContent = '# Caricamento…';
+      downloadBtn.removeAttribute('href');
+      try {
+        const r = await fetch(src, { cache: 'no-store' });
+        if (!r.ok) throw new Error(r.statusText);
+        rawText = await r.text();
+        pre.textContent = rawText;
+        downloadBtn.href = src;
+      } catch (e) {
+        pre.textContent = '# Impossibile caricare: ' + src + '\n# Controlla il percorso o il nome del file.';
+        viewer.open = true;
       }
+      updateSummary();
+    }
 
-      function setActive(btn) {
-        tabs.querySelectorAll('.tab').forEach(b => b.setAttribute('aria-selected', 'false'));
-        btn.setAttribute('aria-selected', 'true');
-      }
+    // Copia tutto il file
+    copyBtn.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(rawText || ''); } catch (e) {}
+    });
 
-      // Crea tab
-      files.forEach((f, i) => {
-        const b = document.createElement('button');
-        b.className = 'tab';
-        b.type = 'button';
-        b.textContent = f.label;
-        b.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
-        b.addEventListener('click', () => {
-          setActive(b);
-          isCollapsed = !FORCE_FULL; // ogni cambio file riparte in anteprima se non forzato
-          load(f.src);
-        });
-        tabs.appendChild(b);
-      });
+    // Durante la stampa mostra sempre tutto
+    let wasOpen = viewer.open;
+    window.addEventListener('beforeprint', () => { wasOpen = viewer.open; viewer.open = true; });
+    window.addEventListener('afterprint', () => { viewer.open = wasOpen; });
 
-      // Carica il primo file se c'è
-      if (files[0]) {
-        isCollapsed = !FORCE_FULL;
-        load(files[0].src);
-      } else {
-        codeEl.textContent = '# Nessun file configurato.';
-        viewer.dataset.collapsed = 'false';
-        toggleBtn.style.display = 'none';
-      }
-
-      // Copy: copia sempre tutto il file
-      copyBtn.addEventListener('click', async () => {
-        try { await navigator.clipboard.writeText(rawText || ''); }
-        catch (e) { /* niente messaggi UI */ }
-      });
-
-      // Toggle anteprima/completo
-      toggleBtn.addEventListener('click', () => {
-        isCollapsed = !isCollapsed;
-        render();
-      });
-
-      // Stampa: mostra sempre tutto
-      const initialCollapsed = isCollapsed;
-      window.addEventListener('beforeprint', () => { isCollapsed = false; render(); });
-      window.addEventListener('afterprint', () => { isCollapsed = initialCollapsed; render(); });
-    })();
+    load();
+  })();
   </script>
 </body>
 </html>
