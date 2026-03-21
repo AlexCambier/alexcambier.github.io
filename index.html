@@ -168,7 +168,7 @@
     .tl-item:first-child .tl-dot { background: var(--accent); border-color: var(--border); }
 
     .tl-header { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
-    .tl-role { font-size: 18px; font-weight: 700; color: var(--text); }
+    .tl-role { font-size: 18px; font-weight: 700; color: var(--text); transition: color 0.2s; }
     .tl-company { font-size: 16px; color: var(--text-secondary); font-weight: 400; font-style: italic; }
     .tl-meta { display: flex; gap: 16px; margin-bottom: 12px; font-family: sans-serif; }
     .tl-date, .tl-location { font-size: 12px; color: var(--text-tertiary); font-weight: 400; letter-spacing: 0.5px; }
@@ -182,31 +182,22 @@
       content: '—'; position: absolute; left: 0; color: var(--accent); opacity: 0.7;
     }
 
-    /* ── Timeline Clickable Area ── */
+    /* ── Interactive Areas (Badges) ── */
     .tl-clickable {
-      cursor: pointer;
-      padding: 12px;
-      margin: -12px;
-      border-radius: 8px;
+      cursor: pointer; padding: 12px; margin: -12px; border-radius: 8px;
       transition: background 0.2s ease, transform 0.2s ease;
     }
-    .tl-clickable:hover {
-      background: var(--surface);
-    }
-    .tl-clickable:hover .tl-role {
-      color: var(--accent);
-      text-decoration: underline;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 4px;
-    }
+    .tl-clickable:hover { background: var(--surface); }
+    .tl-clickable:hover .tl-role { color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+    
     .demo-badge {
       font-family: sans-serif; font-size: 10px; font-weight: 700;
       background: var(--accent-dim); color: var(--accent);
-      padding: 3px 8px; border-radius: 4px; margin-left: auto;
+      padding: 4px 8px; border-radius: 4px; margin-left: auto;
       border: 1px solid var(--border); transition: all 0.2s ease;
-      display: flex; align-items: center; gap: 4px;
+      display: flex; align-items: center; gap: 5px; letter-spacing: 0.5px;
     }
-    .tl-clickable:hover .demo-badge {
+    .tl-clickable:hover .demo-badge, .edu-clickable:hover .demo-badge {
       background: var(--accent); color: var(--bg); border-color: var(--accent);
     }
 
@@ -217,7 +208,12 @@
       background: var(--surface); transition: all .2s ease;
     }
     .edu-card:hover { border-color: var(--border-hover); background: var(--surface-hover); }
-    .edu-degree { font-size: 17px; font-weight: 700; margin-bottom: 4px; color: var(--text); }
+    
+    .edu-clickable { cursor: pointer; }
+    .edu-clickable:hover { transform: translateY(-2px); border-color: var(--accent); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+    .edu-clickable:hover .edu-degree { color: var(--accent-soft); }
+
+    .edu-degree { font-size: 17px; font-weight: 700; margin-bottom: 4px; color: var(--text); transition: color 0.2s; }
     .edu-school { font-size: 15px; color: var(--text-secondary); margin-bottom: 10px; font-style: italic; }
     .edu-date { font-size: 12px; color: var(--text-tertiary); margin-bottom: 12px; display: block; font-family: sans-serif; letter-spacing: 0.5px; }
     
@@ -226,17 +222,14 @@
       position: relative; padding-left: 16px; font-size: 14.5px; color: var(--text-secondary);
       line-height: 1.6; margin-bottom: 8px; font-weight: 300;
     }
-    .edu-bullets li::before {
-      content: '—'; position: absolute; left: 0; color: var(--accent); opacity: 0.7; font-size: 13px;
-    }
+    .edu-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--accent); opacity: 0.7; font-size: 13px; }
     .edu-bullets strong { color: var(--text); font-weight: 700; font-size: 13.5px; font-family: sans-serif; letter-spacing: 0.3px;}
 
     /* ── Skills ── */
     .skills-row { display: flex; flex-wrap: wrap; gap: 10px; }
     .skill-pill {
       font-family: sans-serif; font-size: 12px; font-weight: 400; letter-spacing: 0.5px;
-      padding: 6px 16px; border-radius: 4px;
-      background: var(--surface); color: var(--text); border: 1px solid var(--border);
+      padding: 6px 16px; border-radius: 4px; background: var(--surface); color: var(--text); border: 1px solid var(--border);
       transition: all .2s ease; cursor: default;
     }
     .skill-pill:hover { background: var(--accent-dim); border-color: var(--border-hover); color: var(--accent-soft); }
@@ -245,12 +238,11 @@
     .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(290px,1fr)); }
     .card {
       display: flex; flex-direction: column; text-decoration: none; color: inherit;
-      padding: 28px; border: 1px solid var(--border); border-radius: 8px;
-      background: var(--surface); transition: all .3s ease; position: relative; overflow: hidden;
+      padding: 28px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface);
+      transition: all .3s ease; position: relative; overflow: hidden;
     }
     .card::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(circle 250px at var(--mx,50%) var(--my,0%), rgba(147, 197, 253, 0.08), transparent 100%);
+      content: ''; position: absolute; inset: 0; background: radial-gradient(circle 250px at var(--mx,50%) var(--my,0%), rgba(147, 197, 253, 0.08), transparent 100%);
       opacity: 0; transition: opacity .4s; pointer-events: none;
     }
     .card:hover { border-color: var(--border-hover); background: var(--surface-hover); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
@@ -258,123 +250,83 @@
 
     .card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; }
     .card-number { font-family: sans-serif; font-size: 12px; font-weight: 400; color: var(--text-tertiary); letter-spacing: 1px; }
-    .card-arrow {
-      width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
-      border-radius: 6px; color: var(--text-tertiary); transition: all .2s;
-    }
+    .card-arrow { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 6px; color: var(--text-tertiary); transition: all .2s; }
     .card:hover .card-arrow { color: var(--accent); transform: translate(3px,-3px); }
-    
     .card h3 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 8px; transition: color .2s; }
     .card:hover h3 { color: var(--accent-soft); }
     .card-date { font-family: sans-serif; font-size: 12px; color: var(--text-tertiary); margin-bottom: 16px; letter-spacing: 0.5px; }
     .card-desc { font-size: 15px; font-weight: 300; color: var(--text-secondary); line-height: 1.7; flex: 1; }
-    
     .card-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 24px; }
-    .tag {
-      font-family: sans-serif; font-size: 11px; font-weight: 400; padding: 4px 10px; border-radius: 4px;
-      background: var(--bg); color: var(--text-secondary); border: 1px solid var(--border); letter-spacing: 0.5px;
-    }
+    .tag { font-family: sans-serif; font-size: 11px; font-weight: 400; padding: 4px 10px; border-radius: 4px; background: var(--bg); color: var(--text-secondary); border: 1px solid var(--border); letter-spacing: 0.5px; }
 
-    /* ── Modal (Popup) ── */
+    /* ── Modal & Espandibili ── */
     .modal-overlay {
-      position: fixed; inset: 0;
-      background: rgba(10, 25, 47, 0.85);
-      backdrop-filter: blur(8px);
-      z-index: 1000; display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.3s ease;
-      padding: 24px;
+      position: fixed; inset: 0; background: rgba(10, 25, 47, 0.85); backdrop-filter: blur(8px);
+      z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding: 24px;
     }
     .modal-overlay.active { opacity: 1; pointer-events: auto; }
-    
     .modal-content {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      width: 100%; max-width: 850px; max-height: 90vh; 
-      overflow-y: auto;
-      transform: translateY(20px) scale(0.98);
-      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      position: relative;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+      width: 100%; max-width: 850px; max-height: 90vh; overflow-y: auto;
+      transform: translateY(20px) scale(0.98); transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.5);
     }
     .modal-overlay.active .modal-content { transform: translateY(0) scale(1); }
-    
     .modal-close {
-      position: absolute; top: 20px; right: 20px;
-      background: var(--surface); border: 1px solid var(--border);
-      color: var(--text-tertiary); width: 36px; height: 36px;
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: all 0.2s; z-index: 2;
+      position: absolute; top: 20px; right: 20px; background: var(--surface); border: 1px solid var(--border);
+      color: var(--text-tertiary); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; z-index: 2;
     }
     .modal-close:hover { background: var(--border-hover); color: var(--text); }
-    
     .modal-body { padding: 40px; }
     .modal-title { font-size: 24px; font-weight: 700; color: var(--text); margin-bottom: 8px; letter-spacing: -0.5px;}
     .modal-subtitle { font-family: sans-serif; font-size: 14px; font-weight: 700; color: var(--accent); margin-bottom: 24px; letter-spacing: 0.5px;}
     
-    /* Griglia per Modali a Media Multipli */
-    .media-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-bottom: 24px;
-    }
-    .media-item-label {
-      font-family: sans-serif; font-size: 11px; font-weight: 700;
-      color: var(--text-tertiary); text-transform: uppercase;
-      letter-spacing: 1px; margin-bottom: 8px; display: block;
-    }
+    /* Box Espandibili (Accordion) */
+    .course-box { margin-bottom: 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); overflow: hidden; transition: all 0.2s ease; }
+    .course-box[open] { border-color: var(--accent); background: var(--bg); }
+    .course-box summary { padding: 18px 20px; font-size: 16px; font-weight: 700; color: var(--text); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
+    .course-box summary::-webkit-details-marker { display: none; }
+    .course-box summary:hover { background: var(--surface-hover); }
+    .box-icon { color: var(--text-tertiary); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .course-box[open] .box-icon { transform: rotate(180deg); color: var(--accent); }
+    .course-content { padding: 20px; border-top: 1px solid var(--border); }
 
-    .media-container {
-      width: 100%;
-      background: var(--surface-hover);
-      border: 1px solid var(--border);
-      border-radius: 8px; margin-bottom: 24px;
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
-    }
+    /* Media Containers nelle modali */
+    .media-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+    .media-item-label { font-family: sans-serif; font-size: 11px; font-weight: 700; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: block; }
+    .media-container { width: 100%; background: var(--surface-hover); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 24px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
     .media-grid .media-container { margin-bottom: 0; } 
     .media-container video, .media-container iframe { width: 100%; height: 100%; display: block; }
-    
     .modal-text { font-size: 15px; font-weight: 300; color: var(--text-secondary); line-height: 1.8; }
 
     /* ── Footer ── */
     .footer { margin-top: auto; padding: 32px 0 40px; animation: fadeIn .8s ease both .5s; }
-    .footer-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      padding-top: 24px; border-top: 1px solid var(--border);
-    }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; padding-top: 24px; border-top: 1px solid var(--border); }
     .footer-text { font-family: sans-serif; font-size: 12px; color: var(--text-tertiary); letter-spacing: 0.5px; }
     .footer-links { display: flex; gap: 20px; font-family: sans-serif; }
     .footer-links a { font-size: 12px; color: var(--text-tertiary); text-decoration: none; transition: color .2s; letter-spacing: 0.5px; }
     .footer-links a:hover { color: var(--text); }
 
-    /* ── Animations ── */
+    /* ── Animations & Responsive ── */
     @keyframes fadeIn { from{opacity:0}to{opacity:1} }
     @keyframes fadeUp { from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)} }
     @keyframes fadeScale { from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)} }
-
     .anim-up { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
     .anim-up.visible { opacity: 1; transform: translateY(0); }
 
-    /* ── Responsive ── */
     @media (max-width: 640px) {
       .nav { padding: 16px 0; flex-direction: column; gap: 12px; background: var(--bg); }
       .hero { padding: 32px 0 28px; }
       .hero-layout { flex-direction: column; gap: 20px; }
       .avatar-outer { width: 84px; height: 84px; }
       .hero-name { font-size: 34px; }
-      .section-title { font-size: 26px; }
       .grid, .edu-grid { grid-template-columns: 1fr; }
-      .card { padding: 24px; }
+      .card, .edu-card { padding: 24px; }
       .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
       .tl-meta { flex-direction: column; gap: 4px; }
       .modal-body { padding: 24px; }
       .demo-badge { display: none; }
       .media-grid { grid-template-columns: 1fr; gap: 24px; }
     }
-
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 4px; border: 2px solid var(--bg); }
@@ -405,7 +357,7 @@
         <div class="hero-layout">
           <div class="avatar-outer">
             <div class="avatar-inner">
-              <img src="assets/contact/profilepicture.png" alt="Profile Picture of Alexandre" width="104" height="104" decoding="async" fetchpriority="high">
+              <img src="assets/contact/profilepicture.png" alt="Profile Picture" width="104" height="104" decoding="async" fetchpriority="high">
             </div>
           </div>
           <div class="hero-content">
@@ -429,7 +381,6 @@
           </div>
         </div>
       </header>
-
       <hr class="divider">
 
       <section class="section cv-section anim-up" id="experience">
@@ -451,11 +402,11 @@
               </div>
             </div>
             <ul class="tl-bullets">
-              <li>Conducted Bloomberg pricing/liquidity analyses and investment research across 50+ instruments, leveraging EQS screening and performance/risk metrics: returns, Sharpe ratios, betas and correlations.</li>
-              <li>Consolidated cross-asset datasets in Excel by joining 2+ sources on composite keys and used VBA to automate conditional formatting checks, saving ~3 hours per week.</li>
+              <li>Conducted Bloomberg pricing/liquidity analyses and investment research across 50+ instruments, leveraging EQS screening and performance/risk metrics.</li>
+              <li>Consolidated cross-asset datasets in Excel by joining 2+ sources on composite keys and used VBA to automate conditional formatting checks.</li>
               <li>Simulated structured-product pricing with Leonteq and Marex, running 15+ scenarios to optimize coupon, tenor, non-call periods and fee impact.</li>
-              <li>Supported compliance by reviewing 12+ term sheets and final terms, mapping issuers' fee disclosures and assisting with MiFID II due diligence and onboarding.</li>
-              <li>Improved product sheets and client presentations by replicating Excel visuals in Python and building targeted LinkedIn outreach lists with 100+ leads.</li>
+              <li>Supported compliance by reviewing 12+ term sheets and final terms, mapping issuers' fee disclosures and assisting with MiFID II due diligence.</li>
+              <li>Improved product sheets and client presentations by replicating Excel visuals in Python and building targeted LinkedIn outreach lists.</li>
             </ul>
           </div>
 
@@ -488,8 +439,12 @@
         <p class="section-label">Education</p>
         <h2 class="section-title">Academic Background</h2>
         <div class="edu-grid">
-          <div class="edu-card">
-            <p class="edu-degree">International Master in Business Analytics and Data Science</p>
+          
+          <div class="edu-card edu-clickable" onclick="openModal('master-modal')" title="Click to view Group Projects">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <p class="edu-degree">International Master in Business Analytics and Data Science</p>
+              <span class="demo-badge" style="margin-left: 10px; flex-shrink: 0;"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>VIEW PROJECTS</span>
+            </div>
             <p class="edu-school">Politecnico di Milano | GPA: ~28/30</p>
             <p class="edu-date">09/2025 — 09/2026 | Milan, Italy</p>
             <ul class="edu-bullets">
@@ -497,6 +452,7 @@
               <li><strong>Major Courses:</strong> Machine Learning and Business Analytics, Fundamentals of Statistics, Data Visualization, Data Warehousing, Relational Databases, IoT and Big Data.</li>
             </ul>
           </div>
+          
           <div class="edu-card">
             <p class="edu-degree">Bachelor of Science in Business Administration and Management</p>
             <p class="edu-school">Università Bocconi</p>
@@ -507,6 +463,7 @@
               <li><strong>Final Dissertation:</strong> Information Systems in the Context of Mobility: The Yunex Traffic Case.</li>
             </ul>
           </div>
+
         </div>
       </section>
 
@@ -532,7 +489,7 @@
 
       <section class="section anim-up" id="projects">
         <p class="section-label">Selected Work</p>
-        <h2 class="section-title">Projects</h2>
+        <h2 class="section-title">Hackathons & Competitions</h2>
         <div class="grid">
           <a class="card" href="progetti/itadatahack-2025.html">
             <div class="card-top">
@@ -564,70 +521,125 @@
 
 <div class="modal-overlay" id="bloomberg-modal" onclick="closeModal(event, 'bloomberg-modal')">
   <div class="modal-content" onclick="event.stopPropagation()">
-    <button class="modal-close" onclick="closeModal(event, 'bloomberg-modal')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-    </button>
+    <button class="modal-close" onclick="closeModal(event, 'bloomberg-modal')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
     <div class="modal-body">
       <h3 class="modal-title">Bloomberg Data Pipeline</h3>
       <p class="modal-subtitle">Gold Grain Capital · Workflow Simulation</p>
-      
       <div class="media-container" style="aspect-ratio: 16/9;">
-        <span style="color: var(--text-tertiary); font-family: sans-serif; font-size: 14px; text-align: center; padding: 20px;">
-          [ Placeholder Video Simulazione ]
-        </span>
+        <span style="color: var(--text-tertiary); font-family: sans-serif; font-size: 14px; text-align: center; padding: 20px;">[ Placeholder Video Simulazione ]</span>
       </div>
-      
-      <p class="modal-text">
-        In questo workflow, estraggo i dati di pricing e liquidità da <strong>Bloomberg Terminal</strong> tramite API/Excel Add-in. Successivamente, consolido i dataset cross-asset incrociando diverse fonti tramite chiavi composite. Infine, una macro VBA automatizza la formattazione condizionale e i controlli di integrità, risparmiando circa 3 ore di lavoro manuale a settimana.
-      </p>
+      <p class="modal-text">In questo workflow, estraggo i dati di pricing e liquidità da <strong>Bloomberg Terminal</strong> tramite API/Excel Add-in. Successivamente, consolido i dataset cross-asset incrociando diverse fonti tramite chiavi composite. Infine, una macro VBA automatizza la formattazione condizionale e i controlli di integrità, risparmiando circa 3 ore di lavoro manuale a settimana.</p>
     </div>
   </div>
 </div>
 
 <div class="modal-overlay" id="luiss-modal" onclick="closeModal(event, 'luiss-modal')">
   <div class="modal-content" onclick="event.stopPropagation()">
-    <button class="modal-close" onclick="closeModal(event, 'luiss-modal')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-    </button>
+    <button class="modal-close" onclick="closeModal(event, 'luiss-modal')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
     <div class="modal-body">
       <h3 class="modal-title">Sleep-Monitoring Sensor Project</h3>
       <p class="modal-subtitle">Milano LUISS Hub · Hardware & Strategy</p>
-      
       <div class="media-grid">
-        
         <div>
           <span class="media-item-label">Hardware Prototype (Video)</span>
           <div class="media-container" style="height: auto; aspect-ratio: unset; background: transparent; border: none;">
-            <video controls preload="metadata" playsinline style="width: 100%; border-radius: 8px; display: block; border: 1px solid var(--border);">
-              <source src="assets/sleep-sensor.mp4" type="video/mp4">
-              Il tuo browser non supporta il tag video.
-            </video>
+            <video controls preload="metadata" playsinline style="width: 100%; border-radius: 8px; display: block; border: 1px solid var(--border);"><source src="assets/sleep-sensor.mp4" type="video/mp4">Il tuo browser non supporta il tag video.</video>
           </div>
         </div>
-
         <div>
           <span class="media-item-label">Pitch & SWOT (Slides)</span>
           <div class="media-container" style="aspect-ratio: 16/13.5; position: relative;">
             <iframe src="assets/presentazioni/Sweet_Dreams.pdf#page=1&view=FitH" title="Presentazione" style="border: none;"></iframe>
           </div>
+          <div style="display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap;">
+            <a class="btn" href="assets/presentazioni/Sweet_Dreams.pdf" target="_blank" rel="noopener noreferrer"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>Full screen</a>
+            <a class="btn" href="assets/presentazioni/Sweet_Dreams.pdf" download><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>Download PDF</a>
+          </div>
+        </div>
+      </div>
+      <p class="modal-text">Durante questa esperienza laboratoriale, ho curato sia l'aspetto tecnico che quello di business. Da un lato la modellazione 3D dell'involucro in Tinkercad e l'integrazione del firmware (C++) per i sensori Arduino; dall'altro lato, ho redatto un'analisi SWOT per definire al meglio la value proposition del nostro dispositivo per anziani e neonati.</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="master-modal" onclick="closeModal(event, 'master-modal')">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal(event, 'master-modal')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+    <div class="modal-body">
+      <h3 class="modal-title">Academic Group Projects</h3>
+      <p class="modal-subtitle">Politecnico di Milano · MSc Business Analytics</p>
+      
+      <p class="modal-text" style="margin-bottom: 24px;">
+        A collection of hands-on data science and analytics projects developed during my Master's degree. Click on a specific course below to explore the documentation and output.
+      </p>
+
+      <details class="course-box">
+        <summary>
+          Cloud Technologies
+          <svg class="box-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </summary>
+        <div class="course-content">
+          
+          <div class="media-container" style="aspect-ratio: 16/13.5; position: relative;">
+            <iframe src="assets/presentazioni/Cloud.pdf#page=1&view=FitH" title="Cloud Technologies Presentation" style="border: none;"></iframe>
+          </div>
           
           <div style="display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap;">
-            <a class="btn" href="assets/presentazioni/Sweet_Dreams.pdf" target="_blank" rel="noopener noreferrer">
+            <a class="btn" href="assets/presentazioni/Cloud.pdf" target="_blank" rel="noopener noreferrer">
               <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
               Full screen
             </a>
-            <a class="btn" href="assets/presentazioni/Sweet_Dreams.pdf" download>
+            <a class="btn" href="assets/presentazioni/Cloud.pdf" download>
               <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
               Download PDF
             </a>
           </div>
+
+          <p class="modal-text" style="margin-top: 16px;">
+            In questo progetto abbiamo analizzato e implementato un'architettura cloud-based. [Sostituisci questo testo con una breve descrizione del lavoro che hai svolto per Cloud Technologies, es: utilizzo di servizi AWS/GCP, creazione di pipeline dati scalabili, ecc.]
+          </p>
         </div>
-        
-      </div>
-      
-      <p class="modal-text">
-        Durante questa esperienza laboratoriale, ho curato sia l'aspetto tecnico che quello di business. Da un lato la modellazione 3D dell'involucro in Tinkercad e l'integrazione del firmware (C++) per i sensori Arduino; dall'altro lato, ho redatto un'analisi SWOT per definire al meglio la value proposition del nostro dispositivo per anziani e neonati.
-      </p>
+      </details>
+
+      <details class="course-box">
+        <summary>
+          Fundamentals of Statistics
+          <svg class="box-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </summary>
+        <div class="course-content">
+          <div class="media-container" style="aspect-ratio: 16/9;">
+            <span style="color: var(--text-tertiary); font-family: sans-serif; font-size: 13px;">[ Placeholder for R/Python analysis report ]</span>
+          </div>
+          <p class="modal-text">Descrizione del progetto. Ad esempio: analisi di inferenza statistica, test d'ipotesi o regressione lineare multipla applicata a un dataset reale.</p>
+        </div>
+      </details>
+
+      <details class="course-box">
+        <summary>
+          Non Relational Databases
+          <svg class="box-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </summary>
+        <div class="course-content">
+          <div class="media-container" style="aspect-ratio: 16/9;">
+            <span style="color: var(--text-tertiary); font-family: sans-serif; font-size: 13px;">[ Placeholder for MongoDB/Neo4j schemas or report ]</span>
+          </div>
+          <p class="modal-text">Progettazione e interrogazione di un database NoSQL (es. MongoDB, Neo4j) per un caso d'uso specifico di Big Data Analytics.</p>
+        </div>
+      </details>
+
+      <details class="course-box">
+        <summary>
+          Mobile Technologies
+          <svg class="box-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </summary>
+        <div class="course-content">
+          <div class="media-container" style="aspect-ratio: 16/9;">
+            <span style="color: var(--text-tertiary); font-family: sans-serif; font-size: 13px;">[ Placeholder for Mobile App Demo video or Figma prototype ]</span>
+          </div>
+          <p class="modal-text">Sviluppo di un prototipo di app mobile per la data visualization o la raccolta di dati sul campo.</p>
+        </div>
+      </details>
+
     </div>
   </div>
 </div>
@@ -656,7 +668,7 @@
   
   document.querySelectorAll('.anim-up').forEach(el => observer.observe(el));
 
-  // Logica Universale per aprire/chiudere Modali
+  // Logica Modali
   function openModal(id) {
     document.getElementById(id).classList.add('active');
     document.body.style.overflow = 'hidden'; 
@@ -664,24 +676,39 @@
   
   function closeModal(event, id) {
     if (event) event.stopPropagation(); 
-    
     const modal = document.getElementById(id);
     modal.classList.remove('active');
     document.body.style.overflow = 'auto'; 
 
-    // Pausa il video quando chiudi la modale
-    const video = modal.querySelector('video');
-    if (video) {
-      video.pause();
+    // Pausa i video
+    const videos = modal.querySelectorAll('video');
+    videos.forEach(v => v.pause());
+    
+    // Chiude i box espandibili
+    if(id === 'master-modal') {
+      const details = modal.querySelectorAll('details');
+      details.forEach(d => d.removeAttribute('open'));
     }
   }
   
-  // Chiude col tasto Esc della tastiera
+  // Chiude col tasto Esc
   document.addEventListener('keydown', function(event) {
     if (event.key === "Escape") {
       const activeModal = document.querySelector('.modal-overlay.active');
       if (activeModal) closeModal(null, activeModal.id);
     }
+  });
+
+  // Logica per chiudere gli altri box quando se ne apre uno
+  const detailsElements = document.querySelectorAll('.course-box');
+  detailsElements.forEach((targetDetail) => {
+    targetDetail.addEventListener('click', () => {
+      detailsElements.forEach((detail) => {
+        if (detail !== targetDetail) {
+          detail.removeAttribute('open');
+        }
+      });
+    });
   });
 </script>
 </body>
