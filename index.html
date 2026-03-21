@@ -1,93 +1,624 @@
 <!doctype html>
-<html lang="it">
+<html lang="it" style="scroll-behavior: smooth;">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Projects</title>
-  <meta name="description" content="Portfolio personale – progetti, contatti e curriculum">
+  <title>Alexandre Benjamin Cambier · Portfolio</title>
+  
+  <meta name="description" content="Portfolio personale di Alexandre Benjamin Cambier – Data Science & Business Analytics, progetti, contatti e curriculum">
+  <meta property="og:title" content="Alexandre Benjamin Cambier · Portfolio">
+  <meta property="og:description" content="Master's student in Business Analytics & Data Science at Politecnico di Milano. Discover my projects and resume.">
+  <meta property="og:type" content="website">
+  
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🚀%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
   <style>
-    :root { --b:#ddd; --bg:#f6f7f9; --ink:#0f172a; --muted:#334155; }
-    * { box-sizing: border-box; }
-    body { margin:0; font-family: system-ui, Arial, sans-serif; background: var(--bg); color: var(--ink); line-height:1.6; }
-    a { color: inherit; text-decoration: none; }
-    .container { max-width: 1000px; margin: 0 auto; padding: 16px; }
-    .hero { background:#fff; border:1px solid var(--b); border-radius:16px; padding:16px; }
-    .row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
-    .avatar { width:88px; height:88px; border-radius:50%; overflow:hidden; border:1px solid var(--b); background:#fff; }
-    .avatar img { width:100%; height:100%; object-fit:cover; display:block; }
-    .title { font-size: 28px; font-weight: 800; margin: 4px 0; }
-    .subtitle { color: var(--muted); margin: 4px 0; }
-    .actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
-    .btn { display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border:1px solid var(--b); border-radius:999px; background:#fff; }
-    .btn:hover { background:#f2f4f7; }
-    .section { margin-top: 24px; }
-    .pill { display:inline-block; padding:6px 10px; border:1px solid var(--b); border-radius:999px; background:#fff; font-weight:600; }
-    .help { color: var(--muted); margin: 8px 0 12px; }
-    .grid { display:grid; gap:12px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-    .card { display:block; background:#fff; border:1px solid var(--b); border-radius:14px; padding:14px; }
-    .card:hover { border-color:#bbb; background:#fafafa; }
-    .card h3 { margin:0 0 6px; font-size: 20px; }
-    .meta { color:#64748b; font-weight:600; margin: 0 0 8px; }
-    .bullets { margin:8px 0 0 18px; color: var(--muted); }
-    .bullets li { margin: 6px 0; }
-    @media (max-width: 520px){ .avatar { width:72px; height:72px; } .title { font-size:24px; } }
-    .ico { width:18px; height:18px; display:inline-block; }
+    :root {
+      --bg: #0b1120;
+      --bg-deep: #070d1a;
+      --surface: rgba(255,255,255,0.035);
+      --surface-hover: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.07);
+      --border-hover: rgba(255,255,255,0.18);
+      --text: #e8eaf0;
+      --text-secondary: #94a3b8;
+      --text-tertiary: #546380;
+      --accent: #818cf8;
+      --accent-soft: #a5b4fc;
+      --accent-dim: rgba(129,140,248,0.08);
+      --accent-glow: rgba(129,140,248,0.12);
+      --warm: #f59e0b;
+      --green: #34d399;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* ── Ambient ── */
+    .ambient {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(ellipse 70% 45% at 45% -5%, rgba(129,140,248,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 35% at 85% 95%, rgba(56,82,161,0.06) 0%, transparent 50%);
+    }
+    .dot-grid {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    /* ── Layout ── */
+    .page { position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column; }
+    .container { max-width: 920px; margin: 0 auto; padding: 0 24px; width: 100%; }
+
+    /* ── Nav ── */
+    .nav {
+      padding: 24px 0;
+      display: flex; align-items: center; justify-content: space-between;
+      animation: fadeIn 0.7s ease both;
+      position: sticky; top: 0;
+      background: linear-gradient(to bottom, var(--bg) 60%, transparent);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      margin-bottom: -1px;
+    }
+    .nav-links {
+      display: flex; gap: 20px;
+    }
+    .nav-links a {
+      color: var(--text-tertiary); text-decoration: none;
+      font-family: 'JetBrains Mono', monospace; font-size: 12px;
+      transition: color 0.3s ease; letter-spacing: 0.5px;
+    }
+    .nav-links a:hover { color: var(--accent-soft); }
+    
+    .nav-status {
+      display: flex; align-items: center; gap: 7px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; color: var(--text-tertiary);
+      letter-spacing: 0.5px;
+    }
+    .status-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px rgba(52,211,153,0.5);
+      animation: breathe 3s ease-in-out infinite;
+    }
+    @keyframes breathe { 0%,100%{opacity:1}50%{opacity:.45} }
+
+    hr.divider {
+      border: none; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border) 15%, var(--border) 85%, transparent);
+      margin: 0;
+    }
+
+    /* ── Hero ── */
+    .hero { padding: 64px 0 44px; animation: fadeUp .8s ease both .1s; }
+    .hero-layout { display: flex; gap: 32px; align-items: flex-start; }
+
+    .avatar-outer {
+      flex-shrink: 0;
+      width: 104px; height: 104px;
+      border-radius: 50%;
+      padding: 2.5px;
+      background: linear-gradient(135deg, var(--accent) 0%, rgba(99,102,241,0.2) 100%);
+      opacity: 0; animation: fadeScale .6s ease both .3s;
+      position: relative;
+    }
+    .avatar-outer::before {
+      content: ''; position: absolute; inset: -4px; border-radius: 50%;
+      background: inherit; filter: blur(12px); opacity: 0.4; z-index: -1;
+    }
+    .avatar-inner {
+      width: 100%; height: 100%;
+      border-radius: 50%; overflow: hidden;
+      background: var(--bg);
+      border: 3px solid var(--bg);
+      transition: transform 0.3s ease;
+    }
+    .avatar-outer:hover .avatar-inner { transform: scale(0.96); }
+    .avatar-inner img { width:100%; height:100%; object-fit:cover; display:block; }
+
+    .hero-content { flex: 1; min-width: 0; }
+    .hero-name {
+      font-family: 'Instrument Serif', serif;
+      font-size: 44px; font-weight: 400;
+      line-height: 1.15; letter-spacing: -0.8px;
+      margin-bottom: 8px;
+      text-wrap: balance;
+    }
+    .hero-name em {
+      font-style: italic;
+      background: linear-gradient(135deg, var(--accent-soft), #c4b5fd);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-role {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px; color: var(--accent);
+      letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 16px; display: inline-block;
+    }
+    .hero-bio {
+      font-size: 16px; color: var(--text-secondary);
+      max-width: 560px; line-height: 1.75;
+      text-wrap: pretty;
+    }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface);
+      color: var(--text-secondary);
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 14px; font-weight: 500;
+      text-decoration: none;
+      transition: all .25s ease;
+      backdrop-filter: blur(8px);
+    }
+    .btn:hover {
+      background: var(--surface-hover);
+      border-color: var(--border-hover);
+      color: var(--text);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,.3);
+    }
+    .btn .ico { width:16px; height:16px; opacity:.7; transition: opacity .2s; }
+    .btn:hover .ico { opacity:1; }
+    .btn-primary {
+      background: var(--accent-dim);
+      border-color: rgba(129,140,248,.22);
+      color: var(--accent-soft);
+    }
+    .btn-primary:hover {
+      background: rgba(129,140,248,.15);
+      border-color: rgba(129,140,248,.4);
+      box-shadow: 0 6px 24px rgba(129,140,248,.15);
+      color: #fff;
+    }
+
+    /* ── Sections ── */
+    .section { padding: 56px 0; scroll-margin-top: 60px; }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 8px;
+    }
+    .section-label::before {
+      content: ''; width: 16px; height: 1px;
+      background: var(--accent); opacity: .6;
+    }
+    .section-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 30px; font-weight: 400;
+      letter-spacing: -0.4px; margin-bottom: 32px;
+      color: #fff;
+    }
+
+    /* ── Timeline (Experience) ── */
+    .cv-section { animation: fadeUp .8s ease both .4s; }
+
+    .timeline { position: relative; padding-left: 28px; }
+    .timeline::before {
+      content: ''; position: absolute;
+      left: 6px; top: 8px; bottom: 8px;
+      width: 1px;
+      background: linear-gradient(180deg, var(--accent) 0%, var(--border) 100%);
+      opacity: .4;
+    }
+
+    .tl-item { position: relative; padding-bottom: 36px; transition: transform 0.3s ease; }
+    .tl-item:hover { transform: translateX(4px); }
+    .tl-item:last-child { padding-bottom: 0; }
+
+    .tl-dot {
+      position: absolute;
+      left: -25px; top: 7px;
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px rgba(129,140,248,.4);
+      transition: background 0.3s;
+    }
+    .tl-item:not(:first-child) .tl-dot {
+      background: var(--text-tertiary);
+      box-shadow: none;
+    }
+    .tl-item:hover .tl-dot { background: var(--accent-soft); }
+
+    .tl-header { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
+    .tl-role { font-size: 18px; font-weight: 600; color: var(--text); }
+    .tl-company { font-size: 15px; color: var(--accent-soft); font-weight: 500; }
+    
+    .tl-meta { display: flex; gap: 16px; margin-bottom: 10px; }
+    .tl-date, .tl-location {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px; color: var(--text-tertiary);
+      letter-spacing: .5px;
+    }
+    
+    .tl-bullets { list-style: none; padding: 0; }
+    .tl-bullets li {
+      position: relative; padding-left: 18px;
+      font-size: 14.5px; color: var(--text-secondary);
+      line-height: 1.7; margin-bottom: 6px;
+    }
+    .tl-bullets li::before {
+      content: '›'; position: absolute; left: 0;
+      color: var(--accent); font-weight: 600; opacity: 0.7;
+    }
+
+    /* ── Education (compact) ── */
+    .edu-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); }
+    .edu-card {
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      backdrop-filter: blur(8px);
+      transition: all .3s cubic-bezier(.25,.46,.45,.94);
+    }
+    .edu-card:hover {
+      border-color: var(--border-hover);
+      background: var(--surface-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,.2);
+    }
+    .edu-degree { font-size: 17px; font-weight: 600; margin-bottom: 4px; color: var(--text); }
+    .edu-school { font-size: 15px; color: var(--accent-soft); margin-bottom: 6px; font-weight: 500; }
+    .edu-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px; color: var(--text-tertiary);
+      letter-spacing: .5px; margin-bottom: 10px;
+    }
+    .edu-detail { font-size: 14px; color: var(--text-secondary); line-height: 1.65; }
+
+    /* ── Skills row ── */
+    .skills-row { display: flex; flex-wrap: wrap; gap: 10px; }
+    .skill-pill {
+      font-size: 13.5px; font-weight: 500;
+      padding: 6px 16px;
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      transition: all .25s ease;
+      cursor: default;
+    }
+    .skill-pill:hover {
+      background: var(--accent-dim);
+      color: var(--accent-soft);
+      border-color: rgba(129,140,248,.3);
+      transform: translateY(-2px);
+    }
+
+    /* ── Cards (Projects) ── */
+    .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(290px,1fr)); }
+    .card {
+      display: flex; flex-direction: column;
+      text-decoration: none; color: inherit;
+      padding: 28px; border: 1px solid var(--border);
+      border-radius: 14px; background: var(--surface);
+      backdrop-filter: blur(12px);
+      transition: all .35s cubic-bezier(.25,.46,.45,.94);
+      position: relative; overflow: hidden;
+    }
+    .card::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle 250px at var(--mx,50%) var(--my,0%), var(--accent-glow), transparent 100%);
+      opacity: 0; transition: opacity .4s; pointer-events: none;
+    }
+    .card:hover {
+      border-color: var(--border-hover);
+      background: var(--surface-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,.4);
+    }
+    .card:hover::before { opacity:1; }
+
+    .card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }
+    .card-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px; color: var(--text-tertiary);
+      letter-spacing: 1px; padding: 4px 10px;
+      border: 1px solid var(--border); border-radius: 6px;
+      background: rgba(255,255,255,.015);
+    }
+    .card-arrow {
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 8px; border: 1px solid var(--border);
+      color: var(--text-tertiary); transition: all .3s;
+    }
+    .card:hover .card-arrow {
+      border-color: var(--accent); color: var(--accent);
+      background: var(--accent-dim); transform: translate(3px,-3px) rotate(45deg);
+    }
+    .card h3 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 24px; font-weight: 400;
+      letter-spacing: -0.3px; margin-bottom: 6px; transition: color .3s;
+    }
+    .card:hover h3 { color: var(--accent-soft); }
+    .card-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px; color: var(--text-tertiary);
+      letter-spacing: .5px; margin-bottom: 14px;
+    }
+    .card-desc { font-size: 14.5px; color: var(--text-secondary); line-height: 1.7; flex: 1; }
+    
+    .card-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px; font-weight: 500;
+      padding: 4px 10px; border-radius: 6px;
+      background: rgba(255,255,255,.035);
+      color: var(--accent-soft);
+      border: 1px solid rgba(255,255,255,.05);
+      letter-spacing: .3px; text-transform: uppercase;
+    }
+
+    /* ── Footer ── */
+    .footer { margin-top: auto; padding: 32px 0 40px; animation: fadeIn .8s ease both .5s; }
+    .footer-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 24px; border-top: 1px solid var(--border);
+    }
+    .footer-text { font-size: 13px; color: var(--text-tertiary); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a {
+      font-size: 13px; color: var(--text-tertiary);
+      text-decoration: none; transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--text); }
+
+    /* ── Animations ── */
+    @keyframes fadeIn { from{opacity:0}to{opacity:1} }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeScale { from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)} }
+
+    .anim-up { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(0.2, 0.8, 0.2, 1); }
+    .anim-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .nav { padding: 16px 0; flex-direction: column; gap: 12px; background: var(--bg); }
+      .hero { padding: 32px 0 28px; }
+      .hero-layout { flex-direction: column; gap: 20px; }
+      .avatar-outer { width: 84px; height: 84px; }
+      .hero-name { font-size: 36px; }
+      .section-title { font-size: 26px; }
+      .grid, .edu-grid { grid-template-columns: 1fr; }
+      .card { padding: 24px; }
+      .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+      .tl-meta { flex-direction: column; gap: 4px; }
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-deep); }
+    ::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 4px; border: 2px solid var(--bg-deep); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
   </style>
 </head>
 <body>
-  <header class="container">
-    <section class="hero">
-      <div class="row">
-        <span class="avatar" aria-hidden="true">
-          <img src="assets/contact/profilepicture.png" alt="Nome Cognome" width="88" height="88" decoding="async" fetchpriority="high">
-        </span>
-        <div>
-          <h1 class="title"> Alexandre Benjamin Cambier </h1>
-          <p class="subtitle"> Data Science @PoliMi</p>
-          <p class="subtitle">Master’s student in Business Analytics & Data Science at PoliMi with a Business Administration foundation from Bocconi and a Cross-Asset Data Analyst experience. Open to Data Science internships.</p>
-          <div class="actions">
-            <a class="btn" href="https://www.linkedin.com/in/alexandre-benjamin-cambier/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
-              <svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V23h-4V8.5zM8.5 8.5h3.8v2h.06c.53-1 1.82-2.06 3.75-2.06 4 0 4.74 2.63 4.74 6.06V23h-4v-6.5c0-1.56-.03-3.56-2.17-3.56-2.17 0-2.5 1.7-2.5 3.44V23h-4V8.5z"/></svg>
-              LinkedIn
-            </a>
-            <a class="btn" href="https://github.com/AlexCambier/alexcambier.github.io" target="_blank" rel="noreferrer" aria-label="GitHub">
-              <svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58l-.02-2.25c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.76.08-.75.08-.75 1.2.09 1.83 1.23 1.83 1.23 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.31-5.48-1.34-5.48-5.95 0-1.31.47-2.38 1.24-3.22-.12-.31-.54-1.57.12-3.27 0 0 1.01-.32 3.3 1.23a11.4 11.4 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.7.24 2.96.12 3.27.77.84 1.24 1.9 1.24 3.22 0 4.62-2.81 5.63-5.49 5.93.43.37.81 1.1.81 2.22l-.01 3.29c0 .32.21.7.83.58A12 12 0 0 0 12 .5z"/></svg>
-              GitHub
-            </a>
-            <a class="btn" href="mailto: alecambier@gmail.com" aria-label="Email">
-              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg>
-              Email
-            </a>
-            <a class="btn" href="../assets/contact/Resume.pdf" target="_blank" rel="noopener" aria-label="Curriculum">
-              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2h9l5 5v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path d="M14 2v6h6"/></svg>
-              Resume
-            </a>
+
+<div class="ambient"></div>
+<div class="dot-grid"></div>
+
+<div class="page">
+  <div class="container">
+
+    <nav class="nav">
+      <div class="nav-links">
+        <a href="#experience">Experience</a>
+        <a href="#education">Education</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+      </div>
+      <div class="nav-status">
+        <span class="status-dot"></span>
+        Available for internships
+      </div>
+    </nav>
+    <hr class="divider">
+
+    <main>
+      <header class="hero">
+        <div class="hero-layout">
+          <div class="avatar-outer">
+            <div class="avatar-inner">
+              <img src="assets/contact/profilepicture.png" alt="Profile Picture of Alexandre" width="104" height="104" decoding="async" fetchpriority="high">
+            </div>
+          </div>
+          <div class="hero-content">
+            <h1 class="hero-name">Alexandre Benjamin <em>Cambier</em></h1>
+            <p class="hero-role">Data Science &amp; Analytics</p>
+            <p class="hero-bio">Master's student in Business Analytics &amp; Data Science at Politecnico di Milano, with a Business Administration foundation from Bocconi and Cross-Asset Data Analyst experience.</p>
+            <div class="actions">
+              <a class="btn btn-primary" href="assets/contact/Resume.pdf" target="_blank" rel="noopener noreferrer" aria-label="Download Resume">
+                <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h9l5 5v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path d="M14 2v6h6"/></svg>
+                Resume
+              </a>
+              <a class="btn" href="https://www.linkedin.com/in/alexandre-benjamin-cambier/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
+                <svg class="ico" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V23h-4V8.5zM8.5 8.5h3.8v2h.06c.53-1 1.82-2.06 3.75-2.06 4 0 4.74 2.63 4.74 6.06V23h-4v-6.5c0-1.56-.03-3.56-2.17-3.56-2.17 0-2.5 1.7-2.5 3.44V23h-4V8.5z"/></svg>
+                LinkedIn
+              </a>
+              <a class="btn" href="https://github.com/AlexCambier/alexcambier.github.io" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+                <svg class="ico" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58l-.02-2.25c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.76.08-.75.08-.75 1.2.09 1.83 1.23 1.83 1.23 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.31-5.48-1.34-5.48-5.95 0-1.31.47-2.38 1.24-3.22-.12-.31-.54-1.57.12-3.27 0 0 1.01-.32 3.3 1.23a11.4 11.4 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.7.24 2.96.12 3.27.77.84 1.24 1.9 1.24 3.22 0 4.62-2.81 5.63-5.49 5.93.43.37.81 1.1.81 2.22l-.01 3.29c0 .32.21.7.83.58A12 12 0 0 0 12 .5z"/></svg>
+                GitHub
+              </a>
+              <a class="btn" href="mailto:tuamail@example.com" aria-label="Send an Email">
+                <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg>
+                Email
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-  </header>
+      </header>
 
-  <main class="container section" id="progetti">
-    <span class="pill">🚀 Projects</span>
-    <p class="help">Click a box below to learn more about a project.</p>
-    <div class="grid">
-      <a class="card" href="progetti/itadatahack-2025.html">
-        <h3>ITADATAhack 2025</h3>
-        <p class="meta">ago 2025 – set 2025</p>
-        <ul class="bullets">
-          <li>Assisted a three-person team in building two Python machine learning classifiers on HDFS logs to predict anomaly category and type. Ranked 6th out of 15.</li>
-        </ul>
-      </a>
-      <a class="card" href="progetti/feduf-2019.html">
-        <h3>FEduF</h3>
-        <p class="meta">gen 2019 – mag 2019</p>
-        <ul class="bullets">
-          <li>Presented a socially beneficial sleep-monitoring sensor to 10–15 professionals, explaining its technical operation and pricing versus industry leaders. Ranked 2nd among 5 teams.</li>
-        </ul>
-      </a>
-    </div>
-  </main>
+      <hr class="divider">
+
+      <section class="section cv-section anim-up" id="experience">
+        <p class="section-label">Experience</p>
+        <h2 class="section-title">Work History</h2>
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-header">
+              <span class="tl-role">Cross-Asset Data Analyst</span>
+              <span class="tl-company">Company Name</span>
+            </div>
+            <div class="tl-meta">
+              <span class="tl-date">MMM YYYY — MMM YYYY</span>
+              <span class="tl-location">Milan, Italy</span>
+            </div>
+            <ul class="tl-bullets">
+              <li>Conducted cross-asset data analysis supporting trading and portfolio decisions</li>
+              <li>Built data pipelines and dashboards for multi-asset class monitoring</li>
+              <li>Collaborated with quantitative teams to deliver actionable insights</li>
+            </ul>
+          </div>
+          </div>
+      </section>
+
+      <hr class="divider">
+
+      <section class="section anim-up" id="education">
+        <p class="section-label">Education</p>
+        <h2 class="section-title">Academic Background</h2>
+        <div class="edu-grid">
+          <div class="edu-card">
+            <p class="edu-degree">MSc Business Analytics &amp; Data Science</p>
+            <p class="edu-school">Politecnico di Milano</p>
+            <p class="edu-date">2024 — Present</p>
+            <p class="edu-detail">Specialization in machine learning, statistical modelling and data-driven decision making.</p>
+          </div>
+          <div class="edu-card">
+            <p class="edu-degree">BSc Business Administration</p>
+            <p class="edu-school">Università Bocconi</p>
+            <p class="edu-date">20XX — 20XX</p>
+            <p class="edu-detail">Foundation in economics, finance, and quantitative methods for business.</p>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <section class="section anim-up" id="skills">
+        <p class="section-label">Tools &amp; Skills</p>
+        <h2 class="section-title">Technical Stack</h2>
+        <div class="skills-row">
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">SQL</span>
+          <span class="skill-pill">Machine Learning</span>
+          <span class="skill-pill">Pandas</span>
+          <span class="skill-pill">Scikit-learn</span>
+          <span class="skill-pill">Data Visualization</span>
+          <span class="skill-pill">Excel / VBA</span>
+          <span class="skill-pill">Power BI</span>
+          <span class="skill-pill">Git</span>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <section class="section anim-up" id="projects">
+        <p class="section-label">Selected Work</p>
+        <h2 class="section-title">Projects</h2>
+        <div class="grid">
+          <a class="card" href="progetti/itadatahack-2025.html">
+            <div class="card-top">
+              <span class="card-number">01</span>
+              <span class="card-arrow">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+              </span>
+            </div>
+            <h3>ITADATAhack 2025</h3>
+            <p class="card-date">Aug 2025 — Sep 2025</p>
+            <p class="card-desc">Assisted a three-person team in building two Python machine learning classifiers on HDFS logs to predict anomaly category and type. Ranked 6th out of 15.</p>
+            <div class="card-tags">
+              <span class="tag">Python</span>
+              <span class="tag">ML</span>
+              <span class="tag">Classification</span>
+            </div>
+          </a>
+          
+          <a class="card" href="progetti/feduf-2019.html">
+            <div class="card-top">
+              <span class="card-number">02</span>
+              <span class="card-arrow">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+              </span>
+            </div>
+            <h3>FEduF</h3>
+            <p class="card-date">Jan 2019 — May 2019</p>
+            <p class="card-desc">Presented a socially beneficial sleep-monitoring sensor to professionals, explaining technical operations and pricing versus industry leaders. Ranked 2nd among 5 teams.</p>
+            <div class="card-tags">
+              <span class="tag">IoT</span>
+              <span class="tag">Presentation</span>
+              <span class="tag">Business</span>
+            </div>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-text">&copy; 2026 Alexandre B. Cambier. All rights reserved.</span>
+        <div class="footer-links">
+          <a href="https://www.linkedin.com/in/alexandre-benjamin-cambier/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href="https://github.com/AlexCambier/alexcambier.github.io" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="mailto:tuamail@example.com">Email</a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+</div>
+
+<script>
+  // 1. Mouse Follow Effect for Cards (Optimized with requestAnimationFrame logic inside standard event)
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mx', `${x}px`);
+      card.style.setProperty('--my', `${y}px`);
+    });
+  });
+
+  // 2. Scroll Reveal Animations
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        obs.unobserve(entry.target); 
+      }
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -50px 0px" });
+  
+  document.querySelectorAll('.anim-up').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
