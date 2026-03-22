@@ -149,7 +149,7 @@
       margin-bottom: 32px; color: var(--text);
     }
 
-    /* ── Timeline (Experience) ── */
+    /* ── Timeline ── */
     .cv-section { animation: fadeUp .8s ease both .4s; }
     .timeline { position: relative; padding-left: 28px; }
     .timeline::before {
@@ -178,15 +178,10 @@
       position: relative; padding-left: 18px; font-size: 15px; color: var(--text-secondary);
       line-height: 1.7; margin-bottom: 8px; font-weight: 300;
     }
-    .tl-bullets li::before {
-      content: '—'; position: absolute; left: 0; color: var(--accent); opacity: 0.7;
-    }
+    .tl-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--accent); opacity: 0.7; }
 
-    /* ── Interactive Areas (Badges) ── */
-    .tl-clickable {
-      cursor: pointer; padding: 12px; margin: -12px; border-radius: 8px;
-      transition: background 0.2s ease, transform 0.2s ease;
-    }
+    /* ── Clickable Areas (Badges) ── */
+    .tl-clickable { cursor: pointer; padding: 12px; margin: -12px; border-radius: 8px; transition: background 0.2s ease, transform 0.2s ease; }
     .tl-clickable:hover { background: var(--surface); }
     .tl-clickable:hover .tl-role { color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
     
@@ -197,16 +192,11 @@
       border: 1px solid var(--border); transition: all 0.2s ease;
       display: flex; align-items: center; gap: 5px; letter-spacing: 0.5px;
     }
-    .tl-clickable:hover .demo-badge, .edu-clickable:hover .demo-badge {
-      background: var(--accent); color: var(--bg); border-color: var(--accent);
-    }
+    .tl-clickable:hover .demo-badge, .edu-clickable:hover .demo-badge { background: var(--accent); color: var(--bg); border-color: var(--accent); }
 
     /* ── Education ── */
     .edu-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); }
-    .edu-card {
-      padding: 24px; border: 1px solid var(--border); border-radius: 8px;
-      background: var(--surface); transition: all .2s ease;
-    }
+    .edu-card { padding: 24px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); transition: all .2s ease; }
     .edu-card:hover { border-color: var(--border-hover); background: var(--surface-hover); }
     
     .edu-clickable { cursor: pointer; }
@@ -218,33 +208,19 @@
     .edu-date { font-size: 12px; color: var(--text-tertiary); margin-bottom: 12px; display: block; font-family: sans-serif; letter-spacing: 0.5px; }
     
     .edu-bullets { list-style: none; padding: 0; margin-top: 12px; }
-    .edu-bullets li {
-      position: relative; padding-left: 16px; font-size: 14.5px; color: var(--text-secondary);
-      line-height: 1.6; margin-bottom: 8px; font-weight: 300;
-    }
+    .edu-bullets li { position: relative; padding-left: 16px; font-size: 14.5px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 8px; font-weight: 300; }
     .edu-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--accent); opacity: 0.7; font-size: 13px; }
     .edu-bullets strong { color: var(--text); font-weight: 700; font-size: 13.5px; font-family: sans-serif; letter-spacing: 0.3px;}
 
     /* ── Skills ── */
     .skills-row { display: flex; flex-wrap: wrap; gap: 10px; }
-    .skill-pill {
-      font-family: sans-serif; font-size: 12px; font-weight: 400; letter-spacing: 0.5px;
-      padding: 6px 16px; border-radius: 4px; background: var(--surface); color: var(--text); border: 1px solid var(--border);
-      transition: all .2s ease; cursor: default;
-    }
+    .skill-pill { font-family: sans-serif; font-size: 12px; font-weight: 400; letter-spacing: 0.5px; padding: 6px 16px; border-radius: 4px; background: var(--surface); color: var(--text); border: 1px solid var(--border); transition: all .2s ease; cursor: default; }
     .skill-pill:hover { background: var(--accent-dim); border-color: var(--border-hover); color: var(--accent-soft); }
 
     /* ── Cards (Projects) ── */
     .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(290px,1fr)); }
-    .card {
-      display: flex; flex-direction: column; text-decoration: none; color: inherit;
-      padding: 28px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface);
-      transition: all .3s ease; position: relative; overflow: hidden;
-    }
-    .card::before {
-      content: ''; position: absolute; inset: 0; background: radial-gradient(circle 250px at var(--mx,50%) var(--my,0%), rgba(147, 197, 253, 0.08), transparent 100%);
-      opacity: 0; transition: opacity .4s; pointer-events: none;
-    }
+    .card { display: flex; flex-direction: column; text-decoration: none; color: inherit; padding: 28px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); transition: all .3s ease; position: relative; overflow: hidden; }
+    .card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle 250px at var(--mx,50%) var(--my,0%), rgba(147, 197, 253, 0.08), transparent 100%); opacity: 0; transition: opacity .4s; pointer-events: none; }
     .card:hover { border-color: var(--border-hover); background: var(--surface-hover); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
     .card:hover::before { opacity:1; }
 
@@ -260,27 +236,51 @@
     .tag { font-family: sans-serif; font-size: 11px; font-weight: 400; padding: 4px 10px; border-radius: 4px; background: var(--bg); color: var(--text-secondary); border: 1px solid var(--border); letter-spacing: 0.5px; }
 
     /* ── Modal & Espandibili ── */
-    .modal-overlay {
-      position: fixed; inset: 0; background: rgba(10, 25, 47, 0.85); backdrop-filter: blur(8px);
-      z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding: 24px;
-    }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(10, 25, 47, 0.85); backdrop-filter: blur(8px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding: 24px; }
     .modal-overlay.active { opacity: 1; pointer-events: auto; }
-    .modal-content {
-      background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
-      width: 100%; max-width: 850px; max-height: 90vh; overflow-y: auto;
-      transform: translateY(20px) scale(0.98); transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-    }
+    .modal-content { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; width: 100%; max-width: 850px; max-height: 90vh; overflow-y: auto; transform: translateY(20px) scale(0.98); transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
     .modal-overlay.active .modal-content { transform: translateY(0) scale(1); }
-    .modal-close {
-      position: absolute; top: 20px; right: 20px; background: var(--surface); border: 1px solid var(--border);
-      color: var(--text-tertiary); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; z-index: 2;
-    }
+    .modal-close { position: absolute; top: 20px; right: 20px; background: var(--surface); border: 1px solid var(--border); color: var(--text-tertiary); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; z-index: 2; }
     .modal-close:hover { background: var(--border-hover); color: var(--text); }
     .modal-body { padding: 40px; }
     .modal-title { font-size: 24px; font-weight: 700; color: var(--text); margin-bottom: 8px; letter-spacing: -0.5px;}
     .modal-subtitle { font-family: sans-serif; font-size: 14px; font-weight: 700; color: var(--accent); margin-bottom: 24px; letter-spacing: 0.5px;}
     
-    /* Box Espandibili (Accordion) */
+    /* Colab Link Preview Card */
+    .colab-preview {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      margin: 16px 0 24px 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .colab-preview:hover {
+      background: var(--surface-hover);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    }
+    .colab-icon {
+      width: 44px;
+      height: 44px;
+      background: #fff;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .colab-info { display: flex; flex-direction: column; }
+    .colab-title { font-family: sans-serif; font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .colab-desc { font-family: sans-serif; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; line-height: 1.4; }
+    .colab-url { font-family: sans-serif; font-size: 11px; color: var(--text-tertiary); display: flex; align-items: center; gap: 4px; }
+
+    /* Box Espandibili */
     .course-box { margin-bottom: 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); overflow: hidden; transition: all 0.2s ease; }
     .course-box[open] { border-color: var(--accent); background: var(--bg); }
     .course-box summary { padding: 18px 20px; font-size: 16px; font-weight: 700; color: var(--text); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
@@ -326,6 +326,7 @@
       .modal-body { padding: 24px; }
       .demo-badge { display: none; }
       .media-grid { grid-template-columns: 1fr; gap: 24px; }
+      .colab-preview { flex-direction: column; align-items: flex-start; }
     }
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
@@ -526,13 +527,29 @@
       <h3 class="modal-title">Bloomberg Data Pipeline</h3>
       <p class="modal-subtitle">Gold Grain Capital · Workflow Simulation</p>
       
-      <div class="media-container" style="height: auto; aspect-ratio: unset; background: transparent; border: none;">
-        <video controls preload="metadata" playsinline style="width: 100%; border-radius: 8px; display: block; border: 1px solid var(--border);">
+      <div class="media-container" style="height: auto; aspect-ratio: unset; background: transparent; border: none; margin-bottom: 0;">
+        <video controls controlsList="nodownload" oncontextmenu="return false;" preload="metadata" playsinline style="width: 100%; border-radius: 8px; display: block; border: 1px solid var(--border);">
           <source src="assets/presentazioni/Bloomberg.mp4" type="video/mp4">
           Il tuo browser non supporta il tag video.
         </video>
       </div>
 
+      <a href="https://colab.research.google.com/drive/1yq9KfTZP8Wc2UZRd3r15Odt8_4MvFbo5?usp=sharing" target="_blank" rel="noopener noreferrer" class="colab-preview">
+        <div class="colab-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f9ab00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+          </svg>
+        </div>
+        <div class="colab-info">
+          <span class="colab-title">Interactive Python Notebook</span>
+          <span class="colab-desc">Esplora il codice, esegui la pipeline di elaborazione e visualizza i risultati in tempo reale tramite Google Colab.</span>
+          <span class="colab-url">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+            colab.research.google.com
+          </span>
+        </div>
+      </a>
+      
       <p class="modal-text">In questo workflow, estraggo i dati di pricing e liquidità da <strong>Bloomberg Terminal</strong> tramite API/Excel Add-in. Successivamente, consolido i dataset cross-asset incrociando diverse fonti tramite chiavi composite. Infine, una macro VBA automatizza la formattazione condizionale e i controlli di integrità, risparmiando circa 3 ore di lavoro manuale a settimana.</p>
     </div>
   </div>
@@ -548,7 +565,7 @@
         <div>
           <span class="media-item-label">Hardware Prototype (Video)</span>
           <div class="media-container" style="height: auto; aspect-ratio: unset; background: transparent; border: none;">
-            <video controls preload="metadata" playsinline style="width: 100%; border-radius: 8px; display: block; border: 1px solid var(--border);"><source src="assets/sleep-sensor.mp4" type="video/mp4">Il tuo browser non supporta il tag video.</video>
+            <video controls controlsList="nodownload" oncontextmenu="return false;" preload="metadata" playsinline style="width: 100%; border-radius: 8px; display: block; border: 1px solid var(--border);"><source src="assets/sleep-sensor.mp4" type="video/mp4">Il tuo browser non supporta il tag video.</video>
           </div>
         </div>
         <div>
@@ -591,9 +608,6 @@
             <a class="btn" href="assets/presentazioni/Cloud.pdf" target="_blank" rel="noopener noreferrer"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>Full screen</a>
             <a class="btn" href="assets/presentazioni/Cloud.pdf" download><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>Download PDF</a>
           </div>
-          <p class="modal-text" style="margin-top: 16px;">
-            In questo progetto abbiamo analizzato e implementato un'architettura cloud-based. [Sostituisci questo testo con una breve descrizione del lavoro che hai svolto per Cloud Technologies, es: utilizzo di servizi AWS/GCP, creazione di pipeline dati scalabili, ecc.]
-          </p>
         </div>
       </details>
 
@@ -606,7 +620,6 @@
           <div class="media-container" style="aspect-ratio: 16/9;">
             <span style="color: var(--text-tertiary); font-family: sans-serif; font-size: 13px;">[ Placeholder for R/Python analysis report ]</span>
           </div>
-          <p class="modal-text">Descrizione del progetto. Ad esempio: analisi di inferenza statistica, test d'ipotesi o regressione lineare multipla applicata a un dataset reale.</p>
         </div>
       </details>
 
@@ -619,7 +632,6 @@
           <div class="media-container" style="aspect-ratio: 16/9;">
             <span style="color: var(--text-tertiary); font-family: sans-serif; font-size: 13px;">[ Placeholder for MongoDB/Neo4j schemas or report ]</span>
           </div>
-          <p class="modal-text">Progettazione e interrogazione di un database NoSQL (es. MongoDB, Neo4j) per un caso d'uso specifico di Big Data Analytics.</p>
         </div>
       </details>
 
@@ -632,7 +644,6 @@
           <div class="media-container" style="aspect-ratio: 16/9;">
             <span style="color: var(--text-tertiary); font-family: sans-serif; font-size: 13px;">[ Placeholder for Mobile App Demo video or Figma prototype ]</span>
           </div>
-          <p class="modal-text">Sviluppo di un prototipo di app mobile per la data visualization o la raccolta di dati sul campo.</p>
         </div>
       </details>
 
@@ -676,11 +687,11 @@
     modal.classList.remove('active');
     document.body.style.overflow = 'auto'; 
 
-    // Pausa i video
+    // Pausa tutti i video quando si chiude la modale
     const videos = modal.querySelectorAll('video');
     videos.forEach(v => v.pause());
     
-    // Chiude i box espandibili
+    // Chiude i box espandibili (accordion)
     if(id === 'master-modal') {
       const details = modal.querySelectorAll('details');
       details.forEach(d => d.removeAttribute('open'));
