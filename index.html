@@ -192,7 +192,7 @@
       border: 1px solid var(--border); transition: all 0.2s ease;
       display: flex; align-items: center; gap: 5px; letter-spacing: 0.5px;
     }
-    .tl-clickable:hover .demo-badge, .edu-clickable:hover .demo-badge { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+    .tl-clickable:hover .demo-badge, .edu-clickable:hover .demo-badge, .card:hover .demo-badge { background: var(--accent); color: var(--bg); border-color: var(--accent); }
 
     /* ── Education ── */
     .edu-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); }
@@ -219,15 +219,15 @@
 
     /* ── Cards (Projects) ── */
     .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(290px,1fr)); }
-    .card { display: flex; flex-direction: column; text-decoration: none; color: inherit; padding: 28px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); transition: all .3s ease; position: relative; overflow: hidden; }
+    /* RIMOSSO tag 'a' base e aggiunto stile per renderlo div cliccabile */
+    .card { display: flex; flex-direction: column; color: inherit; padding: 28px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); transition: all .3s ease; position: relative; overflow: hidden; cursor: pointer;}
     .card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle 250px at var(--mx,50%) var(--my,0%), rgba(147, 197, 253, 0.08), transparent 100%); opacity: 0; transition: opacity .4s; pointer-events: none; }
-    .card:hover { border-color: var(--border-hover); background: var(--surface-hover); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+    .card:hover { border-color: var(--accent); background: var(--surface-hover); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
     .card:hover::before { opacity:1; }
 
     .card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; }
     .card-number { font-family: sans-serif; font-size: 12px; font-weight: 400; color: var(--text-tertiary); letter-spacing: 1px; }
-    .card-arrow { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 6px; color: var(--text-tertiary); transition: all .2s; }
-    .card:hover .card-arrow { color: var(--accent); transform: translate(3px,-3px); }
+    
     .card h3 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 8px; transition: color .2s; }
     .card:hover h3 { color: var(--accent-soft); }
     .card-date { font-family: sans-serif; font-size: 12px; color: var(--text-tertiary); margin-bottom: 16px; letter-spacing: 0.5px; }
@@ -503,16 +503,18 @@
         <p class="section-label">Selected Work</p>
         <h2 class="section-title">Hackathons & Competitions</h2>
         <div class="grid">
-          <a class="card" href="progetti/itadatahack-2025.html">
+          
+          <div class="card" onclick="openModal('itadatahack-modal')">
             <div class="card-top">
               <span class="card-number">01</span>
-              <span class="card-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg></span>
+              <span class="demo-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>VIEW PROJECT</span>
             </div>
             <h3>ITADATAhack 2025</h3>
             <p class="card-date">Aug 2025 — Sep 2025</p>
             <p class="card-desc">Assisted a three-person team in building two Python machine learning classifiers on HDFS logs to predict anomaly category and type. Ranked 6th out of 15.</p>
             <div class="card-tags"><span class="tag">Python</span><span class="tag">ML</span><span class="tag">Classification</span></div>
-          </a>
+          </div>
+          
         </div>
       </section>
     </main>
@@ -530,6 +532,7 @@
 
   </div>
 </div>
+
 
 <div class="modal-overlay" id="bloomberg-modal" onclick="closeModal(event, 'bloomberg-modal')">
   <div class="modal-content" onclick="event.stopPropagation()">
@@ -779,6 +782,47 @@ plt.show()</code></pre>
   </div>
 </div>
 
+<div class="modal-overlay" id="itadatahack-modal" onclick="closeModal(event, 'itadatahack-modal')">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal(event, 'itadatahack-modal')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+    <div class="modal-body">
+      <h3 class="modal-title">ITADATAhack 2025</h3>
+      <p class="modal-subtitle">Machine Learning Classification on HDFS Logs</p>
+      
+      <p class="modal-text" style="margin-bottom: 24px;">
+        This hackathon focused on developing a predictive model capable of classifying anomaly categories and types from Hadoop Distributed File System (HDFS) logs. Our team successfully ranked 6th out of 15 participating teams.
+      </p>
+
+      <details class="course-box">
+        <summary>
+          Project Overview & Methodology
+          <svg class="box-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </summary>
+        <div class="course-content">
+          <p class="modal-text">
+            <strong>Role:</strong> Data Scientist / ML Engineer Assistant<br><br>
+            <strong>The Challenge:</strong> The main objective was to analyze raw system logs and identify patterns that precede system failures or anomalies. This required extensive data preprocessing, feature engineering on text logs, and building robust classification algorithms.<br><br>
+            <strong>Our Approach:</strong> We utilized Python as our primary tool. We parsed the semi-structured HDFS log data, applied TF-IDF for text feature extraction, and trained two distinct ML classifiers (e.g., Random Forest, XGBoost) to predict both the broad anomaly category and the specific anomaly type.
+          </p>
+        </div>
+      </details>
+
+      <details class="course-box">
+        <summary>
+          Code & Implementation (Placeholder)
+          <svg class="box-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </summary>
+        <div class="course-content">
+          <div class="media-container" style="aspect-ratio: 16/9;">
+            <span style="color: var(--text-tertiary); font-family: sans-serif; font-size: 13px;">[ Placeholder for Github link or Python Notebook snippet ]</span>
+          </div>
+        </div>
+      </details>
+
+    </div>
+  </div>
+</div>
+
 <script>
   // Hover Effect sulle Card
   document.querySelectorAll('.card').forEach(card => {
@@ -820,10 +864,8 @@ plt.show()</code></pre>
     videos.forEach(v => v.pause());
     
     // Chiude i box espandibili
-    if(id === 'master-modal') {
-      const details = modal.querySelectorAll('details');
-      details.forEach(d => d.removeAttribute('open'));
-    }
+    const details = modal.querySelectorAll('details');
+    details.forEach(d => d.removeAttribute('open'));
   }
   
   // Chiude col tasto Esc
