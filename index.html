@@ -149,7 +149,7 @@
       margin-bottom: 32px; color: var(--text);
     }
 
-    /* ── Timeline ── */
+    /* ── Timeline (Experience) ── */
     .cv-section { animation: fadeUp .8s ease both .4s; }
     .timeline { position: relative; padding-left: 28px; }
     .timeline::before {
@@ -180,8 +180,11 @@
     }
     .tl-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--accent); opacity: 0.7; }
 
-    /* ── Clickable Areas (Badges) ── */
-    .tl-clickable { cursor: pointer; padding: 12px; margin: -12px; border-radius: 8px; transition: background 0.2s ease, transform 0.2s ease; }
+    /* ── Interactive Areas (Badges) ── */
+    .tl-clickable {
+      cursor: pointer; padding: 12px; margin: -12px; border-radius: 8px;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
     .tl-clickable:hover { background: var(--surface); }
     .tl-clickable:hover .tl-role { color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
     
@@ -192,7 +195,9 @@
       border: 1px solid var(--border); transition: all 0.2s ease;
       display: flex; align-items: center; gap: 5px; letter-spacing: 0.5px;
     }
-    .tl-clickable:hover .demo-badge, .edu-clickable:hover .demo-badge { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+    .tl-clickable:hover .demo-badge, .edu-clickable:hover .demo-badge {
+      background: var(--accent); color: var(--bg); border-color: var(--accent);
+    }
 
     /* ── Education ── */
     .edu-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); }
@@ -246,41 +251,69 @@
     .modal-title { font-size: 24px; font-weight: 700; color: var(--text); margin-bottom: 8px; letter-spacing: -0.5px;}
     .modal-subtitle { font-family: sans-serif; font-size: 14px; font-weight: 700; color: var(--accent); margin-bottom: 24px; letter-spacing: 0.5px;}
     
-    /* Colab Link Preview Card */
-    .colab-preview {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 16px;
-      margin: 16px 0 24px 0;
-      background: var(--surface);
+    /* ── Jupyter/Colab Cell Simulator ── */
+    .notebook-cell {
+      background: #0d1117; 
       border: 1px solid var(--border);
       border-radius: 8px;
-      text-decoration: none;
-      transition: all 0.2s ease;
+      overflow: hidden;
+      margin: 16px 0 24px 0;
+      position: relative;
     }
-    .colab-preview:hover {
-      background: var(--surface-hover);
-      border-color: var(--accent);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-    }
-    .colab-icon {
-      width: 44px;
-      height: 44px;
-      background: #fff;
-      border-radius: 8px;
+    .notebook-header {
+      background: var(--surface);
+      padding: 8px 16px;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+      border-bottom: 1px solid var(--border);
     }
-    .colab-info { display: flex; flex-direction: column; }
-    .colab-title { font-family: sans-serif; font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
-    .colab-desc { font-family: sans-serif; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; line-height: 1.4; }
-    .colab-url { font-family: sans-serif; font-size: 11px; color: var(--text-tertiary); display: flex; align-items: center; gap: 4px; }
+    .notebook-title {
+      font-family: sans-serif; font-size: 12px; font-weight: 700;
+      color: var(--text-secondary); display: flex; align-items: center; gap: 8px;
+    }
+    .colab-open-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(249, 171, 0, 0.15); 
+      color: #f9ab00; border: 1px solid rgba(249, 171, 0, 0.3);
+      padding: 4px 10px; border-radius: 4px;
+      font-family: sans-serif; font-size: 11px; font-weight: 700; text-decoration: none;
+      transition: all 0.2s;
+    }
+    .colab-open-btn:hover { background: #f9ab00; color: #0a192f; }
+    .notebook-input {
+      padding: 16px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 13px; color: #e6edf3;
+      line-height: 1.6; overflow-x: auto;
+    }
+    .py-k { color: #ff7b72; font-weight: bold; } 
+    .py-f { color: #d2a8ff; } 
+    .py-s { color: #a5d6ff; } 
+    .py-c { color: #8b949e; font-style: italic; } 
+    .py-n { color: #79c0ff; } 
 
-    /* Box Espandibili */
+    .notebook-output {
+      background: #010409; 
+      padding: 16px;
+      border-top: 1px dashed rgba(255,255,255,0.1);
+      font-family: sans-serif;
+    }
+    .output-label {
+      font-size: 10px; color: var(--green);
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: block;
+    }
+    .pandas-table {
+      width: 100%; border-collapse: collapse; font-size: 12px; color: var(--text-secondary);
+      text-align: right;
+    }
+    .pandas-table th { font-weight: 700; border-bottom: 1px solid var(--border); padding: 6px; color: var(--text); }
+    .pandas-table td { padding: 6px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .pandas-table tr:last-child td { border-bottom: none; }
+    .pandas-table tr:hover td { background: rgba(255,255,255,0.03); }
+    .pandas-table th:first-child, .pandas-table td:first-child { text-align: left; font-weight: bold; color: var(--accent-soft); }
+
+    /* Box Espandibili (Accordion) */
     .course-box { margin-bottom: 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); overflow: hidden; transition: all 0.2s ease; }
     .course-box[open] { border-color: var(--accent); background: var(--bg); }
     .course-box summary { padding: 18px 20px; font-size: 16px; font-weight: 700; color: var(--text); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
@@ -326,7 +359,6 @@
       .modal-body { padding: 24px; }
       .demo-badge { display: none; }
       .media-grid { grid-template-columns: 1fr; gap: 24px; }
-      .colab-preview { flex-direction: column; align-items: flex-start; }
     }
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
@@ -534,22 +566,78 @@
         </video>
       </div>
 
-      <a href="https://colab.research.google.com/drive/1yq9KfTZP8Wc2UZRd3r15Odt8_4MvFbo5?usp=sharing" target="_blank" rel="noopener noreferrer" class="colab-preview">
-        <div class="colab-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f9ab00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
-          </svg>
-        </div>
-        <div class="colab-info">
-          <span class="colab-title">Interactive Python Notebook</span>
-          <span class="colab-desc">Esplora il codice, esegui la pipeline di elaborazione e visualizza i risultati in tempo reale tramite Google Colab.</span>
-          <span class="colab-url">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
-            colab.research.google.com
+      <div class="notebook-cell">
+        <div class="notebook-header">
+          <span class="notebook-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path></svg>
+            Pricing_Simulation.ipynb
           </span>
+          <a href="https://colab.research.google.com/drive/1yq9KfTZP8Wc2UZRd3r15Odt8_4MvFbo5?usp=sharing" target="_blank" rel="noopener noreferrer" class="colab-open-btn">
+            Open in Google Colab
+          </a>
         </div>
-      </a>
-      
+
+        <div class="notebook-input">
+<pre style="margin: 0;"><code><span class="py-k">import</span> pandas <span class="py-k">as</span> pd
+<span class="py-k">import</span> numpy <span class="py-k">as</span> np
+
+<span class="py-c"># Calcolo metriche di rischio e performance per i prodotti strutturati</span>
+<span class="py-k">def</span> <span class="py-f">calc_sharpe</span>(returns, risk_free_rate=<span class="py-n">0.02</span>):
+    excess_returns = returns - risk_free_rate/<span class="py-n">252</span>
+    <span class="py-k">return</span> np.sqrt(<span class="py-n">252</span>) * excess_returns.mean() / excess_returns.std()
+
+<span class="py-c"># Mostra le prime righe del dataframe consolidato</span>
+portfolio_metrics.head()</code></pre>
+        </div>
+
+        <div class="notebook-output">
+          <span class="output-label">Out [1]: Pandas.DataFrame</span>
+          <div style="overflow-x: auto;">
+            <table class="pandas-table">
+              <thead>
+                <tr>
+                  <th>Ticker</th>
+                  <th>Ann_Return</th>
+                  <th>Volatility</th>
+                  <th>Sharpe_Ratio</th>
+                  <th>Liquidity_Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>SX5E Index</td>
+                  <td>0.124</td>
+                  <td>0.185</td>
+                  <td>0.56</td>
+                  <td>High</td>
+                </tr>
+                <tr>
+                  <td>SPX Index</td>
+                  <td>0.152</td>
+                  <td>0.160</td>
+                  <td>0.82</td>
+                  <td>High</td>
+                </tr>
+                <tr>
+                  <td>LEONTEQ_1</td>
+                  <td>0.085</td>
+                  <td>0.120</td>
+                  <td>0.54</td>
+                  <td>Medium</td>
+                </tr>
+                <tr>
+                  <td>MAREX_EQ</td>
+                  <td>0.102</td>
+                  <td>0.145</td>
+                  <td>0.62</td>
+                  <td>Low</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
       <p class="modal-text">In questo workflow, estraggo i dati di pricing e liquidità da <strong>Bloomberg Terminal</strong> tramite API/Excel Add-in. Successivamente, consolido i dataset cross-asset incrociando diverse fonti tramite chiavi composite. Infine, una macro VBA automatizza la formattazione condizionale e i controlli di integrità, risparmiando circa 3 ore di lavoro manuale a settimana.</p>
     </div>
   </div>
@@ -687,11 +775,11 @@
     modal.classList.remove('active');
     document.body.style.overflow = 'auto'; 
 
-    // Pausa tutti i video quando si chiude la modale
+    // Pausa i video
     const videos = modal.querySelectorAll('video');
     videos.forEach(v => v.pause());
     
-    // Chiude i box espandibili (accordion)
+    // Chiude i box espandibili
     if(id === 'master-modal') {
       const details = modal.querySelectorAll('details');
       details.forEach(d => d.removeAttribute('open'));
