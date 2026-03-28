@@ -197,6 +197,8 @@
     .viewer-box { border: 1px solid var(--border); border-radius: 8px; background: #f8fafc; position: relative; overflow: hidden; margin-bottom: 16px; }
     .viewer-pre { margin: 0; padding: 16px; color: #1e293b; font: 13px/1.6 'Courier New', monospace; white-space: pre-wrap; word-break: break-word; overflow: auto; max-height: 220px; transition: max-height 0.5s var(--ease-out-expo); }
     .viewer-box[data-collapsed="true"]::after { content: ""; position: absolute; inset: auto 0 0 0; height: 60px; background: linear-gradient(to bottom, rgba(248,250,252,0), rgba(248,250,252,1)); pointer-events: none; }
+    .code-line { display: block; padding: 0 4px; margin: 0 -4px; border-radius: 3px; transition: background 0.3s, box-shadow 0.3s; }
+    .code-line-hl { background: rgba(59,130,246,0.1); box-shadow: inset 3px 0 0 #3b82f6; }
 
     .notebook-cell { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 16px 0 24px 0; box-shadow: 0 4px 16px rgba(0,0,0,0.06); transition: border-color 0.3s; }
     .notebook-cell:hover { border-color: var(--border-hover); }
@@ -537,7 +539,7 @@ const hiPy=(code)=>{return code.replace(/&/g,'&amp;').replace(/</g,'&lt;').repla
 .replace(/\b(\d+\.?\d*)\b/g,'<span class="py-n">$1</span>')
 .replace(/\.([a-zA-Z_]\w*)\s*\(/g,'.<span class="py-f">$1</span>(')
 .replace(/@(\w+)/g,'<span class="py-k">@$1</span>');};
-const render=()=>{const l=raw.split('\n');const m=l.length>PL;let code;if(col&&m){code=l.slice(0,PL).join('\n')+'\n\n... (click "Show all" to view the rest of the code) ...'}else{code=raw;}cE.innerHTML=hiPy(code);vb.dataset.collapsed=col&&m?'true':'false';cE.style.maxHeight=col&&m?'220px':'600px';tB.hidden=!m;tB.textContent=col?'Show all':'Show less';};
+const render=()=>{const l=raw.split('\n');const m=l.length>PL;let srcLines;if(col&&m){srcLines=l.slice(0,PL);srcLines.push('','... (click "Show all" to view the rest of the code) ...');}else{srcLines=l;}const highlighted=hiPy(srcLines.join('\n'));const hLines=highlighted.split('\n');cE.innerHTML=hLines.map((ln,i)=>'<span class="code-line" data-ln="'+(i+1)+'">'+ln+'</span>').join('\n');vb.dataset.collapsed=col&&m?'true':'false';cE.style.maxHeight=col&&m?'220px':'600px';tB.hidden=!m;tB.textContent=col?'Show all':'Show less';};
 const load=async(src)=>{cE.textContent='# Loading file...';raw='';dB.removeAttribute('href');try{const r=await fetch(src,{cache:'no-store'});if(!r.ok)throw 0;raw=await r.text();dB.href=src;render();}catch{cE.textContent='# Error: Cannot load file at: '+src;vb.dataset.collapsed='false';tB.hidden=true;}};
 tabs.innerHTML=files.map((f,i)=>`<button class="code-tab" type="button" data-i="${i}" aria-selected="${i===0}">${f.label}</button>`).join('');
 const sA=i=>tabs.querySelectorAll('.code-tab').forEach((b,k)=>b.setAttribute('aria-selected',k===i));
@@ -559,6 +561,37 @@ tB.addEventListener('click',()=>{col=!col;render();});
     {icon:"\ud83c\udfaf",title:"Evaluation (G-Mean)",sub:"geometric_mean_score()",desc:"On the 20\u0025 held aside, the model\u2019s predictions are compared with the true answers. The G-Mean is strict: if the model ignores even one rare category, the score drops sharply."},
     {icon:"\ud83c\udfc1",title:"Final Prediction",sub:"submission.to_csv()",desc:"Finally, the trained model is applied to the test set (data with no answers). The numeric predictions are converted back into the original category names, and the result is saved as the submission file."}
   ];
+  // Map each walkthrough step to the corresponding line numbers in Task 1.py
+  var STEP_LINES=[
+    [7,8],          // Step 0: read_csv
+    [10,11],        // Step 1: drop, y=
+    [13,14],        // Step 2: LabelEncoder
+    [16,17,18],     // Step 3: train_test_split
+    [20,21,22,23],  // Step 4: StandardScaler
+    [25,26,27,28,29,30], // Step 5: RandomForestClassifier
+    [32,33,34,35],  // Step 6: predict, gmean
+    [37,38,39,40,41,42,43,44] // Step 7: submission
+  ];
+
+  function highlightCode(s){
+    var cE=document.getElementById('codeArea');
+    var vb=cE?cE.closest('.viewer-box'):null;
+    if(!cE||!vb)return;
+    // Auto-expand code if collapsed
+    var tB=document.getElementById('toggleBtn');
+    if(vb.dataset.collapsed==='true'&&tB){tB.click();}
+    // Remove all existing highlights
+    cE.querySelectorAll('.code-line-hl').forEach(function(el){el.classList.remove('code-line-hl');});
+    // Add highlights to matching lines
+    var lines=STEP_LINES[s]||[];
+    var first=null;
+    lines.forEach(function(ln){
+      var el=cE.querySelector('.code-line[data-ln="'+ln+'"]');
+      if(el){el.classList.add('code-line-hl');if(!first)first=el;}
+    });
+    // Scroll first highlighted line into view within the pre
+    if(first){setTimeout(function(){first.scrollIntoView({behavior:'smooth',block:'center'});},120);}
+  }
   var DATA=[
     {id:"T001",an:1,cat:"DataLoss",e5:3,e9:2,e22:1,sl:12},
     {id:"T002",an:0,cat:"Normal",e5:3,e9:3,e22:1,sl:19},
@@ -604,13 +637,13 @@ tB.addEventListener('click',()=>{col=!col;render();});
 
   function renderSubmission(el){var preds=[{id:"T101",cat:"NetworkErr"},{id:"T102",cat:"Normal"},{id:"T103",cat:"SlowWrite"}];var h='<div class="wt-tbl-wrap"><div style="font:400 13px/1 \'Courier New\',monospace;color:var(--text-tertiary);margin-bottom:10px">submission.dsv</div><table class="wt-tbl"><thead><tr><th>TRACE_ID</th><th style="background:rgba(34,197,94,.08)">ANOMALY_CATEGORY</th></tr></thead><tbody>';preds.forEach(function(p){h+='<tr><td>'+p.id+'</td><td class="'+catCls(p.cat)+'">'+p.cat+'</td></tr>';});h+='</tbody></table></div>';el.innerHTML=h;}
 
-  function render(){renderSteps();renderCard();renderTable();var p=document.getElementById("wtPrev"),n=document.getElementById("wtNext");if(p)p.disabled=step===0;if(n){n.disabled=step===STEPS.length-1;n.textContent=step===STEPS.length-1?"Done":"Next \u2192";}}
+  function render(){renderSteps();renderCard();renderTable();highlightCode(step);var p=document.getElementById("wtPrev"),n=document.getElementById("wtNext");if(p)p.disabled=step===0;if(n){n.disabled=step===STEPS.length-1;n.textContent=step===STEPS.length-1?"Done":"Next \u2192";}}
 
   var p=document.getElementById("wtPrev"),n=document.getElementById("wtNext");
   if(p)p.addEventListener("click",function(){if(step>0){step--;render();}});
   if(n)n.addEventListener("click",function(){if(step<STEPS.length-1){step++;render();}});
 
-  function hookTabs(){var tabs=document.querySelector('#codeViewer .code-tabs');if(!tabs)return;tabs.addEventListener('click',function(e){var b=e.target.closest('.code-tab');if(!b)return;var idx=+b.dataset.i;var wrap=document.getElementById('wtWrap');if(wrap){if(idx===0){wrap.classList.add('active');render();}else{wrap.classList.remove('active');}}},true);}
+  function hookTabs(){var tabs=document.querySelector('#codeViewer .code-tabs');if(!tabs)return;tabs.addEventListener('click',function(e){var b=e.target.closest('.code-tab');if(!b)return;var idx=+b.dataset.i;var wrap=document.getElementById('wtWrap');if(wrap){if(idx===0){wrap.classList.add('active');render();}else{wrap.classList.remove('active');var cE=document.getElementById('codeArea');if(cE)cE.querySelectorAll('.code-line-hl').forEach(function(el){el.classList.remove('code-line-hl');});}}},true);}
 
   var origOpen=window.openModal;
   window.openModal=function(id){origOpen(id);if(id==='itadatahack-modal'){setTimeout(function(){hookTabs();var wrap=document.getElementById('wtWrap');if(wrap){wrap.classList.add('active');step=0;render();}},150);}};
