@@ -194,13 +194,18 @@
     .code-tab:hover { border-color: var(--border-hover); background: var(--surface-hover); }
     .code-tab[aria-selected="true"] { background: var(--accent-dim); border-color: var(--accent); color: var(--accent-soft); }
     .code-actions-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
-    .viewer-box { border: 1px solid var(--border); border-radius: 8px; background: #f8fafc; position: relative; overflow: hidden; margin-bottom: 16px; }
-    .viewer-pre { margin: 0; padding: 16px; color: #1e293b; font: 13px/1.6 'Courier New', monospace; white-space: pre-wrap; word-break: break-word; overflow: auto; max-height: 220px; transition: max-height 0.5s var(--ease-out-expo); }
-    .viewer-box[data-collapsed="true"]::after { content: ""; position: absolute; inset: auto 0 0 0; height: 60px; background: linear-gradient(to bottom, rgba(248,250,252,0), rgba(248,250,252,1)); pointer-events: none; }
+    .viewer-box { border: 1px solid var(--border); border-radius: 8px; background: #ffffff; position: relative; overflow: hidden; margin-bottom: 16px; }
+    .viewer-pre { margin: 0; padding: 16px; color: #212121; font: 13px/1.6 'Courier New', monospace; white-space: pre-wrap; word-break: break-word; overflow: auto; max-height: 220px; transition: max-height 0.5s var(--ease-out-expo); }
+    .viewer-box[data-collapsed="true"]::after { content: ""; position: absolute; inset: auto 0 0 0; height: 60px; background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1)); pointer-events: none; }
     .code-line { display: block; padding: 0 4px; margin: 0 -4px; border-radius: 3px; transition: background 0.3s, box-shadow 0.3s; }
-    .code-line-hl { background: rgba(59,130,246,0.1); box-shadow: inset 3px 0 0 #3b82f6; }
+    .code-line-hl { background: rgba(59,130,246,0.08); box-shadow: inset 3px 0 0 #3b82f6; }
+    .wt-snippet{margin-top:14px;background:#ffffff;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+    .wt-snippet-header{display:flex;align-items:center;gap:6px;padding:8px 14px;background:#f8f9fa;border-bottom:1px solid var(--border);font:600 11px/1 sans-serif;color:var(--text-tertiary);letter-spacing:0.5px}
+    .wt-snippet-dot{width:7px;height:7px;border-radius:50%;background:#3b82f6;opacity:.6}
+    .wt-snippet-pre{margin:0;padding:14px 16px;font:12.5px/1.7 'Courier New',monospace;color:#212121;overflow-x:auto;white-space:pre}
+    .wt-snippet-pre .py-k{color:#008000;font-weight:bold}.wt-snippet-pre .py-s{color:#ba2121}.wt-snippet-pre .py-c{color:#408080;font-style:italic}.wt-snippet-pre .py-n{color:#666666}.wt-snippet-pre .py-f{color:#0000ff}
 
-    .notebook-cell { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 16px 0 24px 0; box-shadow: 0 4px 16px rgba(0,0,0,0.06); transition: border-color 0.3s; }
+    .notebook-cell { background: #ffffff; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 16px 0 24px 0; box-shadow: 0 4px 16px rgba(0,0,0,0.06); transition: border-color 0.3s; }
     .notebook-cell:hover { border-color: var(--border-hover); }
     .notebook-colab-header { display: flex; align-items: center; gap: 16px; padding: 14px 16px; background: var(--surface); border-bottom: 1px dashed var(--border); text-decoration: none; transition: background 0.3s var(--ease-out-expo); }
     .notebook-colab-header:hover { background: var(--surface-hover); }
@@ -211,9 +216,9 @@
     .colab-url { font-family: sans-serif; font-size: 11px; color: var(--text-tertiary); display: flex; align-items: center; gap: 4px; }
     .colab-action { margin-left: auto; color: var(--text-tertiary); display: flex; align-items: center; padding-left: 12px; transition: all 0.3s var(--ease-out-expo); }
     .notebook-colab-header:hover .colab-action { color: var(--accent); transform: translateX(3px); }
-    .notebook-input { padding: 16px; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #1e293b; line-height: 1.6; overflow-x: auto; }
-    .py-k { color: #d32f2f; font-weight: bold; } .py-s { color: #1565c0; } .py-c { color: #8892b0; font-style: italic; } .py-n { color: #0d47a1; } .py-f { color: #7b1fa2; }
-    .notebook-output { background: #f1f5f9; padding: 16px; border-top: 1px solid var(--border); font-family: sans-serif; }
+    .notebook-input { padding: 16px; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #212121; line-height: 1.6; overflow-x: auto; }
+    .py-k { color: #008000; font-weight: bold; } .py-s { color: #ba2121; } .py-c { color: #408080; font-style: italic; } .py-n { color: #666666; } .py-f { color: #0000ff; }
+    .notebook-output { background: #f8f9fa; padding: 16px; border-top: 1px solid var(--border); font-family: sans-serif; }
     .output-label { font-size: 10px; color: var(--green); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: block; }
     .pandas-table { width: 100%; border-collapse: collapse; font-size: 12px; color: var(--text-secondary); text-align: right; }
     .pandas-table th { font-weight: 700; border-bottom: 1px solid var(--border); padding: 6px; color: var(--text); }
@@ -552,14 +557,22 @@ tB.addEventListener('click',()=>{col=!col;render();});
 // ── Walkthrough Engine ──
 (function(){
   var STEPS=[
-    {icon:"\ud83d\udccb",title:"Original Dataset",sub:"training_categoria.dsv",desc:"This is the starting dataset. Each row is an HDFS trace. The columns include: an identifier (TRACE_ID), whether it is an anomaly (ANOMALY), the anomaly category (ANOMALY_CATEGORY), and the numeric features that describe each trace's behaviour."},
-    {icon:"\u2702\ufe0f",title:"Separate X and y",sub:"train.drop([...]) \u2192 X, y",desc:"Split the \"questions\" from the \"answers\". The greyed-out columns are removed from the features. ANOMALY_CATEGORY becomes the target y \u2014 what the model must learn to predict. Only the numeric feature columns remain as input X."},
-    {icon:"\ud83d\udd22",title:"Label Encoding",sub:"LabelEncoder().fit_transform(y)",desc:"Computers don\u2019t understand words, so each category is turned into a number: \"DataLoss\" \u2192 0, \"NetworkErr\" \u2192 1, \"Normal\" \u2192 2, \"SlowWrite\" \u2192 3. The order is alphabetical."},
-    {icon:"\ud83d\udcca",title:"Train / Validation Split",sub:"train_test_split(80% / 20%)",desc:"The data is split into two parts: 80\u0025 for training (blue rows) and 20\u0025 for testing (orange rows). Stratification ensures that every category is represented proportionally in both parts."},
-    {icon:"\u2696\ufe0f",title:"Standard Scaling",sub:"StandardScaler()",desc:"Features have different scales \u2014 some range from 0 to 5, others from 3 to 21. Scaling brings everything to a comparable range (mean = 0, std = 1). The scaler is fitted only on the training set and then applied to the validation set."},
-    {icon:"\ud83c\udf32",title:"Random Forest",sub:"300 trees voting together",desc:"Imagine 300 \"experts\", each looking at the data from a slightly different angle. Every tree learns simple rules; in the end they all vote, and the most-voted category wins. class_weight=\"balanced\" makes the model pay extra attention to rare categories."},
-    {icon:"\ud83c\udfaf",title:"Evaluation (G-Mean)",sub:"geometric_mean_score()",desc:"On the 20\u0025 held aside, the model\u2019s predictions are compared with the true answers. The G-Mean is strict: if the model ignores even one rare category, the score drops sharply."},
-    {icon:"\ud83c\udfc1",title:"Final Prediction",sub:"submission.to_csv()",desc:"Finally, the trained model is applied to the test set (data with no answers). The numeric predictions are converted back into the original category names, and the result is saved as the submission file."}
+    {icon:"\ud83d\udccb",title:"Original Dataset",sub:"training_categoria.dsv",desc:"This is the starting dataset. Each row is an HDFS trace. The columns include: an identifier (TRACE_ID), whether it is an anomaly (ANOMALY), the anomaly category (ANOMALY_CATEGORY), and the numeric features that describe each trace's behaviour.",
+     code:'train = pd.read_csv("training_categoria.dsv", sep=";")\ntest = pd.read_csv("test_categoria.dsv", sep=";")'},
+    {icon:"\u2702\ufe0f",title:"Separate X and y",sub:"train.drop([...]) \u2192 X, y",desc:"Split the \"questions\" from the \"answers\". The greyed-out columns are removed from the features. ANOMALY_CATEGORY becomes the target y \u2014 what the model must learn to predict. Only the numeric feature columns remain as input X.",
+     code:'X = train.drop(["TRACE_ID", "ANOMALY", "ANOMALY_CATEGORY"], axis=1)\ny = train["ANOMALY_CATEGORY"]'},
+    {icon:"\ud83d\udd22",title:"Label Encoding",sub:"LabelEncoder().fit_transform(y)",desc:"Computers don\u2019t understand words, so each category is turned into a number: \"DataLoss\" \u2192 0, \"NetworkErr\" \u2192 1, \"Normal\" \u2192 2, \"SlowWrite\" \u2192 3. The order is alphabetical.",
+     code:'le = LabelEncoder()\ny = le.fit_transform(y)'},
+    {icon:"\ud83d\udcca",title:"Train / Validation Split",sub:"train_test_split(80% / 20%)",desc:"The data is split into two parts: 80\u0025 for training (blue rows) and 20\u0025 for testing (orange rows). Stratification ensures that every category is represented proportionally in both parts.",
+     code:'X_train, X_val, y_train, y_val = train_test_split(\n    X, y, test_size=0.2, random_state=42, stratify=y\n)'},
+    {icon:"\u2696\ufe0f",title:"Standard Scaling",sub:"StandardScaler()",desc:"Features have different scales \u2014 some range from 0 to 5, others from 3 to 21. Scaling brings everything to a comparable range (mean = 0, std = 1). The scaler is fitted only on the training set and then applied to the validation set.",
+     code:'scaler = StandardScaler()\nX_train = scaler.fit_transform(X_train)\nX_val = scaler.transform(X_val)\nX_test = scaler.transform(test.drop("TRACE_ID", axis=1))'},
+    {icon:"\ud83c\udf32",title:"Random Forest",sub:"300 trees voting together",desc:"Imagine 300 \"experts\", each looking at the data from a slightly different angle. Every tree learns simple rules; in the end they all vote, and the most-voted category wins. class_weight=\"balanced\" makes the model pay extra attention to rare categories.",
+     code:'clf = RandomForestClassifier(\n    n_estimators=300,\n    class_weight="balanced",\n    random_state=42\n)\nclf.fit(X_train, y_train)'},
+    {icon:"\ud83c\udfaf",title:"Evaluation (G-Mean)",sub:"geometric_mean_score()",desc:"On the 20\u0025 held aside, the model\u2019s predictions are compared with the true answers. The G-Mean is strict: if the model ignores even one rare category, the score drops sharply.",
+     code:'y_pred = clf.predict(X_val)\n\ngmean = geometric_mean_score(y_val, y_pred, average=\'weighted\')\nprint("G-Mean Weighted:", gmean)'},
+    {icon:"\ud83c\udfc1",title:"Final Prediction",sub:"submission.to_csv()",desc:"Finally, the trained model is applied to the test set (data with no answers). The numeric predictions are converted back into the original category names, and the result is saved as the submission file.",
+     code:'y_test_pred = clf.predict(X_test)\ny_test_pred_labels = le.inverse_transform(y_test_pred)\n\nsubmission = pd.DataFrame({\n    "TRACE_ID": test["TRACE_ID"],\n    "ANOMALY_CATEGORY": y_test_pred_labels\n})\nsubmission.to_csv("submission.dsv", sep=";", index=False)'}
   ];
   // Map each walkthrough step to the corresponding line numbers in Task 1.py
   var STEP_LINES=[
@@ -575,22 +588,15 @@ tB.addEventListener('click',()=>{col=!col;render();});
 
   function highlightCode(s){
     var cE=document.getElementById('codeArea');
-    var vb=cE?cE.closest('.viewer-box'):null;
-    if(!cE||!vb)return;
-    // Auto-expand code if collapsed
-    var tB=document.getElementById('toggleBtn');
-    if(vb.dataset.collapsed==='true'&&tB){tB.click();}
+    if(!cE)return;
     // Remove all existing highlights
     cE.querySelectorAll('.code-line-hl').forEach(function(el){el.classList.remove('code-line-hl');});
     // Add highlights to matching lines
     var lines=STEP_LINES[s]||[];
-    var first=null;
     lines.forEach(function(ln){
       var el=cE.querySelector('.code-line[data-ln="'+ln+'"]');
-      if(el){el.classList.add('code-line-hl');if(!first)first=el;}
+      if(el){el.classList.add('code-line-hl');}
     });
-    // Scroll first highlighted line into view within the pre
-    if(first){setTimeout(function(){first.scrollIntoView({behavior:'smooth',block:'center'});},120);}
   }
   var DATA=[
     {id:"T001",an:1,cat:"DataLoss",e5:3,e9:2,e22:1,sl:12},
@@ -617,7 +623,9 @@ tB.addEventListener('click',()=>{col=!col;render();});
 
   function renderSteps(){var nav=document.getElementById("wtSteps");if(!nav)return;nav.innerHTML=STEPS.map(function(s,i){return '<button class="wt-step-btn'+(i===step?' active':'')+'" data-i="'+i+'">'+s.icon+' '+(i+1)+'</button>';}).join("");nav.onclick=function(e){var b=e.target.closest(".wt-step-btn");if(b){step=+b.dataset.i;render();}};}
 
-  function renderCard(){var c=document.getElementById("wtCard");if(!c)return;var s=STEPS[step];c.innerHTML='<div class="wt-card"><div class="wt-card-step">Step '+(step+1)+' of '+STEPS.length+'</div><div class="wt-card-title">'+s.icon+' '+s.title+'</div><div class="wt-card-code">'+s.sub+'</div><div class="wt-card-desc">'+s.desc+'</div></div>';}
+  function hiSnippet(code){return code.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/(#.*$)/gm,'<span class="py-c">$1</span>').replace(/\b(import|from|as|def|class|return|if|elif|else|for|in|while|try|except|with|raise|pass|break|continue|and|or|not|is|lambda|yield|True|False|None)\b/g,'<span class="py-k">$1</span>').replace(/\b(print|len|range|int|float|str|list|dict|set|tuple|type|enumerate|zip|map|filter|sorted)\b(?=\s*\()/g,'<span class="py-f">$1</span>').replace(/(["'])(?:(?!\1|\\).|\\.)*?\1/g,function(m){if(m.indexOf('py-')>=0)return m;return '<span class="py-s">'+m+'</span>';}).replace(/\b(\d+\.?\d*)\b/g,'<span class="py-n">$1</span>').replace(/\.([a-zA-Z_]\w*)\s*\(/g,'.<span class="py-f">$1</span>(');}
+
+  function renderCard(){var c=document.getElementById("wtCard");if(!c)return;var s=STEPS[step];var snippet='';if(s.code){snippet='<div class="wt-snippet"><div class="wt-snippet-header"><span class="wt-snippet-dot"></span>Task 1.py \u2014 lines highlighted</div><pre class="wt-snippet-pre">'+hiSnippet(s.code)+'</pre></div>';}c.innerHTML='<div class="wt-card"><div class="wt-card-step">Step '+(step+1)+' of '+STEPS.length+'</div><div class="wt-card-title">'+s.icon+' '+s.title+'</div><div class="wt-card-code">'+s.sub+'</div><div class="wt-card-desc">'+s.desc+'</div>'+snippet+'</div>';}
 
   function renderTable(){
     var el=document.getElementById("wtTable");if(!el)return;
