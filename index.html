@@ -593,9 +593,9 @@ tB.addEventListener('click',()=>{col=!col;render();});
      code:'max_count = df_subset[\'target\'].value_counts().max()\nfor cls in df_subset[\'target\'].unique():\n    df_cls = df_subset[df_subset[\'target\'] == cls]\n    if len(df_cls) < max_count:\n        df_cls_resampled = resample(\n            df_cls, replace=True,\n            n_samples=max_count\n        )'},
     {icon:"\ud83d\ude80",title:"Train LightGBM",sub:"LGBMClassifier \u00d7 5 models",desc:"Each subset trains a LightGBM model: a fast gradient-boosted tree algorithm. With 300 trees per model, each new tree corrects the mistakes of the previous. class_weight=\"balanced\" adds extra focus on rare classes.",
      code:'model = LGBMClassifier(\n    n_estimators=300,\n    learning_rate=0.05,\n    num_leaves=32,\n    class_weight=\'balanced\',\n    subsample=0.8,\n    colsample_bytree=0.8\n)\nmodel.fit(X_balanced, y_balanced)'},
-    {icon:"\ud83d\uddf3\ufe0f",title:"Soft Voting",sub:"Average probabilities across 5 models",desc:"Each model outputs a probability for every class (e.g. 70% type A, 20% type B). The probabilities from all 5 models are averaged. The class with the highest average probability wins \u2014 more accurate than just counting votes.",
+    {icon:"\ud83d\uddf3\ufe0f",title:"Soft Voting",sub:"Average probabilities across 5 models",desc:"Each model outputs a probability for every class (for example: 70% Normal, 20% SlowNode, 10% DiskFail). The probabilities from all 5 models are added together and then averaged. The class with the highest average probability is chosen as the final prediction. This approach is more reliable than simply letting each model pick one class and counting votes.",
      code:'# Each model adds its probabilities\npred_probs += model.predict_proba(X_test)\n\n# Average across all models\npred_probs /= n_models\ny_test_pred = le.inverse_transform(\n    np.argmax(pred_probs, axis=1)\n)'},
-    {icon:"\ud83c\udfc1",title:"Save Predictions",sub:"submission.to_csv()",desc:"Convert the numeric predictions back into the original anomaly type names, and save the result as the submission file.",
+    {icon:"\ud83c\udfc1",title:"Save Predictions",sub:"submission.to_csv()",desc:"The final step: the averaged probabilities have already selected the best class for each trace. Now the numeric labels are converted back into the original anomaly type names (DiskFail, NetDelay, Normal, SlowNode) and saved into a .dsv file ready for submission.",
      code:'output = pd.DataFrame({\n    "TRACE_ID": test_ids,\n    "ANOMALY_TYPE": y_test_pred\n})\noutput.to_csv("predictions_tipologia.dsv",\n              sep=\';\', index=False)'}
   ];
   var LINES2=[ [29,30,31,32,33,34],[38,39,40,41,42],[49,50,51,52,53,54,55],[61,62,63],[73,74,75,76,77,78,79,80,81,82],[88,89,90,91,92,93,94,95,96,97,98],[103,104,105,106,107],[111,112,113] ];
@@ -650,9 +650,91 @@ tB.addEventListener('click',()=>{col=!col;render();});
   function renderCard(){var c=document.getElementById("wtCard");if(!c)return;var st=curSteps();var s=st[step];var snippet='';if(s.code){snippet='<div class="wt-snippet"><div class="wt-snippet-header"><span class="wt-snippet-dot"></span>'+taskFile()+' \u2014 corresponding code</div><pre class="wt-snippet-pre">'+hiSnippet(s.code)+'</pre></div>';}c.innerHTML='<div class="wt-card"><div class="wt-card-step">Step '+(step+1)+' of '+st.length+'</div><div class="wt-card-title">'+s.icon+' '+s.title+'</div><div class="wt-card-code">'+s.sub+'</div><div class="wt-card-desc">'+s.desc+'</div>'+snippet+'</div>';}
 
   // ═══ Task 1 tables ═══
+  // ═══ TASK 2 table data ═══
+  var D2=[
+    {id:"T201",ne:42,dur:580,rd:12,wr:8,rpc:20,dn:4,cli:2,type:"Normal"},
+    {id:"T202",ne:15,dur:2400,rd:3,wr:1,rpc:6,dn:2,cli:1,type:"SlowNode"},
+    {id:"T203",ne:38,dur:620,rd:10,wr:9,rpc:18,dn:3,cli:3,type:"Normal"},
+    {id:"T204",ne:8,dur:null,rd:0,wr:0,rpc:2,dn:1,cli:1,type:"DiskFail"},
+    {id:"T205",ne:44,dur:550,rd:14,wr:10,rpc:22,dn:5,cli:2,type:"Normal"},
+    {id:"T206",ne:20,dur:1800,rd:5,wr:2,rpc:9,dn:2,cli:1,type:"NetDelay"},
+    {id:"T207",ne:40,dur:600,rd:11,wr:7,rpc:19,dn:4,cli:3,type:"Normal"},
+    {id:"T208",ne:6,dur:950,rd:1,wr:0,rpc:1,dn:1,cli:1,type:"DiskFail"},
+    {id:"T209",ne:45,dur:530,rd:13,wr:11,rpc:21,dn:5,cli:2,type:"Normal"},
+    {id:"T210",ne:18,dur:2100,rd:4,wr:3,rpc:7,dn:2,cli:1,type:"SlowNode"},
+    {id:"T211",ne:41,dur:590,rd:12,wr:8,rpc:20,dn:4,cli:2,type:"Normal"},
+    {id:"T212",ne:22,dur:1700,rd:6,wr:2,rpc:10,dn:3,cli:1,type:"NetDelay"}
+  ];
+  var T2COL=["ne","dur","rd","wr","rpc","dn","cli"];
+  var T2LBL=["NUM_EVT","AVG_DUR","READ","WRITE","RPC","NUM_DN","CLI"];
+  var T2ENG=["dur_evt","rd_dn","wr_dn","rpc_evt","evt_cli"];
+  var T2ELBL=["DUR/EVT","RD/DN","WR/DN","RPC/EVT","EVT\u00d7CLI"];
+  var T2TYPES={Normal:"#22c55e",SlowNode:"#f59e0b",DiskFail:"#ef4444",NetDelay:"#8b5cf6"};
+  var T2ENC={DiskFail:0,NetDelay:1,Normal:2,SlowNode:3};
+  var T2MED=620; // median of dur column
+
+  function t2badge(t){var c=T2TYPES[t]||"#666";return '<span style="color:'+c+';font-weight:700;font-size:11px;background:'+c+'12;border:1px solid '+c+'30;padding:2px 8px;border-radius:12px">'+t+'</span>';}
+  function t2eng(r){return {dur_evt:r.dur!==null?(r.dur/(r.ne+1e-6)).toFixed(1):"NaN",rd_dn:(r.rd/(r.dn+1e-6)).toFixed(1),wr_dn:(r.wr/(r.dn+1e-6)).toFixed(1),rpc_evt:(r.rpc/(r.ne+1e-6)).toFixed(2),evt_cli:r.ne*r.cli};}
+
+  function renderT2(el){
+    if(step===0){
+      var h='<div class="wt-tbl-wrap"><div style="font:400 12px/1 monospace;color:var(--text-tertiary);margin-bottom:8px">training_tipologia.dsv</div><table class="wt-tbl"><thead><tr><th>ID</th>';
+      T2LBL.forEach(function(l){h+='<th>'+l+'</th>';});h+='<th>ANOMALY_TYPE</th></tr></thead><tbody>';
+      D2.forEach(function(r){h+='<tr><td style="opacity:.4">'+r.id+'</td>';T2COL.forEach(function(c){h+='<td style="font-family:monospace;font-size:11px">'+(r[c]===null?'<span style="color:#ef4444;font-style:italic">NaN</span>':r[c])+'</td>';});h+='<td>'+t2badge(r.type)+'</td></tr>';});
+      h+='</tbody></table></div>';el.innerHTML=h;return;
+    }
+    if(step===1){
+      var h='<div class="wt-tbl-wrap"><div style="font:400 12px/1 monospace;color:var(--text-tertiary);margin-bottom:8px">After adding 5 engineered features</div><table class="wt-tbl" style="font-size:11px"><thead><tr><th>ID</th>';
+      T2LBL.forEach(function(l){h+='<th style="opacity:.4">'+l+'</th>';});T2ELBL.forEach(function(l){h+='<th style="color:var(--accent)">'+l+'</th>';});h+='</tr></thead><tbody>';
+      D2.forEach(function(r){var e=t2eng(r);h+='<tr><td style="opacity:.4;font-size:10px">'+r.id+'</td>';T2COL.forEach(function(c){h+='<td style="opacity:.35;font-family:monospace;font-size:10px">'+(r[c]===null?"NaN":r[c])+'</td>';});T2ENG.forEach(function(c){h+='<td style="font-family:monospace;font-size:11px;background:rgba(59,130,246,.05)">'+(e[c]==="NaN"?'<span style="color:#ef4444">NaN</span>':e[c])+'</td>';});h+='</tr>';});
+      h+='</tbody></table></div>';el.innerHTML=h;return;
+    }
+    if(step===2){
+      var h='<div class="wt-tbl-wrap"><div style="font:400 12px/1 monospace;color:var(--text-tertiary);margin-bottom:8px">NaN replaced with median ('+T2MED+') + labels encoded</div><table class="wt-tbl"><thead><tr><th>ID</th>';
+      T2LBL.forEach(function(l){h+='<th>'+l+'</th>';});h+='<th style="color:#16a34a">y (enc)</th></tr></thead><tbody>';
+      D2.forEach(function(r){var isNull=r.dur===null;h+='<tr><td style="opacity:.4">'+r.id+'</td>';T2COL.forEach(function(c){var v=r[c]===null?T2MED:r[c];var hl=r[c]===null;h+='<td style="font-family:monospace;font-size:11px;'+(hl?'background:rgba(59,130,246,.08);font-weight:700':'')+'">'+(hl?'<span style="color:#3b82f6">'+v+'</span>':v)+'</td>';});h+='<td style="font-family:monospace;font-weight:700;color:#16a34a">'+T2ENC[r.type]+'</td></tr>';});
+      h+='</tbody></table></div>';el.innerHTML=h;return;
+    }
+    if(step===3){
+      var subs=[{l:"Subset 1",r:"T201, T203, T205, T207 ..."},{l:"Subset 2",r:"T202, T204, T206, T208 ..."},{l:"Subset 3",r:"T201, T204, T207, T210 ..."},{l:"Subset 4",r:"T203, T205, T209, T211 ..."},{l:"Subset 5",r:"T206, T207, T211, T212 ..."}];
+      var h='<div class="wt-tbl-wrap"><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px">';
+      subs.forEach(function(s,i){var hue=210+i*15;h+='<div style="padding:14px 10px;border-radius:10px;background:hsl('+hue+',80%,96%);border:1px solid hsl('+hue+',60%,85%);text-align:center"><div style="font:700 11px/1 sans-serif;color:hsl('+hue+',50%,40%);margin-bottom:4px">'+s.l+'</div><div style="font:400 10px/1.4 monospace;color:#64748b">'+s.r+'</div></div>';});
+      h+='</div><div style="text-align:center;font:400 12px/1 sans-serif;color:var(--text-tertiary);margin-top:12px">Each subset: ~45,000 rows with stratified class proportions</div></div>';el.innerHTML=h;return;
+    }
+    if(step===4){
+      var before={Normal:320,SlowNode:45,DiskFail:22,NetDelay:38};var after={Normal:320,SlowNode:320,DiskFail:320,NetDelay:320};
+      function bars(title,data,bal){var mx=320;var h='<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px"><div style="font:700 11px/1 sans-serif;color:#64748b;margin-bottom:12px;text-align:center">'+title+'</div>';
+      ["Normal","SlowNode","DiskFail","NetDelay"].forEach(function(k){var v=data[k];var c=bal?"#22c55e":T2TYPES[k];h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><div style="width:50px;font:600 10px/1 sans-serif;color:'+T2TYPES[k]+';text-align:right">'+k.substring(0,4)+'</div><div style="flex:1;height:16px;background:#e2e8f0;border-radius:4px;overflow:hidden"><div style="width:'+(v/mx*100)+'%;height:100%;border-radius:4px;background:'+c+'"></div></div><div style="width:28px;font:400 10px/1 monospace;color:#94a3b8">'+v+'</div></div>';});return h+'</div>';}
+      var h='<div class="wt-tbl-wrap"><div style="display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center">'+bars("Before",before,false)+'<div style="font-size:22px;color:#94a3b8;text-align:center">\u2192</div>'+bars("After oversampling",after,true)+'</div></div>';el.innerHTML=h;return;
+    }
+    if(step===5){
+      var h='<div class="wt-tbl-wrap"><div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px">';
+      [1,2,3,4,5].forEach(function(i){h+='<div style="padding:14px;border-radius:10px;background:#f0fdf4;border:1px solid #bbf7d0;text-align:center"><div style="font-size:24px;margin-bottom:4px">\ud83d\ude80</div><div style="font:700 11px/1 sans-serif;color:#166534">Model '+i+'</div><div style="font:400 10px/1 sans-serif;color:#64748b;margin-top:4px">300 trees</div><div style="font:400 10px/1 sans-serif;color:#64748b">Subset '+i+'</div></div>';});
+      h+='</div><div class="wt-note" style="margin-top:14px"><strong>Gradient boosting:</strong> each tree corrects the mistakes of the previous one (unlike Random Forest where trees are independent)</div></div>';el.innerHTML=h;return;
+    }
+    if(step===6){
+      var models=[[.05,.02,.88,.05],[.08,.01,.85,.06],[.03,.03,.90,.04],[.06,.02,.86,.06],[.04,.01,.91,.04]];
+      var avg=[0,1,2,3].map(function(c){return models.reduce(function(s,m){return s+m[c]},0)/5;});
+      var labels=["DiskFail","NetDelay","Normal","SlowNode"];var win=avg.indexOf(Math.max.apply(null,avg));
+      var h='<div class="wt-tbl-wrap"><div style="font:400 12px/1 monospace;color:var(--text-tertiary);margin-bottom:8px">Probabilities for trace T302</div><table class="wt-tbl"><thead><tr><th></th>';
+      labels.forEach(function(l){h+='<th>'+l+'</th>';});h+='</tr></thead><tbody>';
+      models.forEach(function(m,i){h+='<tr><td style="font:700 11px/1 sans-serif;color:#64748b">Model '+(i+1)+'</td>';m.forEach(function(p,j){h+='<td style="font-family:monospace;font-size:12px">'+p.toFixed(2)+'</td>';});h+='</tr>';});
+      h+='<tr style="border-top:2px solid #cbd5e1"><td style="font:700 11px/1 sans-serif;color:#0f172a">Average</td>';
+      avg.forEach(function(a,j){h+='<td style="font-family:monospace;font-size:12px;font-weight:'+(j===win?'800':'400')+';color:'+(j===win?'#22c55e':'inherit')+';'+(j===win?'background:rgba(34,197,94,.06)':'')+'">'+(j===win?'\u2705 ':'')+a.toFixed(3)+'</td>';});
+      h+='</tr></tbody></table><div style="text-align:center;font:400 13px/1 sans-serif;margin-top:10px">Winner: '+t2badge(labels[win])+' with '+(avg[win]*100).toFixed(1)+'% average probability</div></div>';el.innerHTML=h;return;
+    }
+    if(step===7){
+      var preds=[{id:"T301",t:"DiskFail"},{id:"T302",t:"Normal"},{id:"T303",t:"SlowNode"}];
+      var h='<div class="wt-tbl-wrap"><div style="font:400 12px/1 monospace;color:var(--text-tertiary);margin-bottom:8px">predictions_tipologia.dsv</div><table class="wt-tbl"><thead><tr><th>TRACE_ID</th><th style="background:rgba(34,197,94,.08)">ANOMALY_TYPE</th></tr></thead><tbody>';
+      preds.forEach(function(p){h+='<tr><td style="font-family:monospace">'+p.id+'</td><td>'+t2badge(p.t)+'</td></tr>';});
+      h+='</tbody></table></div>';el.innerHTML=h;return;
+    }
+    el.innerHTML='';
+  }
+
   function renderTable(){
     var el=document.getElementById("wtTable");if(!el)return;
-    if(activeTask===1){el.innerHTML='';return;}
+    if(activeTask===1){renderT2(el);return;}
     if(step===5)return renderForest(el);if(step===6)return renderEval(el);if(step===7)return renderSubmission(el);
     var dimCols=(step>=1),showEnc=(step===2),showSplit=(step>=3&&step<=4),doScale=(step>=4);
     var allCols=MLABELS.concat(FLABELS);
