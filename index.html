@@ -40,17 +40,11 @@
       -webkit-font-smoothing: antialiased; overflow-x: hidden;
     }
 
-    /* ── Scroll Progress ── */
     .scroll-progress { position: fixed; top: 0; left: 0; height: 2px; z-index: 9998; background: var(--accent); transform-origin: left; transform: scaleX(0); width: 100%; pointer-events: none; }
-
-    /* ── Cursor Glow ── */
     .cursor-glow { position: fixed; width: 500px; height: 500px; border-radius: 50%; pointer-events: none; z-index: 0; background: radial-gradient(circle, rgba(147,197,253,0.035) 0%, transparent 70%); will-change: transform; }
-
-    /* ── Layout ── */
     .page { position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column; }
     .container { max-width: 920px; margin: 0 auto; padding: 0 24px; width: 100%; }
 
-    /* ── Nav ── */
     .nav {
       padding: 24px 0; display: flex; align-items: center; justify-content: space-between;
       position: sticky; top: 0; z-index: 100; margin-bottom: -1px;
@@ -74,7 +68,6 @@
     @keyframes breathe { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(0.85)} }
     hr.divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border) 15%, var(--border) 85%, transparent); margin: 0; }
 
-    /* ── Hero ── */
     .hero { padding: 64px 0 44px; }
     .hero-layout { display: flex; gap: 32px; align-items: flex-start; }
     .avatar-outer {
@@ -99,7 +92,6 @@
     .hero-bio { font-size: 16px; font-weight: 300; color: var(--text-secondary); max-width: 580px; line-height: 1.8; text-wrap: pretty; }
     .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; }
 
-    /* ── Buttons ── */
     .btn {
       display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px;
       border: 1px solid var(--border); border-radius: 6px; background: var(--surface);
@@ -114,18 +106,15 @@
     .btn-primary:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,255,255,0.1); }
     .btn-primary .ico { opacity: 1; stroke: var(--bg); }
 
-    /* ── Sections ── */
     .section { padding: 56px 0; scroll-margin-top: 60px; }
     .section-label { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); margin-bottom: 12px; font-family: sans-serif; }
     .section-title { font-size: 30px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 32px; }
 
-    /* ── Scroll Reveal ── */
     .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
     .reveal-d1 { transition-delay: 0.08s; }
     .reveal-d2 { transition-delay: 0.16s; }
 
-    /* ── Timeline ── */
     .timeline { position: relative; padding-left: 28px; }
     .timeline::before { content: ''; position: absolute; left: 6px; top: 8px; bottom: 8px; width: 1px; background: var(--border); }
     .tl-item { position: relative; padding-bottom: 36px; transition: transform 0.5s var(--ease-out-expo); }
@@ -142,14 +131,12 @@
     .tl-bullets { list-style: none; }
     .tl-bullets li { position: relative; padding-left: 18px; font-size: 15px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 8px; font-weight: 300; }
     .tl-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--accent); opacity: 0.7; }
-
     .tl-clickable { cursor: pointer; padding: 12px; margin: -12px; border-radius: 8px; transition: all 0.35s var(--ease-out-expo); }
     .tl-clickable:hover { background: rgba(255,255,255,0.02); }
     .tl-clickable:hover .tl-role { color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: rgba(147,197,253,0.4); }
     .demo-badge { font-family: sans-serif; font-size: 10px; font-weight: 700; background: var(--accent-dim); color: var(--accent); padding: 4px 8px; border-radius: 4px; margin-left: auto; border: 1px solid var(--border); transition: all 0.35s var(--ease-out-expo); display: flex; align-items: center; gap: 5px; letter-spacing: 0.5px; }
     .tl-clickable:hover .demo-badge, .edu-clickable:hover .demo-badge, .card:hover .demo-badge { background: var(--accent); color: var(--bg); border-color: var(--accent); box-shadow: 0 2px 10px rgba(147,197,253,0.2); }
 
-    /* ── Education ── */
     .edu-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); }
     .edu-card { padding: 24px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); transition: all .35s var(--ease-out-expo); }
     .edu-card:hover { border-color: var(--border-hover); background: var(--surface-hover); }
@@ -164,12 +151,10 @@
     .edu-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--accent); opacity: 0.7; font-size: 13px; }
     .edu-bullets strong { color: var(--text); font-weight: 700; font-size: 13.5px; font-family: sans-serif; letter-spacing: 0.3px; }
 
-    /* ── Skills ── */
     .skills-row { display: flex; flex-wrap: wrap; gap: 10px; }
     .skill-pill { font-family: sans-serif; font-size: 12px; font-weight: 400; letter-spacing: 0.5px; padding: 6px 16px; border-radius: 4px; background: var(--surface); color: var(--text); border: 1px solid var(--border); transition: all .3s var(--ease-out-expo); cursor: default; }
     .skill-pill:hover { background: var(--accent-dim); border-color: var(--border-hover); color: var(--accent-soft); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
 
-    /* ── Cards ── */
     .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(290px,1fr)); }
     .card { display: flex; flex-direction: column; text-decoration: none; color: inherit; padding: 28px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); transition: all .4s var(--ease-out-expo); position: relative; overflow: hidden; cursor: pointer; }
     .card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle 250px at var(--mx,50%) var(--my,0%), rgba(147,197,253,0.08), transparent 100%); opacity: 0; transition: opacity .5s; pointer-events: none; }
@@ -186,7 +171,6 @@
     .tag { font-family: sans-serif; font-size: 11px; padding: 4px 10px; border-radius: 4px; background: var(--bg); color: var(--text-secondary); border: 1px solid var(--border); letter-spacing: 0.5px; transition: border-color 0.3s; }
     .card:hover .tag { border-color: var(--border-hover); }
 
-    /* ── Modal ── */
     .modal-overlay { position: fixed; inset: 0; background: rgba(10,25,47,0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.35s var(--ease-out-expo); padding: 24px; }
     .modal-overlay.active { opacity: 1; pointer-events: auto; }
     .modal-content { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; width: 100%; max-width: 900px; max-height: 90vh; overflow-y: auto; transform: translateY(24px) scale(0.97); transition: all 0.4s var(--ease-out-expo); position: relative; box-shadow: 0 24px 50px rgba(0,0,0,0.5); }
@@ -205,7 +189,6 @@
     .media-container video, .media-container iframe { width: 100%; height: 100%; display: block; border: none; }
     .modal-text { font-size: 15px; font-weight: 300; color: var(--text-secondary); line-height: 1.8; }
 
-    /* ── Code Viewer ── */
     .code-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
     .code-tab { cursor: pointer; padding: 6px 14px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text-secondary); font-family: sans-serif; font-size: 13px; font-weight: 600; transition: all 0.3s var(--ease-out-expo); }
     .code-tab:hover { border-color: var(--border-hover); background: var(--surface-hover); }
@@ -215,7 +198,6 @@
     .viewer-pre { margin: 0; padding: 16px; color: #e6edf3; font: 13px/1.6 'Courier New', monospace; white-space: pre-wrap; word-break: break-word; overflow: auto; max-height: 220px; transition: max-height 0.5s var(--ease-out-expo); }
     .viewer-box[data-collapsed="true"]::after { content: ""; position: absolute; inset: auto 0 0 0; height: 60px; background: linear-gradient(to bottom, rgba(13,17,23,0), rgba(13,17,23,1)); pointer-events: none; }
 
-    /* Notebook */
     .notebook-cell { background: #0d1117; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 16px 0 24px 0; box-shadow: 0 4px 16px rgba(0,0,0,0.2); transition: border-color 0.3s; }
     .notebook-cell:hover { border-color: var(--border-hover); }
     .notebook-colab-header { display: flex; align-items: center; gap: 16px; padding: 14px 16px; background: var(--surface); border-bottom: 1px dashed rgba(255,255,255,0.1); text-decoration: none; transition: background 0.3s var(--ease-out-expo); }
@@ -238,7 +220,6 @@
     .pandas-table tr:hover td { background: rgba(255,255,255,0.03); }
     .pandas-table th:first-child, .pandas-table td:first-child { text-align: left; font-weight: bold; color: var(--accent-soft); }
 
-    /* Course Boxes */
     .course-box { margin-bottom: 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); overflow: hidden; transition: all 0.35s var(--ease-out-expo); }
     .course-box[open] { border-color: var(--accent); background: var(--bg); box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
     .course-box summary { padding: 18px 20px; font-size: 16px; font-weight: 700; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; transition: background 0.25s; }
@@ -248,7 +229,6 @@
     .course-box[open] .box-icon { transform: rotate(180deg); color: var(--accent); }
     .course-content { padding: 20px; border-top: 1px solid var(--border); }
 
-    /* ── Footer ── */
     .footer { margin-top: auto; padding: 32px 0 40px; }
     .footer-inner { display: flex; align-items: center; justify-content: space-between; padding-top: 24px; border-top: 1px solid var(--border); }
     .footer-text { font-family: sans-serif; font-size: 12px; color: var(--text-tertiary); letter-spacing: 0.5px; }
@@ -258,10 +238,8 @@
     .footer-links a:hover { color: var(--text); }
     .footer-links a:hover::after { width: 100%; }
 
-    /* ── a11y ── */
     :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-    /* ── Responsive ── */
     @media (max-width: 640px) {
       .nav { padding: 16px 0; flex-direction: column; gap: 12px; }
       .hero { padding: 32px 0 28px; }
@@ -285,6 +263,48 @@
     ::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
     .modal-content::-webkit-scrollbar { width: 4px; }
     .modal-content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    /* ── Walkthrough ── */
+    .wt-wrap{display:none;margin-top:24px;border-top:1px solid var(--border);padding-top:24px}
+    .wt-wrap.active{display:block}
+    .wt-steps{display:flex;gap:4px;margin-bottom:20px;overflow-x:auto;padding-bottom:8px}
+    .wt-step-btn{flex:0 0 auto;padding:7px 13px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text-tertiary);font:600 12px/1 sans-serif;cursor:pointer;white-space:nowrap;transition:all .25s var(--ease-out-expo)}
+    .wt-step-btn:hover{border-color:var(--border-hover);color:var(--text)}
+    .wt-step-btn.active{border-color:var(--accent);background:var(--accent-dim);color:var(--accent-soft)}
+    .wt-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px 26px;margin-bottom:16px}
+    .wt-card-step{font:600 11px/1 sans-serif;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+    .wt-card-title{font-size:19px;font-weight:700;margin-bottom:4px}
+    .wt-card-code{font:12px/1 'Courier New',monospace;color:#818cf8;background:#1e1b4b;padding:5px 10px;border-radius:6px;display:inline-block;margin-bottom:12px}
+    .wt-card-desc{font-size:14px;color:var(--text-secondary);line-height:1.7;font-weight:300}
+    .wt-tbl-wrap{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px 26px;overflow-x:auto;margin-bottom:16px}
+    .wt-tbl{width:100%;border-collapse:separate;border-spacing:0;font-size:12px}
+    .wt-tbl th{padding:8px 10px;text-align:left;font:700 11px/1 sans-serif;color:var(--text);background:var(--bg);border-bottom:2px solid var(--border);white-space:nowrap}
+    .wt-tbl td{padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.04);white-space:nowrap;color:var(--text-secondary);font-family:'Courier New',monospace}
+    .wt-tbl .dim{opacity:.2}.wt-tbl .strike{opacity:.35;text-decoration:line-through}
+    .wt-tbl .row-train{background:rgba(59,130,246,.06)}.wt-tbl .row-val{background:rgba(251,146,60,.06)}
+    .wt-cat-DataLoss{color:#ef4444;font-weight:700}.wt-cat-NetworkErr{color:#f59e0b;font-weight:700}
+    .wt-cat-Normal{color:#22c55e;font-weight:700}.wt-cat-SlowWrite{color:#8b5cf6;font-weight:700}
+    .wt-encoded{color:#16a34a;font-weight:700}
+    .wt-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font:400 12px/1 sans-serif;color:var(--text-tertiary)}
+    .wt-legend span{display:flex;align-items:center;gap:5px}
+    .wt-legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+    .wt-nav{display:flex;justify-content:space-between;margin-top:8px}
+    .wt-nav button{padding:9px 22px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font:600 13px/1 sans-serif;cursor:pointer;transition:all .25s}
+    .wt-nav button:hover:not(:disabled){background:var(--surface-hover);border-color:var(--border-hover)}
+    .wt-nav button:disabled{opacity:.3;cursor:default}
+    .wt-nav .wt-next{background:var(--accent);color:var(--bg);border-color:transparent}
+    .wt-nav .wt-next:hover:not(:disabled){background:var(--accent-soft)}
+    .wt-forest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+    .wt-tree{padding:14px;border-radius:10px;background:var(--bg);border:1px solid var(--border);text-align:center}
+    .wt-tree-icon{font-size:28px;margin-bottom:4px}.wt-tree-label{font:700 11px/1 sans-serif;color:var(--text-tertiary)}
+    .wt-tree-rule{font:400 10px/1.3 sans-serif;color:var(--text-tertiary);margin-top:6px}
+    .wt-gmean-box{margin-top:14px;padding:12px 16px;border-radius:10px;background:var(--bg);border:1px solid var(--border)}
+    .wt-gmean-label{font:400 12px/1 sans-serif;color:var(--text-tertiary);margin-bottom:4px}
+    .wt-gmean-val{font:800 26px/1 'Courier New',monospace;color:var(--text)}
+    .wt-gmean-sub{font:400 13px/1 sans-serif;color:var(--text-tertiary);margin-left:8px}
+    .wt-note{margin-top:14px;padding:10px 14px;border-radius:8px;background:#1c1917;border:1px solid #854d0e;font:400 12px/1.4 sans-serif;color:#fbbf24}
+    .wt-pill{padding:3px 10px;border-radius:16px;font:600 11px/1 sans-serif;border:1px solid}
+    @media(max-width:640px){.wt-forest-grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -456,7 +476,22 @@ plt.show()</code></pre></div><div class="notebook-output"><span class="output-la
 <details class="course-box"><summary>Mobile Technologies<svg class="box-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="course-content"><div class="media-container" style="aspect-ratio:16/9"><span style="color:var(--text-tertiary);font-family:sans-serif;font-size:13px">[ Placeholder for Mobile App Demo video or Figma prototype ]</span></div></div></details>
 </div></div></div>
 
-<div class="modal-overlay" id="itadatahack-modal" onclick="closeModal(event,'itadatahack-modal')"><div class="modal-content" onclick="event.stopPropagation()"><button class="modal-close" onclick="closeModal(event,'itadatahack-modal')" aria-label="Close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><div class="modal-body"><h3 class="modal-title">ITADATAhack 2025</h3><p class="modal-subtitle">Machine Learning Classification on HDFS Logs</p><div class="media-grid"><div id="codeViewer" data-files='[{"label":"Task 1.py","src":"assets/codici/Task 1.py"},{"label":"Task 2.py","src":"assets/codici/Task 2.py"}]'><span class="media-item-label">Codes</span><p class="modal-text" style="font-size:13px;margin-top:-4px;margin-bottom:12px">Select the file and click "Show all" to see everything.</p><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px"><nav class="code-tabs" aria-label="Code files"></nav></div><div class="viewer-box" role="region" aria-live="polite" data-collapsed="true"><pre class="viewer-pre" id="codeArea"># Loading file...</pre></div><div class="code-actions-row" style="justify-content:flex-start;margin-top:12px"><button class="btn" id="toggleBtn" type="button" hidden style="font-size:12px;padding:6px 12px">Show all</button><button class="btn" id="copyBtn" type="button" style="font-size:12px;padding:6px 12px">Copy</button><a class="btn btn-primary" id="downloadBtn" href="#" download style="font-size:12px;padding:6px 12px">Download</a></div></div><div><span class="media-item-label">Presentation</span><p class="modal-text" style="font-size:13px;margin-top:-4px;margin-bottom:12px">Use the buttons at the bottom to view the full document.</p><div class="media-container" style="aspect-ratio:16/13.5;position:relative;margin-bottom:12px"><iframe src="assets/presentazioni/itadatahack-2025.pdf#page=1&view=FitH" title="Presentazione" style="border:none;width:100%;height:100%"></iframe></div><div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn" href="assets/presentazioni/itadatahack-2025.pdf" target="_blank" rel="noopener noreferrer" style="font-size:12px;padding:6px 12px">Full screen</a><a class="btn" href="assets/presentazioni/itadatahack-2025.pdf" download style="font-size:12px;padding:6px 12px">Download PDF</a></div></div></div></div></div></div>
+<div class="modal-overlay" id="itadatahack-modal" onclick="closeModal(event,'itadatahack-modal')"><div class="modal-content" onclick="event.stopPropagation()"><button class="modal-close" onclick="closeModal(event,'itadatahack-modal')" aria-label="Close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><div class="modal-body"><h3 class="modal-title">ITADATAhack 2025</h3><p class="modal-subtitle">Machine Learning Classification on HDFS Logs</p><div class="media-grid"><div id="codeViewer" data-files='[{"label":"Task 1.py","src":"assets/codici/Task 1.py"},{"label":"Task 2.py","src":"assets/codici/Task 2.py"}]'><span class="media-item-label">Codes</span><p class="modal-text" style="font-size:13px;margin-top:-4px;margin-bottom:12px">Select the file and click "Show all" to see everything.</p><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px"><nav class="code-tabs" aria-label="Code files"></nav></div><div class="viewer-box" role="region" aria-live="polite" data-collapsed="true"><pre class="viewer-pre" id="codeArea"># Loading file...</pre></div><div class="code-actions-row" style="justify-content:flex-start;margin-top:12px"><button class="btn" id="toggleBtn" type="button" hidden style="font-size:12px;padding:6px 12px">Show all</button><button class="btn" id="copyBtn" type="button" style="font-size:12px;padding:6px 12px">Copy</button><a class="btn btn-primary" id="downloadBtn" href="#" download style="font-size:12px;padding:6px 12px">Download</a></div></div><div><span class="media-item-label">Presentation</span><p class="modal-text" style="font-size:13px;margin-top:-4px;margin-bottom:12px">Use the buttons at the bottom to view the full document.</p><div class="media-container" style="aspect-ratio:16/13.5;position:relative;margin-bottom:12px"><iframe src="assets/presentazioni/itadatahack-2025.pdf#page=1&view=FitH" title="Presentazione" style="border:none;width:100%;height:100%"></iframe></div><div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn" href="assets/presentazioni/itadatahack-2025.pdf" target="_blank" rel="noopener noreferrer" style="font-size:12px;padding:6px 12px">Full screen</a><a class="btn" href="assets/presentazioni/itadatahack-2025.pdf" download style="font-size:12px;padding:6px 12px">Download PDF</a></div></div></div>
+
+<!-- ── Task 1 Walkthrough ── -->
+<div class="wt-wrap" id="wtWrap">
+  <span class="media-item-label">Step-by-Step Walkthrough</span>
+  <p class="modal-text" style="font-size:13px;margin-top:-4px;margin-bottom:16px">Visualizzazione interattiva della pipeline ML applicata a un dataset di esempio.</p>
+  <nav class="wt-steps" id="wtSteps"></nav>
+  <div id="wtCard"></div>
+  <div id="wtTable"></div>
+  <div class="wt-nav">
+    <button id="wtPrev" disabled>&#8592; Indietro</button>
+    <button id="wtNext" class="wt-next">Avanti &#8594;</button>
+  </div>
+</div>
+
+</div></div></div>
 
 <script>
 // ── Cursor Glow ──
@@ -497,6 +532,75 @@ tabs.addEventListener('click',e=>{const b=e.target.closest('.code-tab');if(!b)re
 if(files[0])load(files[0].src);
 cB.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(raw||'');const o=cB.textContent;cB.textContent='Copied!';setTimeout(()=>cB.textContent=o,2000);}catch(e){console.error(e);}});
 tB.addEventListener('click',()=>{col=!col;render();});
+})();
+
+// ── Walkthrough Engine ──
+(function(){
+  var STEPS=[
+    {icon:"\ud83d\udccb",title:"Dataset Originale",sub:"training_categoria.dsv",desc:"Questo \u00e8 il dataset di partenza. Ogni riga \u00e8 una traccia HDFS. Le colonne contengono: un identificativo (TRACE_ID), se \u00e8 un\u2019anomalia (ANOMALY), la categoria (ANOMALY_CATEGORY) e le feature numeriche."},
+    {icon:"\u2702\ufe0f",title:"Separa X e y",sub:"train.drop([...]) \u2192 X, y",desc:"Separi le \u201cdomande\u201d dalle \u201crisposte\u201d. Le colonne grigie vengono rimosse. ANOMALY_CATEGORY diventa il target y. Restano solo le feature numeriche come input X."},
+    {icon:"\ud83d\udd22",title:"Label Encoding",sub:"LabelEncoder().fit_transform(y)",desc:"Il computer non capisce le parole: \u201cDataLoss\u201d \u2192 0, \u201cNetworkErr\u201d \u2192 1, \u201cNormal\u201d \u2192 2, \u201cSlowWrite\u201d \u2192 3. Ordine alfabetico."},
+    {icon:"\ud83d\udcca",title:"Train / Validation Split",sub:"train_test_split(80% / 20%)",desc:"Dividi i dati: 80% per allenamento (blu) e 20% per verifica (arancione). La stratificazione garantisce ogni categoria in proporzione uguale."},
+    {icon:"\u2696\ufe0f",title:"Standard Scaling",sub:"StandardScaler()",desc:"Le feature hanno scale diverse. Lo scaling porta tutto su una scala comparabile (media=0, std=1). Lo scaler si calcola solo sul training e si applica anche alla validazione."},
+    {icon:"\ud83c\udf32",title:"Random Forest",sub:"300 alberi che votano insieme",desc:"300 \u201cesperti\u201d, ognuno guarda i dati da un\u2019angolazione diversa. Ogni albero impara regole; alla fine votano. class_weight=\"balanced\" fa pesare di pi\u00f9 le categorie rare."},
+    {icon:"\ud83c\udfaf",title:"Valutazione (G-Mean)",sub:"geometric_mean_score()",desc:"Sul 20% messo da parte, confronti predizioni con risposte vere. La G-Mean \u00e8 severa: se ignori una categoria rara, il punteggio crolla."},
+    {icon:"\ud83c\udfc1",title:"Predizione Finale",sub:"submission.to_csv()",desc:"Applichi il modello al test set, riconverti i numeri nelle categorie originali e salvi il file di submission."}
+  ];
+  var DATA=[
+    {id:"T001",an:1,cat:"DataLoss",e5:3,e9:2,e22:1,sl:12},
+    {id:"T002",an:0,cat:"Normal",e5:3,e9:3,e22:1,sl:19},
+    {id:"T003",an:1,cat:"NetworkErr",e5:2,e9:1,e22:0,sl:5},
+    {id:"T004",an:0,cat:"Normal",e5:3,e9:3,e22:1,sl:21},
+    {id:"T005",an:1,cat:"SlowWrite",e5:5,e9:2,e22:1,sl:18},
+    {id:"T006",an:0,cat:"Normal",e5:3,e9:3,e22:1,sl:20},
+    {id:"T007",an:1,cat:"DataLoss",e5:2,e9:1,e22:1,sl:10},
+    {id:"T008",an:0,cat:"Normal",e5:3,e9:3,e22:1,sl:19},
+    {id:"T009",an:1,cat:"NetworkErr",e5:1,e9:0,e22:0,sl:3},
+    {id:"T010",an:0,cat:"Normal",e5:3,e9:3,e22:1,sl:18},
+    {id:"T011",an:1,cat:"SlowWrite",e5:4,e9:2,e22:1,sl:16},
+    {id:"T012",an:0,cat:"Normal",e5:3,e9:3,e22:1,sl:21}
+  ];
+  var TRAIN=[0,1,3,4,5,6,7,8,10,11],VAL=[2,9,11];
+  var LMAP={DataLoss:0,NetworkErr:1,Normal:2,SlowWrite:3};
+  var FCOLS=["e5","e9","e22","sl"],FLABELS=["evt_5","evt_9","evt_22","seq_len"];
+  var MLABELS=["TRACE_ID","ANOMALY","ANOMALY_CATEGORY"];
+  var step=0;
+
+  function sc(col,val){var vals=TRAIN.map(function(i){return DATA[i][col]});var m=vals.reduce(function(a,b){return a+b},0)/vals.length;var s=Math.sqrt(vals.reduce(function(a,b){return a+(b-m)*(b-m)},0)/vals.length);return s===0?"0.00":((val-m)/s).toFixed(2);}
+  function catCls(c){return "wt-cat-"+c}
+
+  function renderSteps(){var nav=document.getElementById("wtSteps");if(!nav)return;nav.innerHTML=STEPS.map(function(s,i){return '<button class="wt-step-btn'+(i===step?' active':'')+'" data-i="'+i+'">'+s.icon+' '+(i+1)+'</button>';}).join("");nav.onclick=function(e){var b=e.target.closest(".wt-step-btn");if(b){step=+b.dataset.i;render();}};}
+
+  function renderCard(){var c=document.getElementById("wtCard");if(!c)return;var s=STEPS[step];c.innerHTML='<div class="wt-card"><div class="wt-card-step">Step '+(step+1)+' di '+STEPS.length+'</div><div class="wt-card-title">'+s.icon+' '+s.title+'</div><div class="wt-card-code">'+s.sub+'</div><div class="wt-card-desc">'+s.desc+'</div></div>';}
+
+  function renderTable(){
+    var el=document.getElementById("wtTable");if(!el)return;
+    if(step===5)return renderForest(el);if(step===6)return renderEval(el);if(step===7)return renderSubmission(el);
+    var dimCols=(step>=1),showEnc=(step===2),showSplit=(step>=3&&step<=4),doScale=(step>=4);
+    var allCols=MLABELS.concat(FLABELS);
+    var h='<div class="wt-tbl-wrap"><table class="wt-tbl"><thead><tr>';
+    allCols.forEach(function(col,ci){var isDim=ci<3&&dimCols,isTarget=(ci===2&&step>=2);var cls=isDim?(step>=1?" strike":""):"";var sub="";if(step>=1&&!isDim&&ci!==2)sub='<div style="font-size:9px;color:var(--accent);font-weight:400">X</div>';if(isTarget)sub='<div style="font-size:9px;color:#22c55e;font-weight:400">y</div>';h+='<th class="'+cls+'">'+col+sub+'</th>';});
+    if(showEnc)h+='<th style="color:#16a34a">y (encoded)</th>';h+='</tr></thead><tbody>';
+    DATA.forEach(function(row,i){var rowCls="";if(showSplit){rowCls=VAL.indexOf(i)>=0?"row-val":(TRAIN.indexOf(i)>=0?"row-train":"");}h+='<tr class="'+rowCls+'">';h+='<td class="'+(dimCols&&step>=1?"dim":"")+'">'+row.id+'</td>';h+='<td class="'+(dimCols&&step>=1?"dim":"")+'">'+row.an+'</td>';if(dimCols&&step>=1&&step<2){h+='<td class="dim">'+row.cat+'</td>';}else{h+='<td class="'+catCls(row.cat)+'">'+row.cat+'</td>';}FCOLS.forEach(function(fc){var v=doScale?sc(fc,row[fc]):row[fc];h+='<td>'+v+'</td>';});if(showEnc)h+='<td class="wt-encoded">'+LMAP[row.cat]+'</td>';h+='</tr>';});
+    h+='</tbody></table>';if(showSplit)h+='<div class="wt-legend"><span><i style="background:rgba(59,130,246,.15);border:1px solid #3b82f6"></i> Training (80%)</span><span><i style="background:rgba(251,146,60,.15);border:1px solid #fb923c"></i> Validation (20%)</span></div>';h+='</div>';el.innerHTML=h;
+  }
+
+  function renderForest(el){var trees=[{rule:'"Se evt_5 \u2264 2 \u2192 anomalia"'},{rule:'"Se seq_len < 10 \u2192 rete"'},{rule:'"Se evt_9 = 0 \u2192 NetworkErr"'}];var h='<div class="wt-tbl-wrap"><div class="wt-forest-grid">';trees.forEach(function(t,i){h+='<div class="wt-tree"><div class="wt-tree-icon">\ud83c\udf32</div><div class="wt-tree-label">Albero '+(i+1)+'</div><div class="wt-tree-rule">'+t.rule+'</div></div>';});h+='</div><div style="text-align:center;font:400 13px/1 sans-serif;color:var(--text-tertiary);margin-bottom:14px">\u2026 \u00d7 300 alberi \u2192 ognuno vota \u2192 la categoria pi\u00f9 votata vince</div><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">';[{c:"DataLoss",col:"#ef4444"},{c:"NetworkErr",col:"#f59e0b"},{c:"Normal",col:"#22c55e"},{c:"SlowWrite",col:"#8b5cf6"}].forEach(function(x){h+='<span class="wt-pill" style="color:'+x.col+';border-color:'+x.col+'40;background:'+x.col+'18">'+x.c+'</span>';});h+='</div><div class="wt-note"><strong>class_weight="balanced"</strong> \u2192 le categorie rare (DataLoss, SlowWrite) contano di pi\u00f9 durante l\u2019apprendimento</div></div>';el.innerHTML=h;}
+
+  function renderEval(el){var rows=[{id:"T003",real:"NetworkErr",pred:"NetworkErr",ok:true},{id:"T010",real:"Normal",pred:"Normal",ok:true},{id:"T012",real:"Normal",pred:"DataLoss",ok:false}];var h='<div class="wt-tbl-wrap"><table class="wt-tbl"><thead><tr><th>TRACE_ID</th><th>Vero</th><th>Predetto</th><th style="text-align:center">Esito</th></tr></thead><tbody>';rows.forEach(function(r){h+='<tr style="background:'+(r.ok?"rgba(34,197,94,.05)":"rgba(239,68,68,.05)")+'"><td>'+r.id+'</td><td class="'+catCls(r.real)+'">'+r.real+'</td><td class="'+catCls(r.pred)+'">'+r.pred+'</td><td style="text-align:center;font-size:18px">'+(r.ok?"\u2705":"\u274c")+'</td></tr>';});h+='</tbody></table><div class="wt-gmean-box"><div class="wt-gmean-label">G-Mean Weighted</div><div class="wt-gmean-val">0.816<span class="wt-gmean-sub">(2/3 corrette)</span></div></div></div>';el.innerHTML=h;}
+
+  function renderSubmission(el){var preds=[{id:"T101",cat:"NetworkErr"},{id:"T102",cat:"Normal"},{id:"T103",cat:"SlowWrite"}];var h='<div class="wt-tbl-wrap"><div style="font:400 13px/1 \'Courier New\',monospace;color:var(--text-tertiary);margin-bottom:10px">submission.dsv</div><table class="wt-tbl"><thead><tr><th>TRACE_ID</th><th style="background:rgba(34,197,94,.08)">ANOMALY_CATEGORY</th></tr></thead><tbody>';preds.forEach(function(p){h+='<tr><td>'+p.id+'</td><td class="'+catCls(p.cat)+'">'+p.cat+'</td></tr>';});h+='</tbody></table></div>';el.innerHTML=h;}
+
+  function render(){renderSteps();renderCard();renderTable();var p=document.getElementById("wtPrev"),n=document.getElementById("wtNext");if(p)p.disabled=step===0;if(n){n.disabled=step===STEPS.length-1;n.textContent=step===STEPS.length-1?"Fine":"Avanti \u2192";}}
+
+  var p=document.getElementById("wtPrev"),n=document.getElementById("wtNext");
+  if(p)p.addEventListener("click",function(){if(step>0){step--;render();}});
+  if(n)n.addEventListener("click",function(){if(step<STEPS.length-1){step++;render();}});
+
+  function hookTabs(){var tabs=document.querySelector('#codeViewer .code-tabs');if(!tabs)return;tabs.addEventListener('click',function(e){var b=e.target.closest('.code-tab');if(!b)return;var idx=+b.dataset.i;var wrap=document.getElementById('wtWrap');if(wrap){if(idx===0){wrap.classList.add('active');render();}else{wrap.classList.remove('active');}}},true);}
+
+  var origOpen=window.openModal;
+  window.openModal=function(id){origOpen(id);if(id==='itadatahack-modal'){setTimeout(function(){hookTabs();var wrap=document.getElementById('wtWrap');if(wrap){wrap.classList.add('active');step=0;render();}},150);}};
 })();
 </script>
 </body>
