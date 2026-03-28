@@ -588,15 +588,29 @@ tB.addEventListener('click',()=>{col=!col;render();});
 
   function highlightCode(s){
     var cE=document.getElementById('codeArea');
-    if(!cE)return;
-    // Remove all existing highlights
+    var vb=cE?cE.closest('.viewer-box'):null;
+    if(!cE||!vb)return;
+    // Auto-expand if collapsed so highlighted lines are visible
+    var tB=document.getElementById('toggleBtn');
+    if(vb.dataset.collapsed==='true'&&tB){
+      var scrollY=window.scrollY;
+      tB.click();
+      window.scrollTo(0,scrollY); // prevent page jump
+    }
     cE.querySelectorAll('.code-line-hl').forEach(function(el){el.classList.remove('code-line-hl');});
-    // Add highlights to matching lines
     var lines=STEP_LINES[s]||[];
+    var first=null;
     lines.forEach(function(ln){
       var el=cE.querySelector('.code-line[data-ln="'+ln+'"]');
-      if(el){el.classList.add('code-line-hl');}
+      if(el){el.classList.add('code-line-hl');if(!first)first=el;}
     });
+    // Scroll the pre element internally, not the page
+    if(first){setTimeout(function(){
+      var preRect=cE.getBoundingClientRect();
+      var elRect=first.getBoundingClientRect();
+      var offset=elRect.top-preRect.top+cE.scrollTop-cE.clientHeight/3;
+      cE.scrollTo({top:Math.max(0,offset),behavior:'smooth'});
+    },100);}
   }
   var DATA=[
     {id:"T001",an:1,cat:"DataLoss",e5:3,e9:2,e22:1,sl:12},
