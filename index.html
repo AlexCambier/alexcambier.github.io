@@ -17,18 +17,18 @@
   
   <style>
     :root {
-      --bg: #0a192f; 
-      --surface: #112240; 
-      --surface-hover: #1d325a; 
-      --border: #233f6e; 
-      --border-hover: #3b5f9e;
-      --text: #ffffff; 
-      --text-secondary: #cbd5e1; 
+      --bg: #ffffff; 
+      --surface: #f1f5f9; 
+      --surface-hover: #e2e8f0; 
+      --border: #cbd5e1; 
+      --border-hover: #93c5fd;
+      --text: #0a192f; 
+      --text-secondary: #1d325a; 
       --text-tertiary: #8892b0; 
-      --accent: #93c5fd; 
-      --accent-soft: #bfdbfe;
-      --accent-dim: #173461; 
-      --green: #4ade80;
+      --accent: #233f6e; 
+      --accent-soft: #112240;
+      --accent-dim: #dbeafe; 
+      --green: #16a34a;
       --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
       --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
     }
@@ -41,14 +41,14 @@
     }
 
     .scroll-progress { position: fixed; top: 0; left: 0; height: 2px; z-index: 9998; background: var(--accent); transform-origin: left; transform: scaleX(0); width: 100%; pointer-events: none; }
-    .cursor-glow { position: fixed; width: 500px; height: 500px; border-radius: 50%; pointer-events: none; z-index: 0; background: radial-gradient(circle, rgba(147,197,253,0.035) 0%, transparent 70%); will-change: transform; }
+    .cursor-glow { position: fixed; width: 500px; height: 500px; border-radius: 50%; pointer-events: none; z-index: 0; background: radial-gradient(circle, rgba(35,63,110,0.04) 0%, transparent 70%); will-change: transform; }
     .page { position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column; }
     .container { max-width: 920px; margin: 0 auto; padding: 0 24px; width: 100%; }
 
     .nav {
       padding: 24px 0; display: flex; align-items: center; justify-content: space-between;
       position: sticky; top: 0; z-index: 100; margin-bottom: -1px;
-      background: rgba(10, 25, 47, 0.82);
+      background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(16px) saturate(160%);
       -webkit-backdrop-filter: blur(16px) saturate(160%);
       transform: translateY(-100%);
@@ -64,7 +64,7 @@
     .nav-links a:hover { color: var(--text); }
     .nav-links a:hover::after { width: 100%; }
     .nav-status { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-tertiary); letter-spacing: 0.5px; }
-    .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px rgba(52,211,153,0.3); animation: breathe 3s ease-in-out infinite; }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px rgba(22,163,74,0.3); animation: breathe 3s ease-in-out infinite; }
     @keyframes breathe { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(0.85)} }
     hr.divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border) 15%, var(--border) 85%, transparent); margin: 0; }
 
@@ -98,12 +98,12 @@
       color: var(--text); font-size: 13px; font-weight: 400; text-decoration: none;
       transition: all .3s var(--ease-out-expo); font-family: sans-serif; letter-spacing: 0.5px; cursor: pointer;
     }
-    .btn:hover { background: var(--surface-hover); border-color: var(--border-hover); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.25); }
+    .btn:hover { background: var(--surface-hover); border-color: var(--border-hover); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
     .btn:active { transform: translateY(0) scale(0.97); transition-duration: 0.1s; }
     .btn .ico { width:16px; height:16px; opacity:.7; transition: opacity .3s, transform .3s var(--ease-out-expo); }
     .btn:hover .ico { opacity:1; transform: scale(1.08); }
     .btn-primary { background: var(--text); color: var(--bg); border-color: transparent; font-weight: 600; }
-    .btn-primary:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,255,255,0.1); }
+    .btn-primary:hover { background: #112240; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(10,25,47,0.15); }
     .btn-primary .ico { opacity: 1; stroke: var(--bg); }
 
     .section { padding: 56px 0; scroll-margin-top: 60px; }
@@ -121,8 +121,8 @@
     .tl-item:hover { transform: translateX(5px); }
     .tl-item:last-child { padding-bottom: 0; }
     .tl-dot { position: absolute; left: -25px; top: 7px; width: 9px; height: 9px; border-radius: 50%; background: var(--text-tertiary); border: 2px solid var(--bg); transition: all 0.4s var(--ease-out-expo); }
-    .tl-item:hover .tl-dot { background: var(--accent-soft); border-color: var(--border); box-shadow: 0 0 10px rgba(147,197,253,0.25); }
-    .tl-item:first-child .tl-dot { background: var(--accent); border-color: var(--border); box-shadow: 0 0 10px rgba(147,197,253,0.25); }
+    .tl-item:hover .tl-dot { background: var(--accent-soft); border-color: var(--border); box-shadow: 0 0 10px rgba(35,63,110,0.2); }
+    .tl-item:first-child .tl-dot { background: var(--accent); border-color: var(--border); box-shadow: 0 0 10px rgba(35,63,110,0.2); }
     .tl-header { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
     .tl-role { font-size: 18px; font-weight: 700; transition: color 0.3s; }
     .tl-company { font-size: 16px; color: var(--text-secondary); font-weight: 400; font-style: italic; }
@@ -132,16 +132,16 @@
     .tl-bullets li { position: relative; padding-left: 18px; font-size: 15px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 8px; font-weight: 300; }
     .tl-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--accent); opacity: 0.7; }
     .tl-clickable { cursor: pointer; padding: 12px; margin: -12px; border-radius: 8px; transition: all 0.35s var(--ease-out-expo); }
-    .tl-clickable:hover { background: rgba(255,255,255,0.02); }
-    .tl-clickable:hover .tl-role { color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: rgba(147,197,253,0.4); }
+    .tl-clickable:hover { background: rgba(0,0,0,0.02); }
+    .tl-clickable:hover .tl-role { color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: rgba(35,63,110,0.4); }
     .demo-badge { font-family: sans-serif; font-size: 10px; font-weight: 700; background: var(--accent-dim); color: var(--accent); padding: 4px 8px; border-radius: 4px; margin-left: auto; border: 1px solid var(--border); transition: all 0.35s var(--ease-out-expo); display: flex; align-items: center; gap: 5px; letter-spacing: 0.5px; }
-    .tl-clickable:hover .demo-badge, .edu-clickable:hover .demo-badge, .card:hover .demo-badge { background: var(--accent); color: var(--bg); border-color: var(--accent); box-shadow: 0 2px 10px rgba(147,197,253,0.2); }
+    .tl-clickable:hover .demo-badge, .edu-clickable:hover .demo-badge, .card:hover .demo-badge { background: var(--accent); color: var(--bg); border-color: var(--accent); box-shadow: 0 2px 10px rgba(35,63,110,0.15); }
 
     .edu-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); }
     .edu-card { padding: 24px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); transition: all .35s var(--ease-out-expo); }
     .edu-card:hover { border-color: var(--border-hover); background: var(--surface-hover); }
     .edu-clickable { cursor: pointer; }
-    .edu-clickable:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 10px 28px rgba(0,0,0,0.3); }
+    .edu-clickable:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 10px 28px rgba(0,0,0,0.08); }
     .edu-clickable:hover .edu-degree { color: var(--accent-soft); }
     .edu-degree { font-size: 17px; font-weight: 700; margin-bottom: 4px; transition: color 0.3s; }
     .edu-school { font-size: 15px; color: var(--text-secondary); margin-bottom: 10px; font-style: italic; }
@@ -153,12 +153,12 @@
 
     .skills-row { display: flex; flex-wrap: wrap; gap: 10px; }
     .skill-pill { font-family: sans-serif; font-size: 12px; font-weight: 400; letter-spacing: 0.5px; padding: 6px 16px; border-radius: 4px; background: var(--surface); color: var(--text); border: 1px solid var(--border); transition: all .3s var(--ease-out-expo); cursor: default; }
-    .skill-pill:hover { background: var(--accent-dim); border-color: var(--border-hover); color: var(--accent-soft); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    .skill-pill:hover { background: var(--accent-dim); border-color: var(--border-hover); color: var(--accent-soft); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
 
     .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(290px,1fr)); }
     .card { display: flex; flex-direction: column; text-decoration: none; color: inherit; padding: 28px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); transition: all .4s var(--ease-out-expo); position: relative; overflow: hidden; cursor: pointer; }
-    .card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle 250px at var(--mx,50%) var(--my,0%), rgba(147,197,253,0.08), transparent 100%); opacity: 0; transition: opacity .5s; pointer-events: none; }
-    .card:hover { border-color: var(--accent); background: var(--surface-hover); transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.3); }
+    .card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle 250px at var(--mx,50%) var(--my,0%), rgba(35,63,110,0.06), transparent 100%); opacity: 0; transition: opacity .5s; pointer-events: none; }
+    .card:hover { border-color: var(--accent); background: var(--surface-hover); transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
     .card:hover::before { opacity:1; }
     .card:active { transform: translateY(-1px) scale(0.99); transition-duration: 0.1s; }
     .card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; }
@@ -171,9 +171,9 @@
     .tag { font-family: sans-serif; font-size: 11px; padding: 4px 10px; border-radius: 4px; background: var(--bg); color: var(--text-secondary); border: 1px solid var(--border); letter-spacing: 0.5px; transition: border-color 0.3s; }
     .card:hover .tag { border-color: var(--border-hover); }
 
-    .modal-overlay { position: fixed; inset: 0; background: rgba(10,25,47,0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.35s var(--ease-out-expo); padding: 24px; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(10,25,47,0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.35s var(--ease-out-expo); padding: 24px; }
     .modal-overlay.active { opacity: 1; pointer-events: auto; }
-    .modal-content { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; width: 100%; max-width: 900px; max-height: 90vh; overflow-y: auto; transform: translateY(24px) scale(0.97); transition: all 0.4s var(--ease-out-expo); position: relative; box-shadow: 0 24px 50px rgba(0,0,0,0.5); }
+    .modal-content { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; width: 100%; max-width: 900px; max-height: 90vh; overflow-y: auto; transform: translateY(24px) scale(0.97); transition: all 0.4s var(--ease-out-expo); position: relative; box-shadow: 0 24px 50px rgba(0,0,0,0.12); }
     .modal-overlay.active .modal-content { transform: translateY(0) scale(1); }
     .modal-close { position: absolute; top: 20px; right: 20px; background: var(--surface); border: 1px solid var(--border); color: var(--text-tertiary); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s var(--ease-out-expo); z-index: 2; }
     .modal-close:hover { background: var(--border-hover); color: var(--text); transform: rotate(90deg); }
@@ -194,34 +194,34 @@
     .code-tab:hover { border-color: var(--border-hover); background: var(--surface-hover); }
     .code-tab[aria-selected="true"] { background: var(--accent-dim); border-color: var(--accent); color: var(--accent-soft); }
     .code-actions-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
-    .viewer-box { border: 1px solid var(--border); border-radius: 8px; background: #0d1117; position: relative; overflow: hidden; margin-bottom: 16px; }
-    .viewer-pre { margin: 0; padding: 16px; color: #e6edf3; font: 13px/1.6 'Courier New', monospace; white-space: pre-wrap; word-break: break-word; overflow: auto; max-height: 220px; transition: max-height 0.5s var(--ease-out-expo); }
-    .viewer-box[data-collapsed="true"]::after { content: ""; position: absolute; inset: auto 0 0 0; height: 60px; background: linear-gradient(to bottom, rgba(13,17,23,0), rgba(13,17,23,1)); pointer-events: none; }
+    .viewer-box { border: 1px solid var(--border); border-radius: 8px; background: #f8fafc; position: relative; overflow: hidden; margin-bottom: 16px; }
+    .viewer-pre { margin: 0; padding: 16px; color: #1e293b; font: 13px/1.6 'Courier New', monospace; white-space: pre-wrap; word-break: break-word; overflow: auto; max-height: 220px; transition: max-height 0.5s var(--ease-out-expo); }
+    .viewer-box[data-collapsed="true"]::after { content: ""; position: absolute; inset: auto 0 0 0; height: 60px; background: linear-gradient(to bottom, rgba(248,250,252,0), rgba(248,250,252,1)); pointer-events: none; }
 
-    .notebook-cell { background: #0d1117; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 16px 0 24px 0; box-shadow: 0 4px 16px rgba(0,0,0,0.2); transition: border-color 0.3s; }
+    .notebook-cell { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 16px 0 24px 0; box-shadow: 0 4px 16px rgba(0,0,0,0.06); transition: border-color 0.3s; }
     .notebook-cell:hover { border-color: var(--border-hover); }
-    .notebook-colab-header { display: flex; align-items: center; gap: 16px; padding: 14px 16px; background: var(--surface); border-bottom: 1px dashed rgba(255,255,255,0.1); text-decoration: none; transition: background 0.3s var(--ease-out-expo); }
+    .notebook-colab-header { display: flex; align-items: center; gap: 16px; padding: 14px 16px; background: var(--surface); border-bottom: 1px dashed var(--border); text-decoration: none; transition: background 0.3s var(--ease-out-expo); }
     .notebook-colab-header:hover { background: var(--surface-hover); }
-    .colab-icon { width: 40px; height: 40px; background: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .colab-icon { width: 40px; height: 40px; background: #f8fafc; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid var(--border); }
     .colab-info { display: flex; flex-direction: column; }
     .colab-title { font-family: sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 2px; }
     .colab-desc { font-family: sans-serif; font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; line-height: 1.4; }
     .colab-url { font-family: sans-serif; font-size: 11px; color: var(--text-tertiary); display: flex; align-items: center; gap: 4px; }
     .colab-action { margin-left: auto; color: var(--text-tertiary); display: flex; align-items: center; padding-left: 12px; transition: all 0.3s var(--ease-out-expo); }
     .notebook-colab-header:hover .colab-action { color: var(--accent); transform: translateX(3px); }
-    .notebook-input { padding: 16px; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #e6edf3; line-height: 1.6; overflow-x: auto; }
-    .py-k { color: #ff7b72; font-weight: bold; } .py-s { color: #a5d6ff; } .py-c { color: #8b949e; font-style: italic; } .py-n { color: #79c0ff; } .py-f { color: #d2a8ff; }
-    .notebook-output { background: #010409; padding: 16px; border-top: 1px solid rgba(255,255,255,0.05); font-family: sans-serif; }
+    .notebook-input { padding: 16px; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #1e293b; line-height: 1.6; overflow-x: auto; }
+    .py-k { color: #d32f2f; font-weight: bold; } .py-s { color: #1565c0; } .py-c { color: #8892b0; font-style: italic; } .py-n { color: #0d47a1; } .py-f { color: #7b1fa2; }
+    .notebook-output { background: #f1f5f9; padding: 16px; border-top: 1px solid var(--border); font-family: sans-serif; }
     .output-label { font-size: 10px; color: var(--green); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: block; }
     .pandas-table { width: 100%; border-collapse: collapse; font-size: 12px; color: var(--text-secondary); text-align: right; }
     .pandas-table th { font-weight: 700; border-bottom: 1px solid var(--border); padding: 6px; color: var(--text); }
-    .pandas-table td { padding: 6px; border-bottom: 1px solid rgba(255,255,255,0.05); white-space: nowrap; transition: background 0.2s; }
+    .pandas-table td { padding: 6px; border-bottom: 1px solid var(--border); white-space: nowrap; transition: background 0.2s; }
     .pandas-table tr:last-child td { border-bottom: none; }
-    .pandas-table tr:hover td { background: rgba(255,255,255,0.03); }
-    .pandas-table th:first-child, .pandas-table td:first-child { text-align: left; font-weight: bold; color: var(--accent-soft); }
+    .pandas-table tr:hover td { background: rgba(0,0,0,0.03); }
+    .pandas-table th:first-child, .pandas-table td:first-child { text-align: left; font-weight: bold; color: var(--accent); }
 
     .course-box { margin-bottom: 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); overflow: hidden; transition: all 0.35s var(--ease-out-expo); }
-    .course-box[open] { border-color: var(--accent); background: var(--bg); box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+    .course-box[open] { border-color: var(--accent); background: var(--bg); box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
     .course-box summary { padding: 18px 20px; font-size: 16px; font-weight: 700; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; transition: background 0.25s; }
     .course-box summary::-webkit-details-marker { display: none; }
     .course-box summary:hover { background: var(--surface-hover); }
@@ -274,12 +274,12 @@
     .wt-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px 26px;margin-bottom:16px}
     .wt-card-step{font:600 11px/1 sans-serif;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
     .wt-card-title{font-size:19px;font-weight:700;margin-bottom:4px}
-    .wt-card-code{font:12px/1 'Courier New',monospace;color:#818cf8;background:#1e1b4b;padding:5px 10px;border-radius:6px;display:inline-block;margin-bottom:12px}
+    .wt-card-code{font:12px/1 'Courier New',monospace;color:#4338ca;background:#e0e7ff;padding:5px 10px;border-radius:6px;display:inline-block;margin-bottom:12px}
     .wt-card-desc{font-size:14px;color:var(--text-secondary);line-height:1.7;font-weight:300}
     .wt-tbl-wrap{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px 26px;overflow-x:auto;margin-bottom:16px}
     .wt-tbl{width:100%;border-collapse:separate;border-spacing:0;font-size:12px}
     .wt-tbl th{padding:8px 10px;text-align:left;font:700 11px/1 sans-serif;color:var(--text);background:var(--bg);border-bottom:2px solid var(--border);white-space:nowrap}
-    .wt-tbl td{padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.04);white-space:nowrap;color:var(--text-secondary);font-family:'Courier New',monospace}
+    .wt-tbl td{padding:7px 10px;border-bottom:1px solid rgba(0,0,0,.06);white-space:nowrap;color:var(--text-secondary);font-family:'Courier New',monospace}
     .wt-tbl .dim{opacity:.2}.wt-tbl .strike{opacity:.35;text-decoration:line-through}
     .wt-tbl .row-train{background:rgba(59,130,246,.06)}.wt-tbl .row-val{background:rgba(251,146,60,.06)}
     .wt-cat-DataLoss{color:#ef4444;font-weight:700}.wt-cat-NetworkErr{color:#f59e0b;font-weight:700}
@@ -302,7 +302,7 @@
     .wt-gmean-label{font:400 12px/1 sans-serif;color:var(--text-tertiary);margin-bottom:4px}
     .wt-gmean-val{font:800 26px/1 'Courier New',monospace;color:var(--text)}
     .wt-gmean-sub{font:400 13px/1 sans-serif;color:var(--text-tertiary);margin-left:8px}
-    .wt-note{margin-top:14px;padding:10px 14px;border-radius:8px;background:#1c1917;border:1px solid #854d0e;font:400 12px/1.4 sans-serif;color:#fbbf24}
+    .wt-note{margin-top:14px;padding:10px 14px;border-radius:8px;background:#fffbeb;border:1px solid #fbbf24;font:400 12px/1.4 sans-serif;color:#92400e}
     .wt-pill{padding:3px 10px;border-radius:16px;font:600 11px/1 sans-serif;border:1px solid}
     @media(max-width:640px){.wt-forest-grid{grid-template-columns:1fr}}
   </style>
@@ -428,7 +428,7 @@
         <div class="footer-links">
           <a href="https://www.linkedin.com/in/alexandre-benjamin-cambier/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           <a href="https://github.com/AlexCambier/alexcambier.github.io" target="_blank" rel="noopener noreferrer">GitHub</a>
-          <a href="mailto:tuamail@example.com">Email</a>
+          <a href="/cdn-cgi/l/email-protection#235756424e424a4f63465b424e534f460d404c4e">Email</a>
         </div>
       </div>
     </footer>
@@ -436,7 +436,11 @@
 </div>
 
 <!-- ══ MODALS ══ -->
-<div class="modal-overlay" id="bloomberg-modal" onclick="closeModal(event,'bloomberg-modal')"><div class="modal-content" onclick="event.stopPropagation()"><button class="modal-close" onclick="closeModal(event,'bloomberg-modal')" aria-label="Close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><div class="modal-body"><h3 class="modal-title">Bloomberg Data Pipeline</h3><p class="modal-subtitle">Gold Grain Capital · Workflow Simulation</p><div class="media-container" style="height:auto;aspect-ratio:unset;background:transparent;border:none;margin-bottom:8px"><video controls controlsList="nodownload" oncontextmenu="return false;" preload="metadata" playsinline style="width:100%;border-radius:8px;display:block;border:1px solid var(--border)"><source src="assets/presentazioni/Bloomberg.mp4" type="video/mp4">Il tuo browser non supporta il tag video.</video></div><p class="modal-text" style="margin-bottom:24px">The video above demonstrates how to search for information on Bloomberg using EQS and how to process the data in Excel using a VBA macro.</p><div class="notebook-cell"><a href="https://colab.research.google.com/drive/1yq9KfTZP8Wc2UZRd3r15Odt8_4MvFbo5?usp=sharing" target="_blank" rel="noopener noreferrer" class="notebook-colab-header"><div class="colab-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f9ab00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></div><div class="colab-info"><span class="colab-title">Interactive Python Notebook</span><span class="colab-desc">Explore the code, run the pipeline, and view real-time results via Google Colab.</span><span class="colab-url"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> colab.research.google.com</span></div><div class="colab-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div></a><div class="notebook-header" style="border-top:1px solid var(--border)"><span class="notebook-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg> ETF_Comparison.py</span></div><div class="notebook-input"><pre style="margin:0"><code><span class="py-k">import</span> pandas <span class="py-k">as</span> pd
+<div class="modal-overlay" id="bloomberg-modal" onclick="closeModal(event,'bloomberg-modal')"><div class="modal-content" onclick="event.stopPropagation()"><button class="modal-close" onclick="closeModal(event,'bloomberg-modal')" aria-label="Close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><div class="modal-body"><h3 class="modal-title">Bloomberg Data Pipeline</h3><p class="modal-subtitle">Gold Grain Capital · Workflow Simulation</p><p class="modal-text" style="margin-bottom:28px">The video below demonstrates how to search for information on Bloomberg using EQS and how to process the data in Excel using a VBA macro. The Python notebook replicates and visualises the same data programmatically.</p>
+
+<div style="margin-bottom:32px"><span class="media-item-label">Bloomberg EQS & VBA Workflow</span><div class="media-container" style="height:auto;aspect-ratio:unset;background:transparent;border:none;margin-bottom:0"><video controls controlsList="nodownload" oncontextmenu="return false;" preload="metadata" playsinline style="width:100%;border-radius:8px;display:block;border:1px solid var(--border)"><source src="assets/presentazioni/Bloomberg.mp4" type="video/mp4">Il tuo browser non supporta il tag video.</video></div></div>
+
+<div><span class="media-item-label">Python Data Visualisation</span><div class="notebook-cell"><a href="https://colab.research.google.com/drive/1yq9KfTZP8Wc2UZRd3r15Odt8_4MvFbo5?usp=sharing" target="_blank" rel="noopener noreferrer" class="notebook-colab-header"><div class="colab-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f9ab00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></div><div class="colab-info"><span class="colab-title">Interactive Python Notebook</span><span class="colab-desc">Explore the code, run the pipeline, and view real-time results via Google Colab.</span><span class="colab-url"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> colab.research.google.com</span></div><div class="colab-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div></a><div class="notebook-header" style="border-top:1px solid var(--border)"><span class="notebook-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg> ETF_Comparison.py</span></div><div class="notebook-input"><pre style="margin:0"><code><span class="py-k">import</span> pandas <span class="py-k">as</span> pd
 <span class="py-k">import</span> matplotlib.pyplot <span class="py-k">as</span> plt
 
 <span class="py-c"># Create DataFrame</span>
@@ -465,7 +469,7 @@ plt.title(<span class="py-s">'Yearly Performance with Quarterly Detail'</span>)
 plt.xlabel(<span class="py-s">'Quarter'</span>)
 plt.xticks(rotation=<span class="py-n">45</span>)
 plt.ylabel(<span class="py-s">'Performance (%)'</span>)
-plt.show()</code></pre></div><div class="notebook-output"><span class="output-label">Console Output [1]:</span><div style="overflow-x:auto"><table class="pandas-table"><thead><tr><th>Quarter</th><th>Analyzed Fund</th><th>L&G Cyber Security</th><th>First Trust NASDAQ</th><th>WisdomTree Cyber</th><th>Rize Cyber</th><th>iShares Digital</th></tr></thead><tbody><tr><td>Q1 '22</td><td>-4.88</td><td>0.95</td><td>1.02</td><td>-5.81</td><td>-5.51</td><td>-10.12</td></tr><tr><td>Q2 '22</td><td>-22.66</td><td>-20.25</td><td>-24.91</td><td>-28.48</td><td>-22.35</td><td>-20.18</td></tr><tr><td>Q3 '22</td><td>-5.68</td><td>6.26</td><td>-2.04</td><td>-1.98</td><td>-0.81</td><td>-3.07</td></tr><tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr></tbody></table></div></div></div><p class="modal-text">The code demonstrates how to generate graphical representations from data using Python.</p></div></div></div>
+plt.show()</code></pre></div><div class="notebook-output"><span class="output-label">Console Output [1]:</span><div style="overflow-x:auto"><table class="pandas-table"><thead><tr><th>Quarter</th><th>Analyzed Fund</th><th>L&G Cyber Security</th><th>First Trust NASDAQ</th><th>WisdomTree Cyber</th><th>Rize Cyber</th><th>iShares Digital</th></tr></thead><tbody><tr><td>Q1 '22</td><td>-4.88</td><td>0.95</td><td>1.02</td><td>-5.81</td><td>-5.51</td><td>-10.12</td></tr><tr><td>Q2 '22</td><td>-22.66</td><td>-20.25</td><td>-24.91</td><td>-28.48</td><td>-22.35</td><td>-20.18</td></tr><tr><td>Q3 '22</td><td>-5.68</td><td>6.26</td><td>-2.04</td><td>-1.98</td><td>-0.81</td><td>-3.07</td></tr><tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr></tbody></table></div></div></div></div></div></div></div>
 
 <div class="modal-overlay" id="luiss-modal" onclick="closeModal(event,'luiss-modal')"><div class="modal-content" onclick="event.stopPropagation()"><button class="modal-close" onclick="closeModal(event,'luiss-modal')" aria-label="Close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><div class="modal-body"><h3 class="modal-title">Sleep-Monitoring Sensor Project</h3><p class="modal-subtitle">Milano LUISS Hub · Hardware & Strategy</p><div class="media-grid"><div><span class="media-item-label">Hardware Prototype (Video)</span><div class="media-container" style="height:auto;aspect-ratio:unset;background:transparent;border:none"><video controls controlsList="nodownload" oncontextmenu="return false;" preload="metadata" playsinline style="width:100%;border-radius:8px;display:block;border:1px solid var(--border)"><source src="assets/sleep-sensor.mp4" type="video/mp4"></video></div></div><div><span class="media-item-label">Pitch & SWOT (Slides)</span><div class="media-container" style="aspect-ratio:16/13.5;position:relative"><iframe src="assets/presentazioni/Sweet_Dreams.pdf#page=1&view=FitH" title="Presentazione" style="border:none"></iframe></div><div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap"><a class="btn" href="assets/presentazioni/Sweet_Dreams.pdf" target="_blank" rel="noopener noreferrer"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Full screen</a><a class="btn" href="assets/presentazioni/Sweet_Dreams.pdf" download><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download PDF</a></div></div></div><p class="modal-text">Durante questa esperienza laboratoriale, ho curato sia l'aspetto tecnico che quello di business. Da un lato la modellazione 3D dell'involucro in Tinkercad e l'integrazione del firmware (C++) per i sensori Arduino; dall'altro lato, ho redatto un'analisi SWOT per definire al meglio la value proposition del nostro dispositivo per anziani e neonati.</p></div></div></div>
 
@@ -481,19 +485,19 @@ plt.show()</code></pre></div><div class="notebook-output"><span class="output-la
 <!-- ── Task 1 Walkthrough ── -->
 <div class="wt-wrap" id="wtWrap">
   <span class="media-item-label">Step-by-Step Walkthrough</span>
-  <p class="modal-text" style="font-size:13px;margin-top:-4px;margin-bottom:16px">Visualizzazione interattiva della pipeline ML applicata a un dataset di esempio.</p>
+  <p class="modal-text" style="font-size:13px;margin-top:-4px;margin-bottom:16px">Interactive visualisation of the ML pipeline applied to a sample dataset.</p>
   <nav class="wt-steps" id="wtSteps"></nav>
   <div id="wtCard"></div>
   <div id="wtTable"></div>
   <div class="wt-nav">
-    <button id="wtPrev" disabled>&#8592; Indietro</button>
-    <button id="wtNext" class="wt-next">Avanti &#8594;</button>
+    <button id="wtPrev" disabled>&#8592; Back</button>
+    <button id="wtNext" class="wt-next">Next &#8594;</button>
   </div>
 </div>
 
 </div></div></div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── Cursor Glow ──
 const glow=document.getElementById('cursorGlow');let gx=0,gy=0,cx=0,cy=0;
 document.addEventListener('mousemove',e=>{gx=e.clientX;gy=e.clientY});
@@ -524,7 +528,16 @@ document.querySelectorAll('.course-box').forEach(t=>{t.addEventListener('click',
 
 // ── Code Viewer ──
 (()=>{const root=document.getElementById('codeViewer');if(!root)return;const PL=10;const files=JSON.parse(root.dataset.files||'[]');const tabs=root.querySelector('.code-tabs');const cE=root.querySelector('#codeArea');const vb=root.querySelector('.viewer-box');const cB=root.querySelector('#copyBtn');const tB=root.querySelector('#toggleBtn');const dB=root.querySelector('#downloadBtn');let raw='',col=true;
-const render=()=>{const l=raw.split('\n');const m=l.length>PL;if(col&&m){cE.textContent=l.slice(0,PL).join('\n')+'\n\n... (click "Show all" to view the rest of the code) ...';vb.dataset.collapsed='true';cE.style.maxHeight='220px';}else{cE.textContent=raw;vb.dataset.collapsed='false';cE.style.maxHeight='600px';}tB.hidden=!m;tB.textContent=col?'Show all':'Show less';};
+const hiPy=(code)=>{return code.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+.replace(/(#.*$)/gm,'<span class="py-c">$1</span>')
+.replace(/"""[\s\S]*?"""|'''[\s\S]*?'''/g,m=>'<span class="py-c">'+m+'</span>')
+.replace(/\b(import|from|as|def|class|return|if|elif|else|for|in|while|try|except|with|raise|pass|break|continue|and|or|not|is|lambda|yield|global|nonlocal|assert|del|True|False|None)\b/g,'<span class="py-k">$1</span>')
+.replace(/\b(print|len|range|int|float|str|list|dict|set|tuple|type|isinstance|enumerate|zip|map|filter|sorted|max|min|sum|abs|round|open|super|input)\b(?=\s*\()/g,'<span class="py-f">$1</span>')
+.replace(/(["'])(?:(?!\1|\\).|\\.)*?\1/g,m=>{if(m.indexOf('py-')>=0)return m;return '<span class="py-s">'+m+'</span>';})
+.replace(/\b(\d+\.?\d*)\b/g,'<span class="py-n">$1</span>')
+.replace(/\.([a-zA-Z_]\w*)\s*\(/g,'.<span class="py-f">$1</span>(')
+.replace(/@(\w+)/g,'<span class="py-k">@$1</span>');};
+const render=()=>{const l=raw.split('\n');const m=l.length>PL;let code;if(col&&m){code=l.slice(0,PL).join('\n')+'\n\n... (click "Show all" to view the rest of the code) ...'}else{code=raw;}cE.innerHTML=hiPy(code);vb.dataset.collapsed=col&&m?'true':'false';cE.style.maxHeight=col&&m?'220px':'600px';tB.hidden=!m;tB.textContent=col?'Show all':'Show less';};
 const load=async(src)=>{cE.textContent='# Loading file...';raw='';dB.removeAttribute('href');try{const r=await fetch(src,{cache:'no-store'});if(!r.ok)throw 0;raw=await r.text();dB.href=src;render();}catch{cE.textContent='# Error: Cannot load file at: '+src;vb.dataset.collapsed='false';tB.hidden=true;}};
 tabs.innerHTML=files.map((f,i)=>`<button class="code-tab" type="button" data-i="${i}" aria-selected="${i===0}">${f.label}</button>`).join('');
 const sA=i=>tabs.querySelectorAll('.code-tab').forEach((b,k)=>b.setAttribute('aria-selected',k===i));
@@ -537,14 +550,14 @@ tB.addEventListener('click',()=>{col=!col;render();});
 // ── Walkthrough Engine ──
 (function(){
   var STEPS=[
-    {icon:"\ud83d\udccb",title:"Dataset Originale",sub:"training_categoria.dsv",desc:"Questo \u00e8 il dataset di partenza. Ogni riga \u00e8 una traccia HDFS. Le colonne contengono: un identificativo (TRACE_ID), se \u00e8 un\u2019anomalia (ANOMALY), la categoria (ANOMALY_CATEGORY) e le feature numeriche."},
-    {icon:"\u2702\ufe0f",title:"Separa X e y",sub:"train.drop([...]) \u2192 X, y",desc:"Separi le \u201cdomande\u201d dalle \u201crisposte\u201d. Le colonne grigie vengono rimosse. ANOMALY_CATEGORY diventa il target y. Restano solo le feature numeriche come input X."},
-    {icon:"\ud83d\udd22",title:"Label Encoding",sub:"LabelEncoder().fit_transform(y)",desc:"Il computer non capisce le parole: \u201cDataLoss\u201d \u2192 0, \u201cNetworkErr\u201d \u2192 1, \u201cNormal\u201d \u2192 2, \u201cSlowWrite\u201d \u2192 3. Ordine alfabetico."},
-    {icon:"\ud83d\udcca",title:"Train / Validation Split",sub:"train_test_split(80% / 20%)",desc:"Dividi i dati: 80% per allenamento (blu) e 20% per verifica (arancione). La stratificazione garantisce ogni categoria in proporzione uguale."},
-    {icon:"\u2696\ufe0f",title:"Standard Scaling",sub:"StandardScaler()",desc:"Le feature hanno scale diverse. Lo scaling porta tutto su una scala comparabile (media=0, std=1). Lo scaler si calcola solo sul training e si applica anche alla validazione."},
-    {icon:"\ud83c\udf32",title:"Random Forest",sub:"300 alberi che votano insieme",desc:"300 \u201cesperti\u201d, ognuno guarda i dati da un\u2019angolazione diversa. Ogni albero impara regole; alla fine votano. class_weight=\"balanced\" fa pesare di pi\u00f9 le categorie rare."},
-    {icon:"\ud83c\udfaf",title:"Valutazione (G-Mean)",sub:"geometric_mean_score()",desc:"Sul 20% messo da parte, confronti predizioni con risposte vere. La G-Mean \u00e8 severa: se ignori una categoria rara, il punteggio crolla."},
-    {icon:"\ud83c\udfc1",title:"Predizione Finale",sub:"submission.to_csv()",desc:"Applichi il modello al test set, riconverti i numeri nelle categorie originali e salvi il file di submission."}
+    {icon:"\ud83d\udccb",title:"Original Dataset",sub:"training_categoria.dsv",desc:"This is the starting dataset. Each row is an HDFS trace. The columns include: an identifier (TRACE_ID), whether it is an anomaly (ANOMALY), the anomaly category (ANOMALY_CATEGORY), and the numeric features that describe each trace's behaviour."},
+    {icon:"\u2702\ufe0f",title:"Separate X and y",sub:"train.drop([...]) \u2192 X, y",desc:"Split the \"questions\" from the \"answers\". The greyed-out columns are removed from the features. ANOMALY_CATEGORY becomes the target y \u2014 what the model must learn to predict. Only the numeric feature columns remain as input X."},
+    {icon:"\ud83d\udd22",title:"Label Encoding",sub:"LabelEncoder().fit_transform(y)",desc:"Computers don\u2019t understand words, so each category is turned into a number: \"DataLoss\" \u2192 0, \"NetworkErr\" \u2192 1, \"Normal\" \u2192 2, \"SlowWrite\" \u2192 3. The order is alphabetical."},
+    {icon:"\ud83d\udcca",title:"Train / Validation Split",sub:"train_test_split(80% / 20%)",desc:"The data is split into two parts: 80\u0025 for training (blue rows) and 20\u0025 for testing (orange rows). Stratification ensures that every category is represented proportionally in both parts."},
+    {icon:"\u2696\ufe0f",title:"Standard Scaling",sub:"StandardScaler()",desc:"Features have different scales \u2014 some range from 0 to 5, others from 3 to 21. Scaling brings everything to a comparable range (mean = 0, std = 1). The scaler is fitted only on the training set and then applied to the validation set."},
+    {icon:"\ud83c\udf32",title:"Random Forest",sub:"300 trees voting together",desc:"Imagine 300 \"experts\", each looking at the data from a slightly different angle. Every tree learns simple rules; in the end they all vote, and the most-voted category wins. class_weight=\"balanced\" makes the model pay extra attention to rare categories."},
+    {icon:"\ud83c\udfaf",title:"Evaluation (G-Mean)",sub:"geometric_mean_score()",desc:"On the 20\u0025 held aside, the model\u2019s predictions are compared with the true answers. The G-Mean is strict: if the model ignores even one rare category, the score drops sharply."},
+    {icon:"\ud83c\udfc1",title:"Final Prediction",sub:"submission.to_csv()",desc:"Finally, the trained model is applied to the test set (data with no answers). The numeric predictions are converted back into the original category names, and the result is saved as the submission file."}
   ];
   var DATA=[
     {id:"T001",an:1,cat:"DataLoss",e5:3,e9:2,e22:1,sl:12},
@@ -571,7 +584,7 @@ tB.addEventListener('click',()=>{col=!col;render();});
 
   function renderSteps(){var nav=document.getElementById("wtSteps");if(!nav)return;nav.innerHTML=STEPS.map(function(s,i){return '<button class="wt-step-btn'+(i===step?' active':'')+'" data-i="'+i+'">'+s.icon+' '+(i+1)+'</button>';}).join("");nav.onclick=function(e){var b=e.target.closest(".wt-step-btn");if(b){step=+b.dataset.i;render();}};}
 
-  function renderCard(){var c=document.getElementById("wtCard");if(!c)return;var s=STEPS[step];c.innerHTML='<div class="wt-card"><div class="wt-card-step">Step '+(step+1)+' di '+STEPS.length+'</div><div class="wt-card-title">'+s.icon+' '+s.title+'</div><div class="wt-card-code">'+s.sub+'</div><div class="wt-card-desc">'+s.desc+'</div></div>';}
+  function renderCard(){var c=document.getElementById("wtCard");if(!c)return;var s=STEPS[step];c.innerHTML='<div class="wt-card"><div class="wt-card-step">Step '+(step+1)+' of '+STEPS.length+'</div><div class="wt-card-title">'+s.icon+' '+s.title+'</div><div class="wt-card-code">'+s.sub+'</div><div class="wt-card-desc">'+s.desc+'</div></div>';}
 
   function renderTable(){
     var el=document.getElementById("wtTable");if(!el)return;
@@ -585,13 +598,13 @@ tB.addEventListener('click',()=>{col=!col;render();});
     h+='</tbody></table>';if(showSplit)h+='<div class="wt-legend"><span><i style="background:rgba(59,130,246,.15);border:1px solid #3b82f6"></i> Training (80%)</span><span><i style="background:rgba(251,146,60,.15);border:1px solid #fb923c"></i> Validation (20%)</span></div>';h+='</div>';el.innerHTML=h;
   }
 
-  function renderForest(el){var trees=[{rule:'"Se evt_5 \u2264 2 \u2192 anomalia"'},{rule:'"Se seq_len < 10 \u2192 rete"'},{rule:'"Se evt_9 = 0 \u2192 NetworkErr"'}];var h='<div class="wt-tbl-wrap"><div class="wt-forest-grid">';trees.forEach(function(t,i){h+='<div class="wt-tree"><div class="wt-tree-icon">\ud83c\udf32</div><div class="wt-tree-label">Albero '+(i+1)+'</div><div class="wt-tree-rule">'+t.rule+'</div></div>';});h+='</div><div style="text-align:center;font:400 13px/1 sans-serif;color:var(--text-tertiary);margin-bottom:14px">\u2026 \u00d7 300 alberi \u2192 ognuno vota \u2192 la categoria pi\u00f9 votata vince</div><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">';[{c:"DataLoss",col:"#ef4444"},{c:"NetworkErr",col:"#f59e0b"},{c:"Normal",col:"#22c55e"},{c:"SlowWrite",col:"#8b5cf6"}].forEach(function(x){h+='<span class="wt-pill" style="color:'+x.col+';border-color:'+x.col+'40;background:'+x.col+'18">'+x.c+'</span>';});h+='</div><div class="wt-note"><strong>class_weight="balanced"</strong> \u2192 le categorie rare (DataLoss, SlowWrite) contano di pi\u00f9 durante l\u2019apprendimento</div></div>';el.innerHTML=h;}
+  function renderForest(el){var trees=[{rule:'"If evt_5 \u2264 2 \u2192 anomaly"'},{rule:'"If seq_len < 10 \u2192 network"'},{rule:'"If evt_9 = 0 \u2192 NetworkErr"'}];var h='<div class="wt-tbl-wrap"><div class="wt-forest-grid">';trees.forEach(function(t,i){h+='<div class="wt-tree"><div class="wt-tree-icon">\ud83c\udf32</div><div class="wt-tree-label">Tree '+(i+1)+'</div><div class="wt-tree-rule">'+t.rule+'</div></div>';});h+='</div><div style="text-align:center;font:400 13px/1 sans-serif;color:var(--text-tertiary);margin-bottom:14px">\u2026 \u00d7 300 trees \u2192 each one votes \u2192 the most-voted category wins</div><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">';[{c:"DataLoss",col:"#ef4444"},{c:"NetworkErr",col:"#f59e0b"},{c:"Normal",col:"#22c55e"},{c:"SlowWrite",col:"#8b5cf6"}].forEach(function(x){h+='<span class="wt-pill" style="color:'+x.col+';border-color:'+x.col+'40;background:'+x.col+'18">'+x.c+'</span>';});h+='</div><div class="wt-note"><strong>class_weight="balanced"</strong> \u2192 rare categories (DataLoss, SlowWrite) are given more weight during training</div></div>';el.innerHTML=h;}
 
-  function renderEval(el){var rows=[{id:"T003",real:"NetworkErr",pred:"NetworkErr",ok:true},{id:"T010",real:"Normal",pred:"Normal",ok:true},{id:"T012",real:"Normal",pred:"DataLoss",ok:false}];var h='<div class="wt-tbl-wrap"><table class="wt-tbl"><thead><tr><th>TRACE_ID</th><th>Vero</th><th>Predetto</th><th style="text-align:center">Esito</th></tr></thead><tbody>';rows.forEach(function(r){h+='<tr style="background:'+(r.ok?"rgba(34,197,94,.05)":"rgba(239,68,68,.05)")+'"><td>'+r.id+'</td><td class="'+catCls(r.real)+'">'+r.real+'</td><td class="'+catCls(r.pred)+'">'+r.pred+'</td><td style="text-align:center;font-size:18px">'+(r.ok?"\u2705":"\u274c")+'</td></tr>';});h+='</tbody></table><div class="wt-gmean-box"><div class="wt-gmean-label">G-Mean Weighted</div><div class="wt-gmean-val">0.816<span class="wt-gmean-sub">(2/3 corrette)</span></div></div></div>';el.innerHTML=h;}
+  function renderEval(el){var rows=[{id:"T003",real:"NetworkErr",pred:"NetworkErr",ok:true},{id:"T010",real:"Normal",pred:"Normal",ok:true},{id:"T012",real:"Normal",pred:"DataLoss",ok:false}];var h='<div class="wt-tbl-wrap"><table class="wt-tbl"><thead><tr><th>TRACE_ID</th><th>True</th><th>Predicted</th><th style="text-align:center">Result</th></tr></thead><tbody>';rows.forEach(function(r){h+='<tr style="background:'+(r.ok?"rgba(34,197,94,.05)":"rgba(239,68,68,.05)")+'"><td>'+r.id+'</td><td class="'+catCls(r.real)+'">'+r.real+'</td><td class="'+catCls(r.pred)+'">'+r.pred+'</td><td style="text-align:center;font-size:18px">'+(r.ok?"\u2705":"\u274c")+'</td></tr>';});h+='</tbody></table><div class="wt-gmean-box"><div class="wt-gmean-label">G-Mean Weighted</div><div class="wt-gmean-val">0.816<span class="wt-gmean-sub">(2/3 correct)</span></div></div></div>';el.innerHTML=h;}
 
   function renderSubmission(el){var preds=[{id:"T101",cat:"NetworkErr"},{id:"T102",cat:"Normal"},{id:"T103",cat:"SlowWrite"}];var h='<div class="wt-tbl-wrap"><div style="font:400 13px/1 \'Courier New\',monospace;color:var(--text-tertiary);margin-bottom:10px">submission.dsv</div><table class="wt-tbl"><thead><tr><th>TRACE_ID</th><th style="background:rgba(34,197,94,.08)">ANOMALY_CATEGORY</th></tr></thead><tbody>';preds.forEach(function(p){h+='<tr><td>'+p.id+'</td><td class="'+catCls(p.cat)+'">'+p.cat+'</td></tr>';});h+='</tbody></table></div>';el.innerHTML=h;}
 
-  function render(){renderSteps();renderCard();renderTable();var p=document.getElementById("wtPrev"),n=document.getElementById("wtNext");if(p)p.disabled=step===0;if(n){n.disabled=step===STEPS.length-1;n.textContent=step===STEPS.length-1?"Fine":"Avanti \u2192";}}
+  function render(){renderSteps();renderCard();renderTable();var p=document.getElementById("wtPrev"),n=document.getElementById("wtNext");if(p)p.disabled=step===0;if(n){n.disabled=step===STEPS.length-1;n.textContent=step===STEPS.length-1?"Done":"Next \u2192";}}
 
   var p=document.getElementById("wtPrev"),n=document.getElementById("wtNext");
   if(p)p.addEventListener("click",function(){if(step>0){step--;render();}});
