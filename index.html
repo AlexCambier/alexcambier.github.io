@@ -257,12 +257,33 @@
       .card, .edu-card { padding: 24px; }
       .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
       .tl-meta { flex-direction: column; gap: 4px; }
-      .modal-body { padding: 24px; }
+      .modal-body { padding: 16px; }
+      .modal-title { font-size: 20px; }
+      .modal-subtitle { font-size: 12px; margin-bottom: 16px; }
+      .modal-text { font-size: 13px; }
+      .modal-overlay { padding: 10px; }
+      .modal-content { max-height: 95vh; }
+      .modal-close { top: 12px; right: 12px; width: 32px; height: 32px; }
       .demo-badge { display: none; }
-      .media-grid { grid-template-columns: 1fr; gap: 24px; }
+      .media-grid { grid-template-columns: 1fr; gap: 16px; }
+      .media-item-label { font-size: 11px; margin-bottom: 8px; }
       .notebook-colab-header { flex-direction: column; align-items: flex-start; gap: 12px; }
       .colab-action { display: none; }
       .cursor-glow { display: none; }
+      .viewer-pre { font-size: 11px; padding: 12px; max-height: 180px; }
+      .code-tabs { gap: 4px; }
+      .code-tab { padding: 5px 10px; font-size: 11px; }
+      .code-actions-row { gap: 6px; }
+      .pandas-table { font-size: 10px; }
+      .pandas-table th, .pandas-table td { padding: 4px; }
+      .section { padding: 36px 0; }
+      .section-title { font-size: 24px; margin-bottom: 24px; }
+      .tl-role { font-size: 16px; }
+      .tl-bullets li { font-size: 13px; }
+      .edu-degree { font-size: 15px; }
+      .card h3 { font-size: 18px; }
+      .card-desc { font-size: 13px; }
+      .hero-bio { font-size: 14px; }
     }
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
@@ -311,7 +332,23 @@
     .wt-gmean-sub{font:400 13px/1 sans-serif;color:var(--text-tertiary);margin-left:8px}
     .wt-note{margin-top:14px;padding:10px 14px;border-radius:8px;background:#fffbeb;border:1px solid #fbbf24;font:400 12px/1.4 sans-serif;color:#92400e}
     .wt-pill{padding:3px 10px;border-radius:16px;font:600 11px/1 sans-serif;border:1px solid}
-    @media(max-width:640px){.wt-forest-grid{grid-template-columns:1fr}}
+    @media(max-width:640px){
+      .wt-forest-grid{grid-template-columns:1fr}
+      .wt-card{padding:16px 18px}
+      .wt-card-title{font-size:16px}
+      .wt-card-desc{font-size:13px}
+      .wt-card-code{font-size:11px}
+      .wt-tbl-wrap{padding:14px 12px}
+      .wt-tbl{font-size:10px}
+      .wt-tbl th{font-size:9px;padding:5px 6px}
+      .wt-tbl td{padding:4px 6px;font-size:10px}
+      .wt-snippet-pre{font-size:11px;padding:10px 12px}
+      .wt-snippet-header{font-size:10px;padding:6px 10px}
+      .wt-steps{gap:3px}
+      .wt-step-btn{padding:6px 10px;font-size:11px}
+      .wt-nav button{padding:8px 16px;font-size:13px}
+      .wt-gmean-val{font-size:22px}
+    }
   </style>
 </head>
 <body>
@@ -534,7 +571,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){const a=document.qu
 document.querySelectorAll('.course-box').forEach(t=>{t.addEventListener('click',()=>{document.querySelectorAll('.course-box').forEach(d=>{if(d!==t)d.removeAttribute('open');});});});
 
 // ── Code Viewer ──
-(()=>{const root=document.getElementById('codeViewer');if(!root)return;const PL=10;const files=JSON.parse(root.dataset.files||'[]');const tabs=root.querySelector('.code-tabs');const cE=root.querySelector('#codeArea');const vb=root.querySelector('.viewer-box');const cB=root.querySelector('#copyBtn');const tB=root.querySelector('#toggleBtn');const dB=root.querySelector('#downloadBtn');let raw='',col=true;
+(()=>{const root=document.getElementById('codeViewer');if(!root)return;const PL=10;const files=JSON.parse(root.dataset.files||'[]');const tabs=root.querySelector('.code-tabs');const cE=root.querySelector('#codeArea');const vb=root.querySelector('.viewer-box');const cB=root.querySelector('#copyBtn');const tB=root.querySelector('#toggleBtn');const dB=root.querySelector('#downloadBtn');let raw='',col=true;window._codeRaw=function(){return raw;};
 const hiPy=(code)=>{return code.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
 .replace(/(#.*$)/gm,'<span class="py-c">$1</span>')
 .replace(/"""[\s\S]*?"""|'''[\s\S]*?'''/g,m=>'<span class="py-c">'+m+'</span>')
@@ -577,7 +614,6 @@ tB.addEventListener('click',()=>{col=!col;render();});
     {icon:"\ud83c\udfc1",title:"Final Prediction",sub:"submission.to_csv()",desc:"The trained model is applied to the 29,999 test traces. Numeric predictions are converted back into the original category names and saved as the submission file.",
      code:'y_test_pred = clf.predict(X_test)\ny_test_pred_labels = le.inverse_transform(y_test_pred)\n\nsubmission = pd.DataFrame({\n    "TRACE_ID": test["TRACE_ID"],\n    "ANOMALY_CATEGORY": y_test_pred_labels\n})\nsubmission.to_csv("submission.dsv", sep=";", index=False)'}
   ];
-  var LINES1=[ [6,7],[8,9],[10,11],[12,13,14],[15,16,17,18],[19,20,21,22,23,24],[25,26,27],[28,29,30,31,32,33,34] ];
 
   // ═══ TASK 2 STEPS ═══
   var STEPS2=[
@@ -598,10 +634,8 @@ tB.addEventListener('click',()=>{col=!col;render();});
     {icon:"\ud83c\udfc1",title:"Save Predictions",sub:"submission.to_csv()",desc:"The final step: the averaged probabilities have already selected the best class for each of the 30,001 test traces. Now the numeric labels are converted back into the original anomaly type names and saved into a .dsv file ready for submission.",
      code:'output = pd.DataFrame({\n    "TRACE_ID": test_ids,\n    "ANOMALY_TYPE": y_test_pred\n})\noutput.to_csv("predictions_tipologia.dsv",\n              sep=\';\', index=False)'}
   ];
-  var LINES2=[ [27,28,29,31,32,33,34,35,36,37,39,40,41],[46,47,48,49,50,51],[56,57,58,61,62,63],[68,69,70],[83,84,85,86,88,89,90,91,92],[103,104,105,106,107,108,109,110,111,112,113,114],[119,121,122,123],[128,129,130,131] ];
 
   function curSteps(){return activeTask===0?STEPS1:STEPS2;}
-  function curLines(){return activeTask===0?LINES1:LINES2;}
   function taskFile(){return activeTask===0?'Task 1.py':'Task 2.py';}
 
   // ═══ TASK 1 table data (5 categories, 6 of 12 features shown) ═══
@@ -653,17 +687,41 @@ tB.addEventListener('click',()=>{col=!col;render();});
   function t2badge(t){var c=T2COLORS[t]||"#666";return '<span style="color:'+c+';font-weight:700;font-size:11px;background:'+c+'12;border:1px solid '+c+'30;padding:2px 8px;border-radius:12px">'+t+'</span>';}
   function t2eng(r){return {dur_evt:r.dur!==null?(r.dur/(r.ne+1e-6)).toFixed(1):"NaN",rd_dn:(r.rd/(r.dn+1e-6)).toFixed(1),wr_dn:(r.wr/(r.dn+1e-6)).toFixed(1),rpc_evt:(r.rpc/(r.ne+1e-6)).toFixed(2),evt_cli:r.ne*r.cli};}
 
-  // ═══ Highlight code viewer ═══
+  // ═══ Highlight code viewer by matching snippet text ═══
   function highlightCode(s){
     var cE=document.getElementById('codeArea');
     var vb=cE?cE.closest('.viewer-box'):null;
     if(!cE||!vb)return;
+    var st=curSteps();var snippetCode=st[s]?st[s].code:'';
+    if(!snippetCode)return;
+    // Auto-expand
     var tB=document.getElementById('toggleBtn');
     if(vb.dataset.collapsed==='true'&&tB){var scrollY=window.scrollY;tB.click();window.scrollTo(0,scrollY);}
+    // Clear old highlights
     cE.querySelectorAll('.code-line-hl').forEach(function(el){el.classList.remove('code-line-hl');});
-    var lines=curLines()[s]||[];
+    // Get raw file lines and snippet lines
+    var rawText=window._codeRaw?window._codeRaw():'';
+    if(!rawText)return;
+    var fileLines=rawText.split('\n');
+    var snippetLines=snippetCode.split('\n').filter(function(l){return l.trim().length>0;});
+    // For each snippet line, find matching file line(s) by trimmed content
+    var matchedLineNums=[];
+    snippetLines.forEach(function(sl){
+      var trimmed=sl.trim();
+      if(trimmed.length<3)return;
+      fileLines.forEach(function(fl,idx){
+        if(fl.trim()===trimmed||fl.indexOf(trimmed)>=0||(trimmed.length>10&&fl.trim().indexOf(trimmed.substring(0,Math.min(trimmed.length,30)))>=0)){
+          if(matchedLineNums.indexOf(idx+1)<0)matchedLineNums.push(idx+1);
+        }
+      });
+    });
+    // Highlight matched lines
     var first=null;
-    lines.forEach(function(ln){var el=cE.querySelector('.code-line[data-ln="'+ln+'"]');if(el){el.classList.add('code-line-hl');if(!first)first=el;}});
+    matchedLineNums.forEach(function(ln){
+      var el=cE.querySelector('.code-line[data-ln="'+ln+'"]');
+      if(el){el.classList.add('code-line-hl');if(!first)first=el;}
+    });
+    // Scroll pre internally
     if(first){setTimeout(function(){var preRect=cE.getBoundingClientRect();var elRect=first.getBoundingClientRect();var offset=elRect.top-preRect.top+cE.scrollTop-cE.clientHeight*0.82;cE.scrollTo({top:Math.max(0,offset),behavior:'smooth'});},100);}
   }
 
