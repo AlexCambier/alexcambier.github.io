@@ -638,7 +638,7 @@ tB.addEventListener('click',()=>{col=!col;render();});
     var lines=curLines()[s]||[];
     var first=null;
     lines.forEach(function(ln){var el=cE.querySelector('.code-line[data-ln="'+ln+'"]');if(el){el.classList.add('code-line-hl');if(!first)first=el;}});
-    if(first){setTimeout(function(){var preRect=cE.getBoundingClientRect();var elRect=first.getBoundingClientRect();var offset=elRect.top-preRect.top+cE.scrollTop-cE.clientHeight/3;cE.scrollTo({top:Math.max(0,offset),behavior:'smooth'});},100);}
+    if(first){setTimeout(function(){var preRect=cE.getBoundingClientRect();var elRect=first.getBoundingClientRect();var offset=elRect.top-preRect.top+cE.scrollTop-cE.clientHeight*0.82;cE.scrollTo({top:Math.max(0,offset),behavior:'smooth'});},100);}
   }
 
   // ═══ Render steps nav ═══
