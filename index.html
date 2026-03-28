@@ -264,7 +264,13 @@
       .modal-overlay { padding: 10px; }
       .modal-content { max-height: 95vh; }
       .modal-close { top: 12px; right: 12px; width: 32px; height: 32px; }
-      .demo-badge { display: none; }
+      .demo-badge { font-size: 9px; padding: 3px 6px; gap: 3px; }
+      .demo-badge svg { display: none; }
+      .demo-badge::before { content: 'TAP'; }
+      .tl-clickable, .edu-clickable, .card { position: relative; }
+      .tl-clickable::after, .edu-clickable::after { content: 'Tap to view \u203a'; position: absolute; bottom: -2px; right: 12px; font: 600 10px/1 sans-serif; color: var(--accent); opacity: 0.6; letter-spacing: 0.3px; }
+      .media-container { aspect-ratio: 3/4 !important; max-width: 88%; margin-left: auto !important; margin-right: auto !important; border-radius: 6px; }
+      .media-container iframe { width: 100%; height: 100%; }
       .media-grid { grid-template-columns: 1fr; gap: 16px; }
       .media-item-label { font-size: 11px; margin-bottom: 8px; }
       .notebook-colab-header { flex-direction: column; align-items: flex-start; gap: 12px; }
@@ -285,12 +291,13 @@
       .card-desc { font-size: 13px; }
       .hero-bio { font-size: 14px; }
     }
-    ::-webkit-scrollbar { width: 6px; }
+    body { scrollbar-width: thin; scrollbar-color: var(--border) var(--bg); }
+    ::-webkit-scrollbar { width: 10px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 5px; border: 2px solid var(--bg); }
     ::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
-    .modal-content::-webkit-scrollbar { width: 4px; }
-    .modal-content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    .modal-content::-webkit-scrollbar { width: 8px; }
+    .modal-content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; border: 2px solid var(--bg); }
 
     /* ── Walkthrough ── */
     .wt-wrap{display:none;margin-top:24px;border-top:1px solid var(--border);padding-top:24px}
